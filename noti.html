@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - Upcycle Market</title>
+    <link rel="stylesheet" href="noti.css">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <img src="https://via.placeholder.com/40x40?text=UM" alt="Logo">
+            </div>
+            <div class="nav-icons">
+                <button id="home-btn" class="nav-btn active"><i class="fas fa-home"></i><span> <a href="index.html">Home</a></span></button>
+                <button id="videos-btn" class="nav-btn"><i class="fa-solid fa-video"></i><span> <a href="videos.html">Videos</a></span></button>
+                <button id="search-btn" class="nav-btn"><i class="fas fa-search"></i><span> Search</span></button>
+                <button id="shopping-btn" class="nav-btn"><i class="fa-solid fa-shop"></i><span> <a href="shopping.html">Shopping</a></span></button>
+                <button id="notifications-btn" class="nav-btn"><i class="fas fa-bell"></i><span> <a href="noti.html">Notifications</a></span></button>
+                <button id="profile-btn" class="nav-btn profile-btn"><i class="fas fa-user-circle"></i><span> Login/SignUp</span></button>
+            </div>
+        </div>
+
+        <!-- Search Bar Popup -->
+        <div id="search-popup" class="search-popup hidden">
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Type to search...">
+                <button id="ask-ai-btn">Ask AI</button>
+            </div>
+            <div id="suggestions" class="suggestions">
+                <!-- Suggestions will populate here -->
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="main-container">
+            <!-- Toolbar for Notifications -->
+            <div class="toolbar">
+                <button id="mark-read-btn"><i class="fas fa-check"></i> Mark as Read</button>
+                <button id="mark-unread-btn"><i class="fas fa-envelope"></i> Mark as Unread</button>
+                <button id="filter-btn"><i class="fas fa-filter"></i> Filter By</button>
+            </div>
+
+            <!-- Notification Feed -->
+            <section class="feed">
+                <div class="notification-card">
+                    <img src="https://via.placeholder.com/40" alt="User Icon" class="user-icon">
+                    <div class="notification-info">
+                        <p class="username">John Doe</p>
+                        <p class="notification-text">Check out my latest post on upcycled furniture!</p>
+                        <p class="time">5 minutes ago</p>
+                    </div>
+                </div>
+
+                <div class="notification-card">
+                    <img src="https://via.placeholder.com/40" alt="User Icon" class="user-icon">
+                    <div class="notification-info">
+                        <p class="username">Jane Smith</p>
+                        <p class="notification-text">New DIY eco-friendly project ideas are now live!</p>
+                        <p class="time">2 hours ago</p>
+                    </div>
+                </div>
+
+                <div class="notification-card">
+                    <img src="https://via.placeholder.com/40" alt="User Icon" class="user-icon">
+                    <div class="notification-info">
+                        <p class="username">Eco World</p>
+                        <p class="notification-text">Join us for a live webinar on upcycling basics.</p>
+                        <p class="time">1 day ago</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

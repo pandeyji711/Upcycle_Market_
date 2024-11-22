@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upcycle Market</title>
+    <link rel="stylesheet" href="posts.css">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <img src="https://via.placeholder.com/40x40?text=UM" alt="Logo">
+            </div>
+            <div class="nav-icons">
+                <button id="home-btn" class="nav-btn active"><i class="fas fa-home"></i><span> <a href="index.html">Home</a></span></button>
+                <button id="videos-btn" class="nav-btn"><i class="fa-solid fa-video"></i><span> <a href="videos.html">Videos</a></span></button>
+                <button id="search-btn" class="nav-btn"><i class="fas fa-search"></i><span> Search</span></button>
+                <button id="shopping-btn" class="nav-btn"><i class="fa-solid fa-shop"></i><span> <a href="shopping.html">Shopping</a></span></button>
+                <button id="notifications-btn" class="nav-btn"><i class="fas fa-bell"></i><span> <a href="noti.html">Notifications</a></span></button>
+                <button id="profile-btn" class="nav-btn profile-btn"><i class="fas fa-user-circle"></i><span> Login/SignUp</span></button>
+            </div>
+        </div>
+
+        <!-- Search Bar Popup -->
+        <div id="search-popup" class="search-popup hidden">
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Type to search...">
+                <button id="ask-ai-btn">Ask AI</button>
+            </div>
+            <div id="suggestions" class="suggestions">
+                <!-- Suggestions will populate here -->
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="main-container">
+            <!-- Left Sidebar -->
+            <!-- <aside class="sidebar-left">
+                <div class="profile-card">
+                    <img src="https://via.placeholder.com/80" alt="Profile Picture" class="profile-pic">
+                    <h3><i class="fas fa-user"></i> Saurav Singh</h3>
+                    <p>Passionate for products made from waste</p>
+                    <small>Gautam Buddha Nagar, Uttar Pradesh</small>
+                </div>
+                <br><br>
+                <div class="stats">
+                    <p>Profile viewers: <span>115</span></p>
+                    <p>Post impressions: <span>7.6K</span></p>
+                    <p>Products Sold: <span>16</span></p>
+                </div>
+                <br><br>
+                <div class="links">
+                    <a href="#"><i class="fas fa-bookmark"></i> Saved items</a><br>
+                    <a href="#"><i class="fa-brands fa-gratipay"></i> Favourites</a><br>
+                    <a href="#"><i class="fa-solid fa-cart-shopping"></i> Orders</a><br>
+                </div>
+            </aside> -->
+
+            <!-- Feed -->
+            <section class="feed">
+                <!-- <div class="post-box">
+                    <input type="text" placeholder="Start a post, try writing with AI">
+                    <div class="post-options">
+                        <button><i class="fas fa-photo-video"></i> Media</button>
+                        <button><i class="fas fa-calendar-alt"></i> Event</button>
+                        <button><i class="fas fa-pen"></i> Write article</button>
+                    </div>
+                </div> -->
+                <div class="post">
+                    <div class="post-header">
+                        <img src="https://via.placeholder.com/40" alt="User Pic" class="post-pic">
+                        <div class="post-user">
+                            <h4><i class="fas fa-user"></i> Manav Agarwal</h4>
+                            <small>     Artist</small>
+                        </div>
+                        <button class="follow-btn">Follow</button>
+                    </div>
+                    <div class="post-content">
+                        <p>
+                            Alert!!! <br/>
+                            New Product Release .... <br/>
+                        </p>
+                        <img src="https://via.placeholder.com/600x300" alt="Post Image" class="post-img">
+                    </div>
+                    <div class="post-actions">
+                        <button><i class="fas fa-thumbs-up"></i> Like</button>
+                        <button><i class="fas fa-comment-alt"></i> Comment</button>
+                        <button><i class="fas fa-share"></i> Share</button>
+                        <button><i class="fas fa-shopping-cart"></i> Buy</button>
+                    </div>
+                </div>
+                <div class="post">
+                    <div class="post-header">
+                        <img src="https://via.placeholder.com/40" alt="User Pic" class="post-pic">
+                        <div class="post-user">
+                            <h4><i class="fas fa-user"></i> Manav Agarwal</h4>
+                            <small>     Artist</small>
+                        </div>
+                        <button class="follow-btn">Follow</button>
+                    </div>
+                    <div class="post-content">
+                        <p>
+                            Alert!!! <br/>
+                            New Product Release .... <br/>
+                        </p>
+                        <img src="https://via.placeholder.com/600x300" alt="Post Image" class="post-img">
+                    </div>
+                    <div class="post-actions">
+                        <button><i class="fas fa-thumbs-up"></i> Like</button>
+                        <button><i class="fas fa-comment-alt"></i> Comment</button>
+                        <button><i class="fas fa-share"></i> Share</button>
+                        <button><i class="fas fa-shopping-cart"></i> Buy</button>
+                    </div>
+                </div>
+                <div class="post">
+                    <div class="post-header">
+                        <img src="https://via.placeholder.com/40" alt="User Pic" class="post-pic">
+                        <div class="post-user">
+                            <h4><i class="fas fa-user"></i> Manav Agarwal</h4>
+                            <small>     Artist</small>
+                        </div>
+                        <button class="follow-btn">Follow</button>
+                    </div>
+                    <div class="post-content">
+                        <p>
+                            Alert!!! <br/>
+                            New Product Release .... <br/>
+                        </p>
+                        <img src="https://via.placeholder.com/600x300" alt="Post Image" class="post-img">
+                    </div>
+                    <div class="post-actions">
+                        <button><i class="fas fa-thumbs-up"></i> Like</button>
+                        <button><i class="fas fa-comment-alt"></i> Comment</button>
+                        <button><i class="fas fa-share"></i> Share</button>
+                        <button><i class="fas fa-shopping-cart"></i> Buy</button>
+                    </div>
+                </div>
+                
+            </section>
+
+            <!-- Right Sidebar -->
+            <!-- <aside class="sidebar-right">
+                <h3>Trending Now</h3>
+                <ul>
+                    <li>Cardboard Products</li>
+                    <li>Plastic Products</li>
+                    <li>Paper Products</li>
+                    <li>Miscellaneous Products</li>
+                </ul>
+                <h3>Today's Products</h3>
+                <ul>
+                    <li>Pen / Pencil Stands</li>
+                    <li>Study Tables</li>
+                    <li>Decoration Products</li>
+                </ul>
+            </aside> -->
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
