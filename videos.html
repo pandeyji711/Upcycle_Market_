@@ -1,117 +1,161 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upcycle Market</title>
-    <link rel="stylesheet" href="videos.css">
-    <!-- FontAwesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
+<html class="no-js" lang="en">
+	<head>
+		<title>Upcycle Market</title>
+		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <meta name="format-detection" content="telephone=no">
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+	    <link rel="stylesheet" type="text/css" href="icomoon/icomoon.css">
+	    <link rel="stylesheet" type="text/css" href="css/vendor.css">
+	    
+	    <link rel="stylesheet" type="text/css" href="videos.css">
+	    <link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Arapey&display=swap" rel="stylesheet">
+	</head>
+
 <body>
-    <!-- Navbar -->
-    <header>
-      <div class="navbar">
-        <div class="logo">
-            <img src="https://via.placeholder.com/40x40?text=UM" alt="Logo">
-        </div>
-        <div class="nav-icons">
-            <button id="home-btn" class="nav-btn active"><i class="fas fa-home"></i><span> <a href="index.html">Home</a></span></button>
-            <button id="videos-btn" class="nav-btn"><i class="fa-solid fa-video"></i><span> <a href="videos.html">Videos</a></span></button>
-            <button id="search-btn" class="nav-btn"><i class="fas fa-search"></i><span> Search</span></button>
-            <button id="shopping-btn" class="nav-btn"><i class="fa-solid fa-shop"></i><span> <a href="shopping.html">Shopping</a></span></button>
-            <button id="notifications-btn" class="nav-btn"><i class="fas fa-bell"></i><span> <a href="noti.html">Notifications</a></span></button>
-            <button id="profile-btn" class="nav-btn profile-btn"><i class="fas fa-user-circle"></i><span> Login/SignUp</span></button>
-        </div>
-    </div>
 
-      <!-- Search Bar Popup -->
-      <div id="search-popup" class="search-popup hidden">
-        <div class="search-container">
-          <input type="text" id="search-input" placeholder="Type to search...">
-          <button id="ask-ai-btn">Ask AI</button>
-        </div>
-        <div id="suggestions" class="suggestions">
-          <!-- Suggestions will populate here -->
-        </div>
-      </div>
-    </header>
+<header id="header" class="fixed">
+	<div id="header-wrap">
+		<div class="main-logo">
+			<a href="index.html"><img src="images/logo.png" alt="logo"></a>
+		</div>
 
-    <main>
-        <div class="main-container">
-            <!-- Left Sidebar -->
-            <!-- <aside class="sidebar-left">
-                  <div class="profile">
-                    <img src="profile-pic.jpg" alt="Profile Picture">
-                    <p>John Doe</p>
-                  </div>
-                  <ul>
-                    <li>My Videos</li>
-                    <li>Trending</li>
-                    <li>Saved Videos</li>
-                  </ul>
-                </aside> -->
+		<nav id="navbar">
+			<div class="main-menu" id="navigation">
+				<ul class="menu-list navbar-nav">
+					<li class="menu-item"><a href="index.html" data-effect="Home" class="nav-link">Home</a></li>
+					<li class="menu-item"><a href="#about" data-effect="about" class="nav-link">About</a></li>
+					<li class="menu-item"><a href="posts.html" data-effect="about" class="nav-link">Posts</a></li>
+					<li class="menu-item"><a href="videos.html" data-effect="about" class="nav-link">Videos</a></li>
+					<li class="menu-item"><a href="shop.html" data-effect="shop" class="nav-link">Shop</a></li>
+					<li class="menu-item nav-item">
+						<a href="noti.html" data-effect="collection" class="nav-link">Notification</a>
+					</li>
+					<li class="menu-item">
+						<a href="posts.html" data-effect="latest-blog" class="nav-link">Blog</a>
+					</li>
 
-            <!-- Feed -->
-                <section class="feed">
-                  <div class="post">
-                    <div class="post-header">
-                      <img src="user1.jpg" alt="User">
-                      <div class="post-info">
-                        <span class="username">User 1</span>
-                        <span class="time">2 hours ago</span>
-                      </div>
-                    </div>
-                    <div class="post-content">
-                      <video controls>
-                        <source src="video1.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                      </video>
-                      <p class="caption">Check out this amazing video!</p>
-                    </div>
-                    <div class="post-actions">
-                      <button class="btn like">Like</button>
-                      <button class="btn comment">Comment</button>
-                      <button class="btn share">Share</button>
-                    </div>
-                  </div>
-            
-                  <div class="post">
-                    <div class="post-header">
-                      <img src="user2.jpg" alt="User">
-                      <div class="post-info">
-                        <span class="username">User 2</span>
-                        <span class="time">5 hours ago</span>
-                      </div>
-                    </div>
-                    <div class="post-content">
-                      <video controls>
-                        <source src="video2.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                      </video>
-                      <p class="caption">A must-watch for everyone!</p>
-                    </div>
-                    <div class="post-actions">
-                      <button class="btn like">Like</button>
-                      <button class="btn comment">Comment</button>
-                      <button class="btn share">Share</button>
-                    </div>
-                  </div>
-                </section>
-            
-                <!-- <aside class="sidebar-right">
-                  <div class="trending">
-                    <h3>Trending Videos</h3>
-                    <ul>
-                      <li>Video 1</li>
-                      <li>Video 2</li>
-                      <li>Video 3</li>
-                    </ul>
-                  </div>
-                </aside> -->
-        </div>
-    </main>
+				</ul>
+			</div>
 
-    <script src="script.js"></script>
+			<div class="right-element icon-element">
+				<div class="search-bar">
+					<a href="#" class="search-button search-toggle" data-selector="#header-wrap">
+						<i class="icon icon-search"></i>
+					</a>
+					<form role="search" method="get" class="search-box">
+						<input class="search-field text search-input" placeholder="Search" type="search">
+					</form>
+				</div>
+
+				<div class="user-account for-buy">
+					<a href="#">
+					<i class="icon icon-user"></i>
+					</a>
+				</div>
+
+				<div class="like-bar for-buy">
+					<a href="#">
+						<i class="icon icon-like-button"></i>
+						<i class="icon icon-liked-button"></i>	
+					</a>
+			    </div><!--like-bar-->
+
+				<div class="cart for-buy">
+					<a href="#">
+					<i class="icon icon-account"></i>
+					<span>0</span>
+					</a>
+				</div>
+
+			</div><!--right-element-->
+
+		</nav>
+
+	</div><!--header-wrap-->
+</header>
+
+<main>
+  <div class="main-container">
+      <!-- Left Sidebar -->
+      <!-- <aside class="sidebar-left">
+            <div class="profile">
+              <img src="profile-pic.jpg" alt="Profile Picture">
+              <p>John Doe</p>
+            </div>
+            <ul>
+              <li>My Videos</li>
+              <li>Trending</li>
+              <li>Saved Videos</li>
+            </ul>
+          </aside> -->
+
+      <!-- Feed -->
+          <section class="feed">
+            <div class="post">
+              <div class="post-header">
+                <img src="./images/shop_user1.png" alt="User">
+                <div class="post-info">
+                  <span class="username">Elena Sofia Castelli</span>
+                  <span class="time">2 hours ago</span>
+                </div>
+              </div>
+              <div class="post-content">
+                <video controls>
+                  <source src="video1.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+                <p class="caption">Check out this amazing video!</p>
+              </div>
+              <div class="post-actions">
+                <button class="btn like">Like</button>
+                <button class="btn comment">Comment</button>
+                <button class="btn share">Share</button>
+              </div>
+            </div>
+      
+            <div class="post">
+              <div class="post-header">
+                <img src="./images/shop_user2.png" alt="User">
+                <div class="post-info">
+                  <span class="username">Amara Lianne</span>
+                  <span class="time">5 hours ago</span>
+                </div>
+              </div>
+              <div class="post-content">
+                <video controls>
+                  <source src="video2.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+                <p class="caption">A must-watch for everyone!</p>
+              </div>
+              <div class="post-actions">
+                <button class="btn like">Like</button>
+                <button class="btn comment">Comment</button>
+                <button class="btn share">Share</button>
+              </div>
+            </div>
+          </section>
+          
+      
+          <!-- <aside class="sidebar-right">
+            <div class="trending">
+              <h3>Trending Videos</h3>
+              <ul>
+                <li>Video 1</li>
+                <li>Video 2</li>
+                <li>Video 3</li>
+              </ul>
+            </div>
+          </aside> -->
+  </div>
+</main>
+
+<script src="script.js"></script>
 </body>
 </html>

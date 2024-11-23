@@ -1389,94 +1389,173 @@ nav#navbar ul.menu-list {
   }
 }
 
+
 /* Main Container */
 .main-container {
   display: flex;
-  flex-direction: column; /* Stack toolbar and feed vertically */
-  align-items: center;
-  justify-content: flex-start;
-  width: 80%; /* Adjust width for responsiveness */
-  max-width: 1200px; /* Max width for larger screens */
-  margin: 20px auto; /* Center the container with some margin */
+  justify-content: space-between; /* Space between the feed and sidebars */
+  align-items: flex-start;
+  width: 80%; /* Responsive width for the main container */
+  max-width: 1200px;
+  margin: 20px auto; /* Center the container with a margin */
 }
 
-/* Toolbar */
-.toolbar {
-  display: flex;
-  justify-content: center; /* Center toolbar items horizontally */
-  gap: 20px; /* Space between buttons */
-  width: 100%; /* Make the toolbar take full width */
-  margin-bottom: 20px; /* Add space between toolbar and feed */
-  text-align: center;
-}
-
-.toolbar button {
-  background-color: #3D713C;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1.1em;
-  transition: background-color 0.3s ease;
-}
-
-.toolbar button:hover {
-  background-color: #2C5F2B;
-}
-
-.toolbar i {
-  margin-right: 8px; /* Add space between icon and text */
-}
-
-/* Notification Feed */
+/* Feed Section */
 .feed {
-  width: 100%;
-  max-width: 800px; /* Limit width for better readability */
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center notifications */
-  gap: 20px; /* Space between notifications */
+  gap: 30px; /* Space between each product */
+  flex: 1; /* Allow feed section to take up the remaining space */
+  align-items: center;
 }
 
-/* Notification Card */
-.notification-card {
+/* Product */
+.product {
   display: flex;
-  align-items: center; /* Center content vertically */
+  flex-direction: column;
   background-color: #fff;
-  padding: 15px;
-  width: 100%;
-  max-width: 700px; /* Set max width for cards */
+  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 15px; /* Space between cards */
+  width: 100%;
+  max-width: 600px; /* Limit the width for better readability */
 }
 
-.notification-card .user-icon {
+.product-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.product-header img {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  margin-right: 15px; /* Space between icon and text */
+  margin-right: 10px;
 }
 
-.notification-info {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.notification-info .username {
+.username {
+  font-size: 1.2em;
   font-weight: bold;
-  font-size: 1.1em;
 }
 
-.notification-info .notification-text {
+/* Product Content */
+.product-content {
+  margin-bottom: 15px;
+}
+
+.product-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.description {
   font-size: 1em;
   color: #555;
+  margin-bottom: 10px;
 }
 
-.notification-info .time {
-  font-size: 0.9em;
-  color: #888;
-  margin-top: 5px;
+.price {
+  font-size: 1.2em;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.rating {
+  font-size: 1em;
+  color: #ffcc00; /* Star color */
+}
+
+/* Product Actions */
+.product-actions {
+  display: flex;
+  justify-content: space-between; /* Space buttons evenly */
+}
+
+.product-actions .btn {
+  background-color: #3D713C;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+
+.product-actions .btn:hover {
+  background-color: #2C5F2B;
+}
+
+.product-actions .btn:focus {
+  outline: none;
+}
+
+/* Sidebar Styles (Optional if sidebars are used in future) */
+/* Left Sidebar */
+.sidebar-left {
+  width: 250px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Right Sidebar */
+.sidebar-right {
+  width: 250px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Sidebar Sections */
+.sidebar-left .cart-info,
+.sidebar-right .trending,
+.sidebar-right .deals {
+  margin-bottom: 30px;
+}
+
+.sidebar-left h3,
+.sidebar-right h3 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.sidebar-left p,
+.sidebar-right ul {
+  font-size: 1em;
+}
+
+.sidebar-left .btn.view-cart,
+.sidebar-right ul li {
+  font-size: 1em;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .main-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sidebar-left,
+  .sidebar-right {
+    width: 100%; /* Full width for sidebars on smaller screens */
+    margin-bottom: 20px;
+  }
+
+  .product-actions {
+    flex-direction: column; /* Stack buttons vertically on smaller screens */
+    align-items: center;
+  }
+
+  .product-actions .btn {
+    width: 100%; /* Make buttons full-width on smaller screens */
+    margin-bottom: 10px;
+  }
 }
