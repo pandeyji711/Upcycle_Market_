@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
-  <head>
-		<title>Upcycle Market</title>
-		<meta charset="utf-8">
-	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	    <meta name="format-detection" content="telephone=no">
-	    <meta name="apple-mobile-web-app-capable" content="yes">
-	    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-	    <link rel="stylesheet" type="text/css" href="icomoon/icomoon.css">
-	    <link rel="stylesheet" type="text/css" href="css/vendor.css">
-	    
-	    <link rel="stylesheet" type="text/css" href="style.css">
-	    <link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Arapey&display=swap" rel="stylesheet">
-	</head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upcycle Market</title>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="icomoon/icomoon.css">
+    <link rel="stylesheet" type="text/css" href="css/vendor.css">
+    <link rel="stylesheet" type="text/css" href="posts.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Arapey&display=swap" rel="stylesheet">
+  <!-- <script src="https://js.stripe.com/v3/"></script> -->
+
+</head>
 <body>
   <header>
 <!-- 
@@ -107,13 +111,28 @@
         <h2>Create Post</h2>
         <textarea id="description" placeholder="What's on your mind?"></textarea>
         <input type="file" id="media-upload" accept="image/*,video/*">
+        
+        <!-- New toggle for selling -->
+        <div>
+          <label>
+            <input type="checkbox" id="sell-toggle"> Want to sell this?
+          </label>
+        </div>
+  
+        <!-- Selling price input -->
+        <div id="selling-price-container" style="display: none;">
+          <input type="number" id="selling-price" placeholder="Enter price in INR">
+        </div>
+        
         <button id="post-btn">Post</button>
       </div>
     </div>
   </section>
   
+  <div id="se" style="display: none;">
   <input id="search-input" type="text" placeholder="Search posts..." />
   <button id="search-btn">Search</button>
+  </div>
   <!-- Feed Section -->
   <div class="main-container">
    
@@ -122,7 +141,7 @@
   </div>
 
   <!-- Profile Section -->
-  <section id="profile-section" style="display: none;">
+  <!-- <section id="profile-section" style="display: none;">
     <h2>Your Profile</h2>
     <div id="user-details">
       <p><strong>Name:</strong> <span id="profile-name"></span></p>
@@ -131,8 +150,8 @@
     </div>
     <h3>Your Posts</h3>
     <div id="profile-posts"></div>
-  </section>
-
+  </section> -->
+  <script src="https://js.stripe.com/v3/"></script>
   <script src="script.js"></script>
 </body>
 </html>

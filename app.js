@@ -1,15 +1,26 @@
 const express = require("express");
 const cors = require("cors"); // Import CORS package
 const bodyParser = require("body-parser");
+const stripe = require("stripe")(
+  "sk_test_51Of7HkSFn1z8nH5wval4ZJg0uTMYbSJqMxsPFCYylGaaRERchwGtNTbjUyuJDPGJKbvvS8eG8bARffxaQu82ogKT00s5JpkokC"
+);
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const app = express();
 const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcryptjs");
-// const data = require("./database/data.json");
+// const data = require("./database/data.json")
 // console.log(data);
-const app = express();
+app.use(
+  cors({
+    origin: "http://127.0.0.1:5501", // URL where your frontend is hosted by Live Server
+  })
+);
+
+const BASE_URL = "http://127.0.0.1:5501";
+
 const PORT = 3000;
 const genAI = new GoogleGenerativeAI("AIzaSyCOhVYSHrIB107NoKOMdHnOED9h29ZhFm4");
 const model = genAI.getGenerativeModel({ model: "gemini-pro" });
@@ -125,19 +136,18 @@ app.post("/signup", upload.single("profilePic"), async (req, res) => {
 });
 // Post API
 app.post("/post", upload.single("media"), (req, res) => {
-  const { description, username } = req.body;
+  const { description, username, forSale, price } = req.body;
   const db = getDB();
-
+  console.log(username);
   const user = db.users.find((u) => u.username === username);
   if (!user) {
     return res.status(401).json({ success: false, message: "User not found!" });
   }
-  const profilePic = user.profilePic;
 
   const newPost = {
     id: uuidv4(),
     username,
-    profilePic,
+    profilePic: user.profilePic,
     description,
     media: req.file ? req.file.filename : null,
     mediaType: req.file
@@ -145,7 +155,8 @@ app.post("/post", upload.single("media"), (req, res) => {
         ? "video"
         : "image"
       : null,
-
+    forSale: forSale === "true", // Convert string to boolean
+    price: forSale === "true" ? Number(price) : null,
     likes: 0,
     likedBy: [],
     comments: [],
@@ -153,6 +164,7 @@ app.post("/post", upload.single("media"), (req, res) => {
 
   db.posts.push(newPost);
   saveDB(db);
+
   res.json({ success: true, message: "Post created successfully!" });
 });
 
@@ -312,7 +324,6 @@ app.post("/api/search", async (req, res) => {
 
     const prompt = `
 You are an advanced AI model trained for semantic matching. Your task is to analyze a user's search query and a dataset of posts to assign a relevance score to each post based on how well its description and media type align with the query.
-
 ### Input:
 1. **Search Query**: "${query}"
 2. **Dataset**: ${JSON.stringify(data)}
@@ -377,6 +388,71 @@ Return a JSON array of relevance scores, one for each post in the dataset, e.g.,
       .status(500)
       .json({ error: "Failed to process search. Please try again." });
   }
+});
+//payment server
+// Endpoint for creating a Stripe Checkout session
+app.post("/create-checkout-session", async (req, res) => {
+  try {
+    const { amount, postId, buyerUsername } = req.body;
+
+    if (!amount || !postId || !buyerUsername) {
+      return res
+        .status(400)
+        .json({ success: false, error: "Missing parameters" });
+    }
+
+    // Create the Stripe Checkout session
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price_data: {
+            currency: "usd", // Use appropriate currency code
+            product_data: {
+              name: `Post #${postId}`,
+            },
+            unit_amount: amount * 100, // Stripe expects amount in cents (INR paisa)
+          },
+          quantity: 1,
+        },
+      ],
+      mode: "payment",
+      success_url: `${BASE_URL}/Upcycle_Market/public/index.html`, // Updated with your success URL
+      cancel_url: `${BASE_URL}/Upcycle_Market/public/index.html`, // Updated with your cancel URL
+    });
+
+    res.json({ success: true, sessionId: session.id });
+  } catch (error) {
+    console.error("Error creating checkout session:", error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Success URL Page
+// app.get("/success", async (req, res) => {
+//   const { session_id } = req.query;
+
+//   const session = await stripe.checkout.sessions.retrieve(session_id);
+
+//   if (session.payment_status === "paid") {
+//     // Handle post-payment actions, e.g., mark post as sold
+//     res.send("Payment successful! Your order has been confirmed.");
+//   } else {
+//     res.send("Payment failed. Please try again.");
+//   }
+// });
+app.get("/payment-success", (req, res) => {
+  const sessionId = req.query.session_id; // Get session_id from query params
+  // Here you can fetch session details from Stripe (optional for dynamic content)
+
+  // Render the success page
+  res.sendFile(path.join(__dirname, "payment-success.html"));
+});
+
+// Route for Failure Page
+app.get("/payment-fail", (req, res) => {
+  // You can pass failure message dynamically here, if needed
+  res.sendFile(path.join(__dirname, "payment-fail.html"));
 });
 
 // Start server
