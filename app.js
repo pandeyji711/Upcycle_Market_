@@ -311,21 +311,32 @@ app.post("/api/search", async (req, res) => {
     }
 
     const prompt = `
-    You are an advanced AI model specializing in semantic search and contextual analysis. Analyze the user's search query and dataset below to assign a relevance score (1-100) to each post:
+You are an advanced AI model trained for semantic matching. Your task is to analyze a user's search query and a dataset of posts to assign a relevance score to each post based on how well its description and media type align with the query.
 
-    Search Query: "${query}"
+### Input:
+1. **Search Query**: "${query}"
+2. **Dataset**: ${JSON.stringify(data)}
 
-    Dataset: ${JSON.stringify(data)}
+### Scoring Criteria:
+- Focus primarily on matching the post's **description** and **media type** with the search query.
+- Evaluate the semantic similarity between the query and the description.
+- Consider how well the media type corresponds to the query's intent.
 
-    ### Task:
-    1. Analyze the search intent and context.
-    2. Compare the query with each post's metadata, tags, and description in the dataset.
-    3. Assign a relevance score (1-100) for each post based on alignment with the query.
-    4. Return a JSON array of scores, e.g., [85, 72, 45, ...].
+### Scoring Guidelines:
+- **90-100**: Perfect match - the description and media type directly address the query.
+- **70-89**: Good match - the description or media type aligns well, even if not perfectly.
+- **50-69**: Partial match - either the description or media type has some relevance.
+- **1-49**: Poor match - minimal or no alignment with the query.
 
-    ### Output:
-    Only return an array of relevance scores (e.g., [85, 72, 45,....]), ensure that you have to assign  score to every post present  in dataset.
-    `;
+### Task:
+1. Analyze each post in the dataset using the criteria above.
+2. Assign a relevance score (1-100) to every post, ensuring that every post gets a score.
+3. Focus only on the post's **description** and **media type** when determining relevance.
+
+### Output:
+Return a JSON array of relevance scores, one for each post in the dataset, e.g., [85, 72, 45, ...].
+- Do not include explanations or additional text, only the JSON array.
+`;
 
     const result = await model.generateContent(prompt);
     const rawResponse = result.response.text();
