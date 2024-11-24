@@ -31,46 +31,28 @@
 					<li class="menu-item"><a href="index.html" data-effect="Home" class="nav-link">Home</a></li>
 					<li class="menu-item"><a href="#about" data-effect="about" class="nav-link">About</a></li>
 					<li class="menu-item"><a href="./public\index.html" data-effect="about" class="nav-link">Posts</a></li>
-					<li class="menu-item"><a href="videos.html" data-effect="about" class="nav-link">Videos</a></li>
+					<!-- <li class="menu-item"><a href="videos.html" data-effect="about" class="nav-link">Videos</a></li>
 					<li class="menu-item"><a href="shop.html" data-effect="shop" class="nav-link">Shop</a></li>
 					<li class="menu-item nav-item">
 						<a href="noti.html" data-effect="collection" class="nav-link">Notification</a>
-					</li>
+					</li> -->
 
 				</ul>
 			</div>
 
 			<div class="right-element icon-element">
-				<div class="search-bar">
-					<a href="#" class="search-button search-toggle" data-selector="#header-wrap">
-						<i class="icon icon-search"></i>
-					</a>
-					<form role="search" method="get" class="search-box">
-						<input class="search-field text search-input" placeholder="Search" type="search">
-					</form>
+				<div class="user-account">
+				  <a href="#" class="account-btn">
+					  <i class="icon icon-user"></i>
+					  <span>User</span>
+				  </a>
+				  <div class="dropdown-menu hidden">
+					<button id="go-to-profile"  onclick="redirectToProfile()">Profile</button>
+					<button id="logout-btn">Logout</button>
+				  </div>
 				</div>
-
-				<div class="user-account for-buy">
-					<a href="#">
-					<i class="icon icon-user"></i>
-					</a>
-				</div>
-
-				<div class="like-bar for-buy">
-					<a href="#">
-						<i class="icon icon-like-button"></i>
-						<i class="icon icon-liked-button"></i>	
-					</a>
-			    </div><!--like-bar-->
-
-				<div class="cart for-buy">
-					<a href="#">
-					<i class="icon icon-account"></i>
-					<span>0</span>
-					</a>
-				</div>
-
-			</div><!--right-element-->
+			  </div>
+			<!--right-element-->
 
 		</nav>
 
