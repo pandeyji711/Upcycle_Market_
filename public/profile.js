@@ -75,7 +75,6 @@ window.onload = () => {
       </button>
       <button><i class="fas fa-comment-alt"></i> Comment</button>
       <button><i class="fas fa-share"></i> Share</button>
-      <button><i class="fas fa-shopping-cart"></i> Buy</button>
     </div>
     <div class="post-comments">
       ${post.comments
