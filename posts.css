@@ -1043,6 +1043,11 @@ html {
     margin-right: 60px;
     transition: 0.5s all ease-out;
 }
+.main-logo img {
+  max-height: 100%; 
+  width: 175px; 
+  object-fit: contain; 
+}
 .main-logo a {    
     margin: 0 auto;
     transition: 0.5s all ease-out;
@@ -1572,7 +1577,7 @@ body {
 .sidebar-right ul li {
   font-size: 16px;
   margin-bottom: 10px;
-
+}
 /* Post Box Styles (if uncommented) */
 .post-box {
   background-color: #fff;
