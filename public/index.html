@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upcycle Market</title>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="icomoon/icomoon.css">
+    <link rel="stylesheet" type="text/css" href="css/vendor.css">
+    <link rel="stylesheet" type="text/css" href="posts.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Arapey&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+<!-- 
+    <nav>
+      <h1>Social Media App</h1>
+      <div id="nav-buttons">
+        <button id="go-to-profile" style="display: none" onclick="redirectToProfile()">Profile</button>
+        <button id="logout-btn" style="display: none"  >Logout</button>
+        <button id="logout-btn" style="display: none"  onclick="goBackToHome();" >feed</button>
+      </div>
+    </nav> -->
+
+    <div id="header-wrap">
+      <div class="main-logo">
+        <a href="index.html"><img src="images/logo.png" alt="logo"></a>
+      </div>
+  
+      <nav id="navbar">
+        <!-- <button id="logout-btn"  onclick="goBackToHome();" >feed</button>  -->
+        <div class="main-menu" id="navigation">
+          <ul class="menu-list navbar-nav">
+            <li class="menu-item"><a href="index.html" data-effect="Home" class="nav-link">Home</a></li>
+            <li class="menu-item"><a href="#about" data-effect="about" class="nav-link">About</a></li>
+            <!-- <li class="menu-item"><a href="posts.html" data-effect="about" class="nav-link"  onclick="goBackToHome();">Posts</a></li> -->
+            <button id="go-to-profile"  onclick="redirectToProfile()">Profile</button>
+            <li class="menu-item"><a href="videos.html" data-effect="about" class="nav-link">Videos</a></li>
+            <li class="menu-item"><a href="shop.html" data-effect="shop" class="nav-link">Shop</a></li>
+            <li class="menu-item nav-item">
+              <a href="noti.html" data-effect="collection" class="nav-link">Notification</a>
+            </li>
+            <li class="menu-item">
+              <a href="posts.html" data-effect="latest-blog" class="nav-link">Blog</a>
+              <button    id="logout-btn"  >Logout</button>
+            </li>
+  
+          </ul>
+        </div>
+  
+        <div class="right-element icon-element">
+          <div class="search-bar">
+            <a href="#" class="search-button search-toggle" data-selector="#header-wrap">
+              <i class="icon icon-search"></i>
+            </a>
+            <form role="search" method="get" class="search-box">
+              <input class="search-field text search-input" placeholder="Search" type="search">
+            </form>
+          </div>
+  
+          <div class="user-account for-buy">
+            <a href="#">
+            <i class="icon icon-user"></i>
+            </a>
+          </div>
+  
+          <div class="like-bar for-buy">
+            <a href="#">
+              <i class="icon icon-like-button"></i>
+              <i class="icon icon-liked-button"></i>	
+            </a>
+            </div><!--like-bar-->
+  
+          <div class="cart for-buy">
+            <a href="#">
+            <i class="icon icon-account"></i>
+            <span>0</span>
+            </a>
+          </div>
+  
+        </div><!--right-element-->
+  
+      </nav>
+  
+    </div><!--header-wrap-->
+  </header>
+
+  <!-- Login Section -->
+  <section id="login-section">
+    <h2>Login</h2>
+    <form id="login-form">
+      <input type="text" id="login-username" placeholder="Username" required>
+      <input type="password" id="login-password" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+    <button id="go-to-signup">Sign Up</button>
+  </section>
+
+  <!-- Signup Section -->
+  <section id="signup-section" style="display: none;">
+    <h2>Sign Up</h2>
+    <form id="signup-form" enctype="multipart/form-data">
+      <input type="text" id="signup-name" placeholder="Full Name" required>
+      <input type="text" id="signup-username" placeholder="Username" required>
+      <input type="email" id="signup-email" placeholder="Email" required>
+      <input type="password" id="signup-password" placeholder="Password" required>
+      <input type="file" id="signup-profile-pic" accept="image/*" required>
+      <button type="submit">Sign Up</button>
+    </form>
+    <button id="go-to-login">Login</button>
+  </section>
+
+  <!-- Post Section -->
+  <section id="post-section" style="display: none;">
+    <button id="open-post-popup" onclick="openPostPopup()">Create Post</button>
+    <div id="post-popup" class="popup" style="display: none;">
+      <div class="popup-content">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <h2>Create Post</h2>
+        <textarea id="description" placeholder="What's on your mind?"></textarea>
+        <input type="file" id="media-upload" accept="image/*,video/*">
+        <button id="post-btn">Post</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feed Section -->
+  <div class="main-container">
+   
+  <div  style="display: none;"  class="feed" id="feed" >
+    <input id="search-input" type="text" placeholder="Search posts..." />
+    <button id="search-btn">Search</button>
+  </div>
+  </div>
+
+  <!-- Profile Section -->
+  <section id="profile-section" style="display: none;">
+    <h2>Your Profile</h2>
+    <div id="user-details">
+      <p><strong>Name:</strong> <span id="profile-name"></span></p>
+      <p><strong>Username:</strong> <span id="profile-username"></span></p>
+      <p><strong>Email:</strong> <span id="profile-email"></span></p>
+    </div>
+    <h3>Your Posts</h3>
+    <div id="profile-posts"></div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>

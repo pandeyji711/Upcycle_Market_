@@ -1,0 +1,78 @@
+{
+  "users": [
+    {
+      "username": "james",
+      "password": "$2a$10$0Gv0uewV8/N3CKUprUIG2Olo5Z4CEgBXwKlp5ufML2896hTgpWn/S",
+      "name": "james",
+      "email": "james@gmail.com",
+      "profilePic": "1732401078456.png",
+      "followers": [
+        "thomas"
+      ],
+      "following": []
+    },
+    {
+      "username": "thomas",
+      "password": "$2a$10$k0oGEHKUcqjcmXgl.crKHuhmBXINEjPUqSuT/M9N8dNLEYjQErRwW",
+      "name": "thomas",
+      "email": "thomas@gmail.com",
+      "profilePic": "1732401385208.jpeg",
+      "followers": [],
+      "following": [
+        "james"
+      ]
+    }
+  ],
+  "posts": [
+    {
+      "id": "1a49dfbf-d9d0-41a3-ac4e-987bd49b5120",
+      "username": "thomas",
+      "profilePic": "1732401385208.jpeg",
+      "description": "This is a vibrant and colorful wind chime featuring three stylized fish hanging vertically. Each fish has a distinct pattern painted in bright colors, and beneath them are small hoops with tassels hanging down. Beads are used along the string for added decoration. The structure is supported by a wooden or bamboo base with decorative designs.\r\nMaterials Used:\r\n\r\nBase: Bamboo or wooden stick.\r\nFish: Likely made of cardboard, thermocol, or light plastic.\r\nPaints: Acrylic or poster colors for vibrant patterns.\r\nBeads: Recycled plastic or wooden beads.\r\nHoops and Tassels: Waste thread or jute string for hoops and tassels",
+      "media": "1732402158096.jpg",
+      "mediaType": "image",
+      "likes": 1,
+      "likedBy": [
+        "thomas"
+      ],
+      "comments": []
+    },
+    {
+      "id": "9368d939-5003-4afb-8d03-0c0f6bec9cb0",
+      "username": "james",
+      "profilePic": "1732401078456.png",
+      "description": "(Colorful Frame with Popsicle Sticks)\r\nDescription: A decorative frame made with colorful popsicle sticks arranged in layers and adorned with small flowers for an elegant touch.\r\nMaterials Used: Popsicle sticks, adhesive/glue, small artificial flowers, and paint for coloring.",
+      "media": "1732411482743.jpg",
+      "mediaType": "image",
+      "likes": 1,
+      "likedBy": [
+        "james"
+      ],
+      "comments": []
+    },
+    {
+      "id": "6a48938d-09ec-4abd-a8b6-01044a15b71f",
+      "username": "james",
+      "profilePic": "1732401078456.png",
+      "description": "Ice Cream Stick Wall Shelf\r\nDescription:\r\nA stylish wall-mounted shelf made with an interlocking square frame design. It features three central compartments displaying decorative items like a Rubik's cube and a potted plant. The golden-black finish adds a rustic charm.\r\n\r\nMaterials Used:\r\n\r\nIce cream sticks or wooden craft sticks\r\nPaint (golden and black tones)\r\nAdhesive or glue for assembling\r\nSmall potted plant and decor items for display",
+      "media": "1732412435690.mp4",
+      "mediaType": "video",
+      "likes": 1,
+      "likedBy": [
+        "james"
+      ],
+      "comments": []
+    },
+    {
+      "id": "efd4148e-a4ed-4073-a19b-6cdaa6f7ff06",
+      "username": "james",
+      "profilePic": "1732401078456.png",
+      "description": "Mesh Rose Flower Vase\r\nDescription:\r\nA delicate artificial flower arrangement featuring pink roses made of layered mesh fabric, placed in a white vase. The roses mimic real petals and serve as an elegant decor item.\r\n\r\nMaterials Used:\r\n\r\nMesh fabric or organza for the petals\r\nFloral wires and green tape for stems\r\nArtificial leaves\r\nA plain white vase",
+      "media": "1732412694574.mp4",
+      "mediaType": "video",
+      "likes": 0,
+      "likedBy": [],
+      "comments": []
+    }
+  ]
+}
