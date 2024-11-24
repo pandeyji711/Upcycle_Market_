@@ -161,6 +161,10 @@ document
 document.getElementById("post-btn").addEventListener("click", async () => {
   const description = document.getElementById("description").value.trim();
   const fileInput = document.getElementById("media-upload");
+  const sellToggle = document.getElementById("sell-toggle").checked;
+  const sellingPrice = document.getElementById("selling-price").value.trim();
+
+  // Retrieve user object
   const user = JSON.parse(localStorage.getItem("user"));
 
   if (!user) {
@@ -168,24 +172,42 @@ document.getElementById("post-btn").addEventListener("click", async () => {
     return;
   }
 
+  // Validate input
+  if (sellToggle && !sellingPrice) {
+    alert("Please provide a selling price if you want to sell this item.");
+    return;
+  }
+
+  // Prepare FormData
   const formData = new FormData();
   formData.append("description", description);
-  if (fileInput.files.length > 0) {
-    formData.append("media", fileInput.files[0]); // Add either photo or video
-  }
   formData.append("username", user.username);
+  if (fileInput.files.length > 0) {
+    formData.append("media", fileInput.files[0]);
+  }
+  formData.append("forSale", sellToggle);
+  if (sellToggle) {
+    formData.append("price", sellingPrice);
+  }
 
-  const response = await fetch(`${BASE_URL}/post`, {
-    method: "POST",
-    body: formData,
-  });
-  const data = await response.json();
+  // Send data to the server
+  try {
+    const response = await fetch(`${BASE_URL}/post`, {
+      method: "POST",
+      body: formData,
+    });
 
-  if (data.success) {
-    alert(data.message);
-    loadFeed();
-  } else {
-    alert(data.message);
+    const data = await response.json();
+
+    if (data.success) {
+      alert(data.message);
+      loadFeed(); // Reload feed after successful post
+    } else {
+      alert(data.message || "Failed to create post.");
+    }
+  } catch (error) {
+    console.error("Error creating post:", error);
+    alert("An error occurred. Please try again.");
   }
 });
 
@@ -206,6 +228,7 @@ async function loadFeed() {
   const posts = await response.json();
 
   const feed = document.getElementById("feed");
+  feed.innerHTML = ""; // Clear previous feed content
 
   const user = JSON.parse(localStorage.getItem("user")); // Current logged-in user
   if (!user) {
@@ -233,10 +256,8 @@ async function loadFeed() {
       <div class="post-user">
         <h4><i class="fas fa-user"></i> ${post.username}</h4>
       </div>
-         <button id="follow-btn-${post.username}" 
-                    onclick="toggleFollow('${user.username}', '${
-      post.username
-    }')">
+      <button id="follow-btn-${post.username}" 
+              onclick="toggleFollow('${user.username}', '${post.username}')">
         ${followButtonText}
       </button>
     </div>
@@ -258,7 +279,13 @@ async function loadFeed() {
       </button>
       <button><i class="fas fa-comment-alt"></i> Comment</button>
       <button><i class="fas fa-share"></i> Share</button>
-      <button><i class="fas fa-shopping-cart"></i> Buy</button>
+      ${
+        post.forSale
+          ? `<button id="buy-btn-${post.id}" onclick="redirectToPayment(${post.price}, '${post.id}')">
+               <i class="fas fa-shopping-cart"></i> Buy for ₹${post.price}
+             </button>`
+          : ""
+      }
     </div>
     <div class="post-comments">
       ${post.comments
@@ -279,10 +306,113 @@ async function loadFeed() {
   `;
 
     // Append the post to the feed
-    const feed = document.getElementById("feed"); // Ensure there's an element with id="feed" in the HTML
     feed.appendChild(postDiv);
   });
 }
+
+function redirectToPayment(price, postId) {
+  // Assume we are sending the price, postId to initiate the payment
+  const user = JSON.parse(localStorage.getItem("user")); // Get current logged-in user
+  const userUsername = user?.username; // The current logged-in user's username
+
+  if (!userUsername) {
+    alert("You need to be logged in to make a payment.");
+    return;
+  }
+
+  // Send the data to the backend to create a Stripe checkout session
+  fetch(`${BASE_URL}/create-checkout-session`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      amount: price, // Price of the post
+      postId: postId, // ID of the post being bought
+      buyerUsername: userUsername, // Logged-in user's username
+    }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to create checkout session.");
+      }
+      return response.json(); // Parse the JSON response from the server
+    })
+    .then((data) => {
+      if (data.success) {
+        const stripe = Stripe(
+          "pk_test_51Of7HkSFn1z8nH5wSKcIazhnfHSWIyi9ntS3b59ybIwSJsQuWs8ACvZPiyEWtVt2IG6xAi8eUrd1cOCWpB2D1aee00eI5Fr9P8" // Stripe publishable key
+        );
+        // Redirect to Stripe checkout with the sessionId
+        return stripe.redirectToCheckout({ sessionId: data.sessionId });
+      } else {
+        alert("Failed to initiate payment. Please try again.");
+      }
+    })
+    .catch((error) => {
+      console.error("Error during payment initiation:", error);
+      alert(
+        "There was an error processing your request. Please try again later."
+      );
+    });
+}
+
+// Redirect to the payment gateway
+// Frontend function to create Checkout session and redirect
+const createCheckoutSession = async (amount, postId, buyerUsername) => {
+  try {
+    const response = await fetch(`${BASE_URL}/create-checkout-session`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ amount, postId, buyerUsername }),
+    });
+
+    const session = await response.json();
+    if (session.success) {
+      const stripe = Stripe(
+        "pk_test_51Of7HkSFn1z8nH5wSKcIazhnfHSWIyi9ntS3b59ybIwSJsQuWs8ACvZPiyEWtVt2IG6xAi8eUrd1cOCWpB2D1aee00eI5Fr9P8"
+      ); // Your Stripe Publishable Key
+      const result = await stripe.redirectToCheckout({
+        sessionId: session.sessionId,
+      });
+      if (result.error) {
+        console.error(result.error.message); // Handle errors (e.g., show message to the user)
+      }
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+const handlePayment = async (amount, postId, buyerUsername) => {
+  const response = await fetch(`${BASE_URL}/create-payment-intent`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ amount, postId, buyerUsername }),
+  });
+
+  const { clientSecret } = await response.json();
+
+  const stripe = Stripe(
+    "pk_test_51Of7HkSFn1z8nH5wSKcIazhnfHSWIyi9ntS3b59ybIwSJsQuWs8ACvZPiyEWtVt2IG6xAi8eUrd1cOCWpB2D1aee00eI5Fr9P8"
+  );
+  const result = await stripe.confirmCardPayment(clientSecret, {
+    payment_method: {
+      card: cardElement, // cardElement is from Stripe's Elements
+      billing_details: { name: buyerUsername },
+    },
+  });
+
+  if (result.error) {
+    console.error(result.error.message); // Handle error
+  } else {
+    if (result.paymentIntent.status === "succeeded") {
+      console.log("Payment succeeded!");
+      // Handle post-payment actions here (e.g., mark post as sold)
+    }
+  }
+};
 
 // Like Post
 async function likePost(postId) {
@@ -531,6 +661,11 @@ async function handleSearch() {
     alert("Failed to fetch search results. Please try again.");
   }
 }
+//toggle sell
+document.getElementById("sell-toggle").addEventListener("change", (event) => {
+  const priceContainer = document.getElementById("selling-price-container");
+  priceContainer.style.display = event.target.checked ? "block" : "none";
+});
 
 // Add event listener to a search input (example)
 document.getElementById("search-btn").addEventListener("click", handleSearch);
