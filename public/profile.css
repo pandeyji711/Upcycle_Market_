@@ -8,7 +8,7 @@ body {
 
 /* Navbar */
 nav {
-  background-color: #4CAF50; /* Green background */
+  background-color: #588456; /* Green background */
   color: white;
   display: flex;
   justify-content: space-between; /* Space out the elements */
@@ -27,7 +27,7 @@ nav h1 {
 }
 
 nav button {
-  background-color: #4CAF50;
+  background-color: #425e41;
   color: white;
   border: 1px solid white;
   padding: 10px 20px;
@@ -63,7 +63,7 @@ nav button:hover {
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #4CAF50;
+  border: 3px solid #588456;
 }
 
 .profile-info {

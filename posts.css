@@ -1452,7 +1452,7 @@ body {
 }
 
 .follow-btn {
-  background-color: #3D713C;
+  background-color: #588456;
   color: white;
   border: none;
   border-radius: 5px;
@@ -1486,7 +1486,7 @@ body {
 .post-actions button {
   background-color: transparent;
   border: none;
-  color: #3D713C;
+  color: #588456;
   font-size: 16px;
   cursor: pointer;
   transition: color 0.3s ease;
@@ -1538,7 +1538,7 @@ body {
 }
 
 .sidebar-left .links a {
-  color: #3D713C;
+  color: #588456;
   font-size: 16px;
   text-decoration: none;
   margin-bottom: 10px;
@@ -1547,7 +1547,7 @@ body {
 }
 
 .sidebar-left .links a:hover {
-  color: #3D713C;
+  color: #588456;
 }
 
 /* Right Sidebar (Commented Out) */
@@ -1592,7 +1592,7 @@ body {
 }
 
 .post-options button {
-  background-color: #3D713C;
+  background-color: #588456;
   color: white;
   border: none;
   border-radius: 5px;
@@ -1602,6 +1602,6 @@ body {
 }
 
 .post-options button:hover {
-  background-color: #3D713C;
+  background-color: #588456;
 }
 

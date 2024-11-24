@@ -1020,14 +1020,14 @@ html {
   bottom: 100px;
   z-index: 9;
   outline: none;
-  background-color: #bed479;
+  background-color: #588456;
   width: 80px;
   height: 80px;
   border-radius: 50%;
   cursor: pointer;
 }
 #scroll-up:hover {
-  background-color: #658e63;
+  background-color: #588456;
 }
 #scroll-up i.icon.icon-arrow-up {
     font-size: 1.8em;
@@ -1154,7 +1154,7 @@ nav#navbar ul.menu-list {
     position: relative;
 }
 .right-element .cart span {
-    background: #BED479;
+    background: #588456;
     padding: 2px 8px;
     position: absolute;
     border-radius: 50%;
@@ -1474,7 +1474,7 @@ nav#navbar ul.menu-list {
 }
 
 .btn {
-  background-color: #3D713C;
+  background-color: #588456;
   color: #fff;
   padding: 8px 15px;
   border-radius: 5px;
@@ -1485,7 +1485,7 @@ nav#navbar ul.menu-list {
 }
 
 .btn:hover {
-  background-color: #2C5F2B;
+  background-color: #588456;
 }
 
 /* Sidebar (if enabled) */

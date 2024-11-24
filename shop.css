@@ -749,7 +749,7 @@ fieldset[disabled] a.btn {
   color: #fff;
 }
 .btn.btn-black:hover {
-    background-color: #bed479;
+    background-color: #588456;
 }
 .btn.btn-white {
   background: #f8f8f8;
@@ -1020,14 +1020,14 @@ html {
   bottom: 100px;
   z-index: 9;
   outline: none;
-  background-color: #bed479;
+  background-color: #588456;
   width: 80px;
   height: 80px;
   border-radius: 50%;
   cursor: pointer;
 }
 #scroll-up:hover {
-  background-color: #658e63;
+  background-color: #588456;
 }
 #scroll-up i.icon.icon-arrow-up {
     font-size: 1.8em;
@@ -1476,7 +1476,7 @@ nav#navbar ul.menu-list {
 }
 
 .product-actions .btn {
-  background-color: #3D713C;
+  background-color: #588456;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -1487,7 +1487,7 @@ nav#navbar ul.menu-list {
 }
 
 .product-actions .btn:hover {
-  background-color: #2C5F2B;
+  background-color: #588456;
 }
 
 .product-actions .btn:focus {

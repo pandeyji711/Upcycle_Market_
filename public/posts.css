@@ -1486,7 +1486,7 @@ body {
 .post-actions button {
   background-color: transparent;
   border: none;
-  color: #3D713C;
+  color: #588456;
   font-size: 16px;
   cursor: pointer;
   transition: color 0.3s ease;
@@ -1538,7 +1538,7 @@ body {
 }
 
 .sidebar-left .links a {
-  color: #3D713C;
+  color: #588456;
   font-size: 16px;
   text-decoration: none;
   margin-bottom: 10px;
@@ -1592,7 +1592,7 @@ body {
 }
 
 .post-options button {
-  background-color: #3D713C;
+  background-color: #588456;
   color: white;
   border: none;
   border-radius: 5px;
@@ -1621,7 +1621,7 @@ body {
 }
 
 #post-popup .popup-content h2 {
-  color: #3D713C;
+  color: #588456;
   margin-bottom: 15px;
 }
 
@@ -1638,7 +1638,7 @@ body {
   width: 100%;
   padding: 10px;
   font-size: 16px;
-  background-color: #3D713C;
+  background-color: #588456;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -1646,5 +1646,5 @@ body {
 }
 
 #post-popup button:hover {
-  background-color: #2b522c;
+  background-color: #588456;
 }

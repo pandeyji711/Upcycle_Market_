@@ -1020,14 +1020,14 @@ html {
   bottom: 100px;
   z-index: 9;
   outline: none;
-  background-color: #bed479;
+  background-color: #588456;
   width: 80px;
   height: 80px;
   border-radius: 50%;
   cursor: pointer;
 }
 #scroll-up:hover {
-  background-color: #658e63;
+  background-color: #588456;
 }
 #scroll-up i.icon.icon-arrow-up {
     font-size: 1.8em;
@@ -1154,7 +1154,7 @@ nav#navbar ul.menu-list {
     position: relative;
 }
 .right-element .cart span {
-    background: #BED479;
+    background: #588456;
     padding: 2px 8px;
     position: absolute;
     border-radius: 50%;
@@ -1178,7 +1178,7 @@ nav#navbar ul.menu-list {
 ------------------------------------------------------------- */
 #header-wrap .search-button {
     order: 1;
-    color: #053634;
+    color: #588456;
 }
 #header-wrap .search-box {
     position: absolute;
@@ -1494,7 +1494,7 @@ nav#navbar ul.menu-list {
 }
 .herb-items .product-content .product-price {
     font-size: 1.3em;
-    color: #3D713C;
+    color: #588456;
 }
 
 
@@ -1661,7 +1661,7 @@ nav#navbar ul.menu-list {
 }
 #services .services-item i.icon {
     font-size: 3em;
-    color: #3D713C;
+    color: #588456;
 }
 #services .services-item .services-title {
     font-size: 1.4em;
@@ -1755,7 +1755,7 @@ nav#navbar ul.menu-list {
 .single-product span.price {
     font-size: 2em;
     font-weight: 500;
-    color: #5c875b;
+    color: #588456;
 }
 .single-product .product-detail input#delivery-date {
     width: 45%;
