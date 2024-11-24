@@ -1421,420 +1421,6 @@ nav#navbar ul.menu-list {
   }
 }
 
-
-/*----- Association Section
---------------------------------------------------------------*/
-#association .association-content {
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    width: 100%;
-}
-#association .association-content img {
-    height: 30px;
-    margin: 20px;
-}
-
-
-/*----- About us Section
---------------------------------------------------------------*/
-#about .video-player {
-   position: relative;
-}
-#about .video-player .icon {
-    position: absolute;
-    top: 200px;
-    bottom: 0;
-    left: 440px;
-    z-index: 3;
-    font-size: 3em;
-    color: #fbfbf9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-}
-#about .description {
-    padding: 100px 30px; 
-    margin-left: 30px;   
-}
-
-/*--------------------------------------------------------------
-/** New Arrival
---------------------------------------------------------------*/
-.herb-items .product-list .product-item {
-    background-color: #EBEEE3;
-    border-radius: 10px;
-    margin-bottom: 25px;
-    position: relative;
-    cursor: pointer;
-}
-.herb-items .image-holder {
-    height: 450px;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-}
-/*.herb-items .image-holder img {
-    margin: 80px 0;
-}*/
-.herb-items .image-holder i.icon {
-    font-size: 1.2em;
-    color: #0B0B0D;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 9;
-    background-color: #fff;
-    padding: 10px;
-    border-radius: 50%;
-}
-.herb-items .image-holder i.icon:hover,
-.herb-items .image-holder i.icon:active {
-    color: #F52B2E;
-}
-.herb-items .product-item .product-inner {
-    position: absolute;
-    right: 0;
-    bottom: 30px;
-    left: 0;
-    width: 90%;
-    margin: 0 auto;
-    opacity: 0;
-    transition: 0.5s ease-in-out;
-}
-.herb-items .product-item:hover .product-inner {
-    bottom: 20px;
-    opacity: 1;
-}
-.herb-items .product-inner a.add-to-cart {
-    border: 1px solid #0B0B0D;
-    border-radius: 10px;
-    width: 90%;
-    display: block;
-    padding: 20px 0;
-    margin: 0 auto;
-    text-align: center;
-}
-.herb-items .product-inner span.cart-text {
-    padding-right: 10px;
-    font-weight: 600;
-    transition: 0.3s ease-in-out;
-}
-.herb-items .product-content h3.product-title {
-    margin-bottom: 0;
-}
-.herb-items .product-content .product-price {
-    font-size: 1.3em;
-    color: #3D713C;
-}
-
-
-/*--------------------------------------------------------------
-/** Collection
---------------------------------------------------------------*/
-
-#collection .product-item {
-    position: relative;
-    cursor: pointer;
-}
-#collection .product-item img {
-    width: 100%;
-    height: 600px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 15px;
-}
-#collection .product-item .image-holder .item-info{
-    opacity: 0;
-    position: absolute;
-    right: 0;
-    bottom: 130px;
-    left: 0;
-    width: 85%;
-    padding: 50px;
-    margin: 0 auto;
-    background-color: var(--accent-color);
-    transition: 0.3s ease-in-out;
-}
-#collection .product-item:hover .item-info{
-    opacity: 1;    
-    bottom: 150px;
-}
-#collection .product-item .item-info p{
-    line-height: 2.3;
-}
-#collection .product-content h3.product-title {
-    font-size: 2em;
-}
-#collection .swiper-button-prev:after, 
-#collection .swiper-button-next:after {
-    font-size: 0;
-}
-#collection .button-container .icon {
-    border: 1px solid #DDE2D8;
-    border-radius: 50%;
-    padding: 10px 20px;
-}
-
-/*--------------------------------------------------------------
-/** Why us
---------------------------------------------------------------*/
-
-#why-us .left-column {
-    margin-top: 120px;
-}
-#why-us .expertize {
-    width: 80%;
-}
-#why-us .expertize ul {
-    margin-top: 80px;
-}
-#why-us .expertize li {
-    display: flex;
-    margin-bottom: 20px;
-}
-#why-us .expertize span.list-number {
-    font-size: 3em;
-    font-weight: 700;
-    color: var(--theme-color);
-    padding-right: 25px;
-    line-height: 1;
-}
-#why-us .list-title h4 {
-    font-size: 1.6em;
-    font-weight: 500;
-    margin: 0;
-}
-#why-us .right-column .single-image-holder img {
-    height: auto;
-}
-
-
-/*--------------------------------------------------------------
-/** Latest Blog
---------------------------------------------------------------*/
-#latest-blog .post-item a.image-hvr-effect {
-    border-radius: 10px;
-}
-#latest-blog .post-content {
-    margin-top: 25px;
-}
-#latest-blog .post-content h3.post-title {
-    margin-bottom: 10px;
-}
-
-/*--------------------------------------------------------------
-/** Testimonials
---------------------------------------------------------------*/
-
-#testimonial .row {
-  display: flex;
-  align-items: center; 
-  justify-content: space-between; 
-}
-#testimonial .testimonial-image {
-    position: relative;
-    margin-bottom: 8.5em;
-}
-#testimonial .testimonial-image:before {
-    content: "";
-    width: 630px;
-    height: 630px;
-    position: absolute;
-    top: 139px;
-    left: -110px;
-    z-index: -1;
-    background-color: #DDE2D7;
-    border-radius: 50%;
-}
-#testimonial .testimonials-inner q {
-    font-size: 1.9em;
-    line-height: 1.8;
-    display: block;
-    margin-bottom: 50px;
-}
-#testimonial .author-detail .name {
-    font-family: "Arapey", Georgia, serif;
-    font-size: 2.2em;
-}
-#testimonial .swiper-button-prev:after, 
-#testimonial .swiper-button-next:after {
-    font-size: 0;
-}
-#testimonial .button-container {
-    position: absolute;
-    right: 90px;
-    bottom: 20px;
-}
-#testimonial .button-container .icon {
-    font-size: 1.5em;
-}
-#testimonial .swiper-button-next, 
-#testimonial .swiper-rtl .swiper-button-prev {
-    right: 0;
-    left: 0;
-}
-#testimonial .swiper-button-prev, 
-#testimonial .swiper-rtl .swiper-button-next {
-    left: -80px;
-    right: 0;
-}
-
-/*--------------------------------------------------------------
-/** Services
---------------------------------------------------------------*/
-#services {
-    border-top: 1px solid #DADDD6;
-    padding: 80px;
-}
-#services .services-item {
-    display: flex;
-}
-#services .services-item i.icon {
-    font-size: 3em;
-    color: #3D713C;
-}
-#services .services-item .services-title {
-    font-size: 1.4em;
-    font-weight: 500;
-    color: #0B0B0D;
-}
-#services .services-item .services-content {
-    margin-left: 25px;
-}
-
-
-/*--------------------------------------------------------------
-/** Footer
---------------------------------------------------------------*/
-#footer .footer-intro {
-    margin-right: 210px;
- }
- #footer .footer-intro p {
-    margin-top: 30px;
- }
-#footer .footer-menu,
-#footer .footer-menu a {
-    color: #58575B;
-}
-#footer .footer-menu h5 {
-    font-size: 1.8em;
-    font-weight: 500;
-    margin: 0 0 30px 0;
-}
-#footer .footer-menu ul.menu-list li {
-    line-height: 2.3;
-}
-#footer form {
-    display: flex;
-    align-items: baseline;
-}
-#footer input[type="text"] {
-    width: 100%;
-    height: 58px;
-    background: #DDE2D7;
-    padding-left: 20px;
-    border: 1px solid #D5DBCF;
-}
-#footer .form-content button {
-    height: 58px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-
-
-/*--------------------------------------------------------------
-/** Footer-Bottom
---------------------------------------------------------------*/
-#footer-bottom {
-    border-top: 1px solid #DDE2DA;
-}
-#footer-bottom .footer-links {
-    display: flex;
-    justify-content: space-between;
-}
-#footer-bottom .social-links {
-    display: flex;
-}
-#footer-bottom .social-links ul {
-    display: flex;
-    margin-left: 20px;
-}
-#footer-bottom .social-links li {
-    margin-bottom: 5px;
-    outline: 0;
-    list-style: none;
-    padding: 0 10px;
-}
-
-
-/*--------------------------------------------------------------
-/** Single Product
---------------------------------------------------------------*/
-.single-product .product-detail {
-    margin-top: 25px;
-}
-.single-product .product-detail h5 {
-    font-size: 2em;
-    line-height: 1.25;
-    margin: 0 0 10px;
-}
-.single-product .product-detail p {
-    line-height: 2;
-    font-size: 1.1em;
-}
-.single-product span.price {
-    font-size: 2em;
-    font-weight: 500;
-    color: #5c875b;
-}
-.single-product .product-detail input#delivery-date {
-    width: 45%;
-    height: 46px;
-}
-.single-product .product-detail input#qty {
-    width: 15%;
-    height: 46px;
-}
-
-
-/*--------------------------------------------------------------
-/** Blog
---------------------------------------------------------------*/
-.post-grid .post-item .post-content {
-    width: 85%;
-    padding-left: 20px;
-    padding-top: 25px;
-}
-.post-grid .post-content span {
-    padding-right: 10px;
-    color: var(--grey-color);
-}
-.post-grid .post-content span>i.icon {
-    padding-right: 10px;
-    color: var(--grey-color);
-}
-
-
-/* single product */
-/* product-qty */
-.product-qty {
-  max-width: 130px;
-}
-.btn-number {
-  width: 46px;
-  height: 58px;
-  margin: 0;
-  line-height: 1;
-  text-align: center;
-  background: #FFFFFF;
-  border: 1px solid #E2E2E2;
-  border-radius: 0;
-  color: #222;
-  padding: 0;
-}
-
 /* product-thumbnail-slider */
 .product-thumbnail-slider {
   height: 590px;
@@ -1860,3 +1446,156 @@ nav#navbar ul.menu-list {
     height: 600px;
   }
 }
+
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arapey', serif;
+}
+
+body {
+  background-color: #f4f4f4;
+  color: #333;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Navbar already styled */
+#header-wrap {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+}
+
+/* Centering the Search Bar */
+#search-input {
+  display: block;
+  margin: 20px auto;
+  width: 50%;
+  max-width: 500px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+}
+
+#search-input:focus {
+  outline: none;
+  border-color: #3D713C;
+  box-shadow: 0 0 5px rgba(61, 113, 60, 0.5);
+}
+
+#search-btn {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #3D713C;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#search-btn:hover {
+  background-color: #2b522c;
+}
+
+
+
+/* Login and Signup Section */
+#login-section, #signup-section {
+  background-color: #fff;
+  width: 80%;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#login-section h2, #signup-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #3D713C;
+}
+
+#login-section form input, #signup-section form input {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+}
+
+#login-section form input:focus, #signup-section form input:focus {
+  outline: none;
+  border-color: #3D713C;
+}
+
+#login-section form button, #signup-section form button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #3D713C;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#login-section form button:hover, #signup-section form button:hover {
+  background-color: #2b522c;
+}
+
+/* Profile Section */
+#profile-section {
+  background-color: #fff;
+  width: 80%;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#profile-section h2, #profile-section h3 {
+  color: #3D713C;
+  margin-bottom: 20px;
+}
+
+#profile-section p {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+/* Create Post Button */
+.create-post-btn {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #3D713C; /* Green color */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.create-post-btn:hover {
+  background-color: #2b522c; /* Darker green on hover */
+}
+

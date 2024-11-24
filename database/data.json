@@ -60,7 +60,12 @@
       "mediaType": "image",
       "likes": 0,
       "likedBy": [],
-      "comments": []
+      "comments": [
+        {
+          "username": "thomas",
+          "comment": ""
+        }
+      ]
     },
     {
       "id": "222fcfa4-6c69-440e-839c-7a6b55eb12ea",

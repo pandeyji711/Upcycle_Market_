@@ -1,119 +1,246 @@
-/* General Styles */
+/* General Body Styling */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-  
-  header {
-    background-color: #4CAF50;
-    color: white;
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  section {
-    padding: 1rem;
-  }
-  
-  button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  button:hover {
-    background-color: #45a049;
-  }
-  
-  input {
-    width: 100%;
-    padding: 0.5rem;
-    margin: 0.5rem 0;
-  }
-  
-  /* Profile Header */
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+/* Navbar */
+nav {
+  background-color: #4CAF50; /* Green background */
+  color: white;
+  display: flex;
+  justify-content: space-between; /* Space out the elements */
+  align-items: center;
+  padding: 15px 30px; /* Padding around navbar */
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+nav h1 {
+  font-size: 1.8rem;
+  margin: 0;
+  font-weight: bold;
+}
+
+nav button {
+  background-color: #4CAF50;
+  color: white;
+  border: 1px solid white;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+nav button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+/* Profile Section */
+#profile-section {
+  padding: 2rem;
+  background-color: white;
+  border-radius: 8px;
+  margin: 2rem auto;
+  width: 90%;
+  max-width: 1200px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.profile-header img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #4CAF50;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-info h2 {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.profile-info p {
+  margin: 0;
+  color: gray;
+}
+
+/* Profile Stats */
+.profile-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.profile-stats div {
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.profile-stats h3 {
+  font-size: 1.6rem;
+  margin: 0;
+}
+
+.profile-stats p {
+  margin: 0;
+  color: gray;
+}
+
+/* Posts Section */
+.main-container {
+  padding: 2rem;
+  background-color: white;
+  border-radius: 8px;
+  margin: 2rem auto;
+  width: 90%;
+  max-width: 1200px;
+}
+
+.main-container h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center; /* Center the title */
+}
+
+.posts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center; /* Center posts horizontally */
+}
+
+.posts-container .post {
+  width: 90%; /* Make the post box larger */
+  max-width: 800px; /* Increase the max-width for larger screens */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1.5rem; /* Adjust padding for a slightly larger box */
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem; /* Slightly increased margin between posts */
+}
+
+.posts-container .post img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.posts-container .post .post-content {
+  margin-bottom: 1rem;
+}
+
+/* New Larger Box Below Posts Section */
+.new-box {
+  width: 90%; /* Adjust width for the new box */
+  max-width: 800px; /* Set max-width */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1.5rem;
+  background-color: #f9f9f9; /* Light background for the new box */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 2rem auto; /* Center the new box below posts */
+}
+
+.new-box h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.new-box p {
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 100%;
+}
+
+.close-btn {
+  float: right;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #999;
+}
+
+.close-btn:hover {
+  color: #333;
+}
+
+button.liked {
+  color: red;
+  font-weight: bold;
+}
+
+button.unliked {
+  color: black;
+}
+
+button:focus {
+  outline: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .profile-header {
-    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-  
-  .profile-header img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #4CAF50;
-  }
-  
-  .profile-info h2 {
-    margin: 0;
-    font-size: 1.5rem;
-  }
-  
-  .profile-info p {
-    margin: 0;
-    color: gray;
-  }
-  
-  /* Profile Stats */
-  .profile-stats {
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 2rem;
-  }
-  
-  .profile-stats div {
     text-align: center;
   }
-  
-  /* Posts */
-  .posts-container .post {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 1rem;
+
+  .profile-header img {
     margin-bottom: 1rem;
   }
-  
-  /* Modal */
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
+
+  .profile-stats {
+    flex-direction: column;
     align-items: center;
   }
-  
-  .modal-content {
-    background: white;
-    padding: 2rem;
-    border-radius: 5px;
-    width: 300px;
+
+  .posts-container {
+    padding: 1rem;
   }
-  
-  .close-btn {
-    float: right;
-    cursor: pointer;
-    font-size: 1.5rem;
-    color: gray;
+
+  .new-box {
+    width: 95%; /* Make it more responsive on small screens */
+    padding: 1.2rem;
   }
-  button.liked {
-    color: red;  /* Highlight liked button */
-    font-weight: bold;
-  }
-  
-  button.unliked {
-    color: black;  /* Default color for unliked button */
-  }
-  
+}
