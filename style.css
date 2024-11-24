@@ -1043,6 +1043,11 @@ html {
     margin-right: 60px;
     transition: 0.5s all ease-out;
 }
+.main-logo img {
+  max-height: 100%; 
+  width: 175px; 
+  object-fit: contain; 
+}
 .main-logo a {    
     margin: 0 auto;
     transition: 0.5s all ease-out;
@@ -1676,6 +1681,13 @@ nav#navbar ul.menu-list {
 /*--------------------------------------------------------------
 /** Footer
 --------------------------------------------------------------*/
+#footer .footer-logo {
+  max-width: 100%; /* Ensure the image does not exceed its container's width */
+  height: 275px; /* Maintain the aspect ratio */
+  display: block; /* Ensure proper alignment within the parent container */
+  margin: 0 auto; /* Center the image horizontally */
+}
+
 #footer .footer-intro {
     margin-right: 210px;
  }
