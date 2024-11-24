@@ -1075,6 +1075,11 @@ html {
     margin-right: 60px;
     transition: 0.5s all ease-out;
 }
+.main-logo img {
+  max-height: 100%; 
+  width: 175px; 
+  object-fit: contain; 
+}
 .main-logo a {    
     margin: 0 auto;
     transition: 0.5s all ease-out;
@@ -1129,6 +1134,99 @@ nav#navbar ul.menu-list {
       display: none;
   }
 }
+
+/* Account Button */
+.user-account {
+  position: relative;
+  display: inline-block;
+}
+
+.user-account .account-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.user-account .account-btn:hover {
+  background-color: #f4f4f4;
+  color: #588456;
+}
+
+/* Icon and Count */
+.user-account .account-btn i {
+  margin-right: 8px;
+  font-size: 20px;
+  color: #588456;
+}
+
+.user-account .account-btn span {
+  font-size: 14px;
+  color: #333;
+}
+
+/* Dropdown Menu */
+.user-account .dropdown-menu {
+  position: absolute;
+  top: 110%; /* Slightly below the Account button */
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: none; /* Hidden by default */
+  z-index: 10;
+  min-width: 150px;
+  padding: 5px 0;
+}
+
+/* Show Dropdown on Hover */
+.user-account:hover .dropdown-menu {
+  display: block; /* Show dropdown when hovering over Account button */
+}
+
+/* Dropdown Buttons */
+.user-account .dropdown-menu button {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 10px 15px;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+  color: #333;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.user-account .dropdown-menu button:hover {
+  background-color: #f4f4f4;
+  color: #588456;
+}
+
+/* Optional: Add Padding for Dropdown Menu */
+.user-account .dropdown-menu button:not(:last-child) {
+  border-bottom: 1px solid #ddd;
+}
+
+@media screen and (max-width: 768px) {
+  .user-account .dropdown-menu {
+      top: 100%;
+      right: 10px;
+  }
+  .user-account .account-btn {
+      padding: 8px 12px;
+      font-size: 14px;
+  }
+}
+
   
 
 /* - Search Form hover Effects
