@@ -6,6 +6,7 @@ const postSection = document.getElementById("post-section");
 const feedSection = document.getElementById("feed");
 const logoutButton = document.getElementById("logout-btn");
 const goToProfileBtn = document.getElementById("go-to-profile");
+const search = document.getElementById("se");
 document.getElementById("search-btn").addEventListener("click", handleSearch);
 
 // Check login status on page load
@@ -20,6 +21,7 @@ window.onload = () => {
     signupSection.style.display = "none";
     postSection.style.display = "block";
     feedSection.style.display = "block";
+    search.style.display = "block";
     // goToProfileBtn.style.display = "block";
     logoutButton.style.display = "block";
     loadFeed();
@@ -100,6 +102,7 @@ document
       postSection.style.display = "block";
       feedSection.style.display = "block";
       logoutButton.style.display = "block";
+      search.style.display = "block";
       loadFeed();
     } else {
       alert(data.message);
@@ -282,7 +285,7 @@ async function loadFeed() {
       ${
         post.forSale
           ? `<button id="buy-btn-${post.id}" onclick="redirectToPayment(${post.price}, '${post.id}')">
-               <i class="fas fa-shopping-cart"></i> Buy for ₹${post.price}
+               <i class="fas fa-shopping-cart"></i> Buy for $${post.price}
              </button>`
           : ""
       }

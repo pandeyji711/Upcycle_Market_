@@ -13,7 +13,13 @@ const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcryptjs");
 // const data = require("./database/data.json")
 // console.log(data);
-const BASE_URL = "http://localhost:3000";
+app.use(
+  cors({
+    origin: "http://127.0.0.1:5501", // URL where your frontend is hosted by Live Server
+  })
+);
+
+const BASE_URL = "http://127.0.0.1:5501";
 
 const PORT = 3000;
 const genAI = new GoogleGenerativeAI("AIzaSyCOhVYSHrIB107NoKOMdHnOED9h29ZhFm4");
@@ -318,7 +324,6 @@ app.post("/api/search", async (req, res) => {
 
     const prompt = `
 You are an advanced AI model trained for semantic matching. Your task is to analyze a user's search query and a dataset of posts to assign a relevance score to each post based on how well its description and media type align with the query.
-
 ### Input:
 1. **Search Query**: "${query}"
 2. **Dataset**: ${JSON.stringify(data)}
@@ -412,8 +417,8 @@ app.post("/create-checkout-session", async (req, res) => {
         },
       ],
       mode: "payment",
-      success_url: `${BASE_URL}/payment-success`, // Updated with your success URL
-      cancel_url: `${BASE_URL}/payment-fail`, // Updated with your cancel URL
+      success_url: `${BASE_URL}/Upcycle_Market/public/index.html`, // Updated with your success URL
+      cancel_url: `${BASE_URL}/Upcycle_Market/public/index.html`, // Updated with your cancel URL
     });
 
     res.json({ success: true, sessionId: session.id });
