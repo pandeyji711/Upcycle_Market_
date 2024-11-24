@@ -421,9 +421,7 @@ async function renderPosts(postIndices = []) {
     alert("Please log in to interact with posts.");
     return;
   }
-  feed.innerHTML = `   <input id="search-input" type="text" placeholder="Search posts..." />
-    <button id="search-btn">Search</button>`; // Clear the feed before rendering
-
+  feed.innerHTML = "";
   if (postIndices.length === 0) {
     feed.innerHTML = "<p>No posts to display.</p>"; // Display a message if no indices are provided
     return;

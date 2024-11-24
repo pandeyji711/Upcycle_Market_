@@ -21,6 +21,15 @@
       "following": [
         "james"
       ]
+    },
+    {
+      "username": "henry",
+      "password": "$2a$10$KlfvZHjiFDF6.EhFRFyLk.2EXahrCAFsVbmcVjA1dKe4zVdJ8lwvu",
+      "name": "henry",
+      "email": "henry@gmail.com",
+      "profilePic": "1732427971857.jpeg",
+      "followers": [],
+      "following": []
     }
   ],
   "posts": [
