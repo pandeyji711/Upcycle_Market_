@@ -15,7 +15,7 @@ const bcrypt = require("bcryptjs");
 const BASE_URL = "http://localhost:3000";
 
 const PORT = 3000;
-const genAI = new GoogleGenerativeAI("AIzaSyCOhVYSHrIB107NoKOMdHnOED9h29ZhFm4");
+const genAI = new GoogleGenerativeAI("AIzaSyDDfqTMsM2gVkRKyLLRxjPX1xrYp48vqlw");
 const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 // Enable CORS for all origins
 app.use(cors());

@@ -57,6 +57,15 @@
         "thomas"
       ],
       "following": []
+    },
+    {
+      "username": "kiara",
+      "password": "$2a$10$Dla/dbqfrexPjrOOhviSdeHxYEKKM9JqvwZ5fYighs.0Nw.BoiT8C",
+      "name": "Kiara",
+      "email": "kiara@gmail.com",
+      "profilePic": "1732541684746.png",
+      "followers": [],
+      "following": []
     }
   ],
   "posts": [
