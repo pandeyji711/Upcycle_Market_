@@ -1,8 +1,10 @@
 const BASE_URL = "http://localhost:3000";
 const logoutButton = document.getElementById("logout-btn");
 // Load user profile details on page load
+const user = JSON.parse(localStorage.getItem("user"));
 window.onload = () => {
   const user = JSON.parse(localStorage.getItem("user"));
+  loadFeed();
   if (!user) {
     alert("Please log in first.");
     window.location.href = "index.html";
@@ -14,20 +16,22 @@ window.onload = () => {
     logoutButton.style.display = "none";
     goBackToHome();
   });
-  // Fetch and display user details
-  fetch(`${BASE_URL}/user/${user.username}`)
-    .then((response) => response.json())
-    .then((data) => {
-      // Update profile info
-      document.getElementById("profile-name").textContent = data.name;
-      document.getElementById(
-        "profile-username"
-      ).textContent = `@${data.username}`;
-      document.getElementById("profile-email").textContent = data.email;
-    })
-    .catch((error) => console.error("Error fetching user details:", error));
+};
+// Fetch and display user details
+fetch(`${BASE_URL}/user/${user.username}`)
+  .then((response) => response.json())
+  .then((data) => {
+    // Update profile info
+    document.getElementById("profile-name").textContent = data.name;
+    document.getElementById(
+      "profile-username"
+    ).textContent = `@${data.username}`;
+    document.getElementById("profile-email").textContent = data.email;
+  })
+  .catch((error) => console.error("Error fetching user details:", error));
 
-  // Fetch and display user posts
+// Fetch and display user posts
+async function loadFeed() {
   fetch(`${BASE_URL}/posts?username=${user.username}`)
     .then((response) => response.json())
     .then((posts) => {
@@ -111,7 +115,7 @@ window.onload = () => {
       document.getElementById("total-comments").textContent = totalComments;
     })
     .catch((error) => console.error("Error fetching user posts:", error));
-};
+}
 
 async function likePost(postId) {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -129,8 +133,9 @@ async function likePost(postId) {
   const data = await response.json();
 
   if (data.success) {
+    loadFeed();
     // alert("Post liked!");
-    loadFeed(); // Reload feed to show updated like count
+    // Reload feed to show updated like count
   } else {
     alert(data.message);
   }
@@ -152,7 +157,7 @@ async function commentPost(postId, comment) {
 
   const data = await response.json();
   if (data.success) {
-    alert("Comment added!");
+    // alert("Comment added!");
     loadFeed(); // Reload feed to show new comments
   } else {
     alert(data.message);
@@ -184,7 +189,7 @@ function deletePost(event) {
     })
     .catch((error) => {
       console.error("Error deleting post:", error);
-      alert("Error deleting post");
+      // alert("Error deleting post");
     });
 }
 

@@ -11,15 +11,8 @@ const fs = require("fs");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcryptjs");
-// const data = require("./database/data.json")
-// console.log(data);
-app.use(
-  cors({
-    origin: "http://127.0.0.1:5501", // URL where your frontend is hosted by Live Server
-  })
-);
 
-const BASE_URL = "http://127.0.0.1:5501";
+const BASE_URL = "http://localhost:3000";
 
 const PORT = 3000;
 const genAI = new GoogleGenerativeAI("AIzaSyCOhVYSHrIB107NoKOMdHnOED9h29ZhFm4");
@@ -73,7 +66,14 @@ const upload = multer({
 const getDB = () => JSON.parse(fs.readFileSync("./database/data.json", "utf8"));
 const saveDB = (data) =>
   fs.writeFileSync("./database/data.json", JSON.stringify(data, null, 2));
+//home
 
+app.use(express.static(path.join(__dirname, "public")));
+
+// Endpoint for home
+app.get("/home", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "home.html"));
+});
 // Login API
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
@@ -417,8 +417,8 @@ app.post("/create-checkout-session", async (req, res) => {
         },
       ],
       mode: "payment",
-      success_url: `${BASE_URL}/Upcycle_Market/public/index.html`, // Updated with your success URL
-      cancel_url: `${BASE_URL}/Upcycle_Market/public/index.html`, // Updated with your cancel URL
+      success_url: `${BASE_URL}/payment-success`, // Updated with your success URL
+      cancel_url: `${BASE_URL}/payment-fail`, // Updated with your cancel URL
     });
 
     res.json({ success: true, sessionId: session.id });

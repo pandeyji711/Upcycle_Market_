@@ -4,29 +4,79 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Profile</title>
-  <link rel="stylesheet" href="profile.css">
+  
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" href="icomoon/icomoon.css">
-  <link rel="stylesheet" type="text/css" href="css/vendor.css">
-  <link rel="stylesheet" type="text/css" href="posts.css">
-  <link rel="stylesheet" type="text/css" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Arapey&display=swap" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="icomoon/icomoon.css">
+    <link rel="stylesheet" type="text/css" href="css/vendor.css">
+    <link rel="stylesheet" type="text/css" href="posts.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="profile.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Arapey&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
-    <nav>
-      <h1>Your Profile</h1>
-      <button id="logout-btn">Logout</button>
-      <button    onclick="goBackToHome();" >feed</button>
-    </nav>
-  </header>
+    <!-- 
+        <nav>
+          <h1>Social Media App</h1>
+          <div id="nav-buttons">
+            <button id="go-to-profile" style="display: none" onclick="redirectToProfile()">Profile</button>
+            <button id="logout-btn" style="display: none"  >Logout</button>
+            <button id="logout-btn" style="display: none"  onclick="goBackToHome();" >feed</button>
+          </div>
+        </nav> -->
+    
+        <div id="header-wrap">
+          <div class="main-logo">
+            <a href="index.html"><img src="./images/logo 03.png" alt="logo"></a>
+          </div>
+      
+          <nav id="navbar">
+            <!-- <button id="logout-btn"  onclick="goBackToHome();" >feed</button>  -->
+            <div class="main-menu" id="navigation">
+              <ul class="menu-list navbar-nav">
+                <li class="menu-item"><a href="/index.html" data-effect="about" class="nav-link">Posts</a></li>
+                <li class="menu-item"><a href="/home.html" data-effect="Home" class="nav-link">Home</a></li>
+                <li class="menu-item"><a href="/home.html" data-effect="about" class="nav-link">About</a></li>
+                <!-- <li class="menu-item"><a href="posts.html" data-effect="about" class="nav-link"  onclick="goBackToHome();">Posts</a></li> -->
+                <!-- <button id="go-to-profile"  onclick="redirectToProfile()">Profile</button> -->
+                <!-- <li class="menu-item"><a href="videos.html" data-effect="about" class="nav-link">Videos</a></li>
+                <li class="menu-item"><a href="shop.html" data-effect="shop" class="nav-link">Shop</a></li>
+                <li class="menu-item nav-item">
+                  <a href="noti.html" data-effect="collection" class="nav-link">Notification</a>
+                </li>
+                <li class="menu-item">
+                  <a href="posts.html" data-effect="latest-blog" class="nav-link">Blog</a>
+                  <button    id="logout-btn"  >Logout</button>
+                </li> -->
+      
+              </ul>
+            </div>
+      
+            <div class="right-element icon-element">
+              <div class="user-account">
+                <a href="#" class="account-btn">
+                    <i class="icon icon-user"></i>
+                    <span>User</span>
+                </a>
+                <div class="dropdown-menu hidden">
+                  <button id="go-to-profile"  onclick="redirectToProfile()">Profile</button>
+                  <button id="logout-btn">Logout</button>
+                </div>
+              </div>
+            </div>
+            <!--right-element-->
+      
+          </nav>
+      
+        </div><!--header-wrap-->
+      </header>
 
   <!-- Profile Section -->
   <section id="profile-section">
@@ -55,6 +105,7 @@
     </div>
    
   </section>
+  <!-- <h2>Your Posts</h2><br> -->
   <div class="main-container">
     <h2>Your Posts</h2><br>
     <div id="profile-posts" class="posts-container"></div>
