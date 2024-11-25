@@ -96,6 +96,7 @@ document
         JSON.stringify({
           username: data.username,
           following: data.following || [], // Save following array
+          profilePic: data.profilePic,
         })
       );
       // localStorage.setItem("user", JSON.stringify({ username }));

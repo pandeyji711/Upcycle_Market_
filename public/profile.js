@@ -1,7 +1,10 @@
 const BASE_URL = "http://localhost:3000";
 const logoutButton = document.getElementById("logout-btn");
+const pro = document.getElementById("profile-pic");
 // Load user profile details on page load
 const user = JSON.parse(localStorage.getItem("user"));
+pro.src = user.profilePic;
+// console.log(user);
 window.onload = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   loadFeed();
