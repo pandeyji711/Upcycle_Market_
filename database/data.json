@@ -1,131 +1,158 @@
 {
   "users": [
     {
-      "username": "james",
-      "password": "$2a$10$0Gv0uewV8/N3CKUprUIG2Olo5Z4CEgBXwKlp5ufML2896hTgpWn/S",
-      "name": "james",
-      "email": "james@gmail.com",
-      "profilePic": "1732401078456.png",
+      "username": "jhon",
+      "password": "$2a$10$oVWFxvmCyFdXJBgGgdZNPusr/bN2nXt81TfjjMPz4b9n1t3fNVL9G",
+      "name": "jhon",
+      "email": "jhon@gmail.com",
+      "profilePic": "1732531637421.jpg",
       "followers": [
         "thomas"
       ],
-      "following": [
-        "thomas"
-      ]
-    },
-    {
-      "username": "thomas",
-      "password": "$2a$10$k0oGEHKUcqjcmXgl.crKHuhmBXINEjPUqSuT/M9N8dNLEYjQErRwW",
-      "name": "thomas",
-      "email": "thomas@gmail.com",
-      "profilePic": "1732401385208.jpeg",
-      "followers": [
-        "james"
-      ],
-      "following": [
-        "james"
-      ]
-    },
-    {
-      "username": "henry",
-      "password": "$2a$10$KlfvZHjiFDF6.EhFRFyLk.2EXahrCAFsVbmcVjA1dKe4zVdJ8lwvu",
-      "name": "henry",
-      "email": "henry@gmail.com",
-      "profilePic": "1732427971857.jpeg",
-      "followers": [],
       "following": []
     },
     {
-      "username": "riya",
-      "password": "$2a$10$pMTSpDJuiovTlsAnQtU2TeD.e11WbU8NZZAG22hqBKuIxoXKVZoqu",
-      "name": "Riya",
-      "email": "riya@gmail.com",
-      "profilePic": "1732471853646.png",
+      "username": "henry",
+      "password": "$2a$10$8VRx6yOoNznscgGzc220GexNFrPrVP9Q9mGlAxdhZw4tZE4yGGym.",
+      "name": "henry",
+      "email": "henry@gmail.com",
+      "profilePic": "1732531691387.jpg",
+      "followers": [
+        "thomas"
+      ],
+      "following": []
+    },
+    {
+      "username": "thomas",
+      "password": "$2a$10$iTS99YjU5HwEjTWJXBqnu.FxRz1eWoJ53ZcatrvA/gmayFFkGki8S",
+      "name": "thomas",
+      "email": "thomas@gmail.com",
+      "profilePic": "1732531724814.jpg",
       "followers": [],
+      "following": [
+        "james",
+        "riya",
+        "henry",
+        "jhon"
+      ]
+    },
+    {
+      "username": "riya",
+      "password": "$2a$10$ruNrtJ.LgCnkfJbUA48yq.tLzkyh1R05CW4Bua9rPEzFp.rl5nHoi",
+      "name": "riya",
+      "email": "riya@gmail.com",
+      "profilePic": "1732531765240.jpg",
+      "followers": [
+        "thomas"
+      ],
+      "following": []
+    },
+    {
+      "username": "james",
+      "password": "$2a$10$VsRFkr0xaXZTzAQqDNsJ6eOXhmcWC/dKD7hNKfFkyTyGeJyyiaBn2",
+      "name": "james",
+      "email": "james@gmail.com",
+      "profilePic": "1732531794376.jpeg",
+      "followers": [
+        "thomas"
+      ],
       "following": []
     }
   ],
   "posts": [
     {
-      "id": "1a49dfbf-d9d0-41a3-ac4e-987bd49b5120",
-      "username": "thomas",
-      "profilePic": "1732401385208.jpeg",
-      "description": "This is a vibrant and colorful wind chime featuring three stylized fish hanging vertically. Each fish has a distinct pattern painted in bright colors, and beneath them are small hoops with tassels hanging down. Beads are used along the string for added decoration. The structure is supported by a wooden or bamboo base with decorative designs.\r\nMaterials Used:\r\n\r\nBase: Bamboo or wooden stick.\r\nFish: Likely made of cardboard, thermocol, or light plastic.\r\nPaints: Acrylic or poster colors for vibrant patterns.\r\nBeads: Recycled plastic or wooden beads.\r\nHoops and Tassels: Waste thread or jute string for hoops and tassels",
-      "media": "1732402158096.jpg",
+      "id": "46e42967-4e4d-4633-80c1-c97a32d604c0",
+      "username": "james",
+      "profilePic": "1732531794376.jpeg",
+      "description": "Mesh Rose Flower Vase\r\nDescription:\r\nA delicate artificial flower arrangement featuring pink roses made of layered mesh fabric, placed in a white vase. The roses mimic real petals and serve as an elegant decor item.\r\n\r\nMaterials Used:\r\n\r\nMesh fabric or organza for the petals\r\nFloral wires and green tape for stems\r\nArtificial leaves\r\nA plain white vase",
+      "media": "1732531851967.mp4",
+      "mediaType": "video",
+      "forSale": true,
+      "price": 12,
+      "likes": 1,
+      "likedBy": [
+        "james"
+      ],
+      "comments": []
+    },
+    {
+      "id": "e82332b3-9c78-4e74-8fb0-1f2b544c2250",
+      "username": "riya",
+      "profilePic": "1732531765240.jpg",
+      "description": "(Dinosaur-Themed Pencil Holder)\r\nDescription: A fun and creative pencil holder designed as a dinosaur, using cardboard tubes and hand-drawn dinosaur features like wings, tail, and spikes.\r\nMaterials Used: Cardboard tubes, cardboard for details, markers or crayons, adhesive/glue, and a base for stability.",
+      "media": "1732531963627.jpg",
+      "mediaType": "image",
+      "forSale": true,
+      "price": 9,
+      "likes": 1,
+      "likedBy": [
+        "riya"
+      ],
+      "comments": []
+    },
+    {
+      "id": "41fc6740-eec3-401f-a547-424443df77ee",
+      "username": "riya",
+      "profilePic": "1732531765240.jpg",
+      "description": "Floral Lattice Wall Hanging\r\nDescription: This is a floral wall hanging featuring three large, hand-crafted flowers in red and yellow tones. The flowers are mounted on a lattice-like wooden framework that acts as the base.\r\nMaterials Used:\r\nCardboard (for the flowers)\r\nPaint (red, yellow, and black for detailing)\r\nWooden sticks or painted cardboard (for the lattice structure)\r\nBeads (for flower centers)",
+      "media": "1732532105113.mp4",
+      "mediaType": "video",
+      "forSale": true,
+      "price": 19,
+      "likes": 0,
+      "likedBy": [],
+      "comments": []
+    },
+    {
+      "id": "9746c6a9-b23e-416e-b3f5-ba3496dabda4",
+      "username": "riya",
+      "profilePic": "1732531765240.jpg",
+      "description": "A creative artwork showcasing a tree made by using various buttons. The trunk and branches are either painted or crafted using materials like twigs or thread, while the foliage is represented by colorful buttons of different sizes. The buttons are arranged in a clustered manner to mimic the shape of a tree’s canopy, creating a vibrant and textured look.\r\n\r\nMaterials Used:\r\nButtons: Various colors and sizes for the tree's leaves.\r\nCanvas or Paper: Base for the artwork.\r\nPaint or Twigs/Threads: To create the tree trunk and branches.\r\nGlue: To fix the buttons in place.",
+      "media": "1732532191003.jpg",
       "mediaType": "image",
       "forSale": false,
       "price": null,
       "likes": 1,
       "likedBy": [
-        "thomas"
+        "riya"
       ],
       "comments": []
     },
     {
-      "id": "9368d939-5003-4afb-8d03-0c0f6bec9cb0",
-      "username": "james",
-      "profilePic": "1732401078456.png",
-      "description": "(Colorful Frame with Popsicle Sticks)\r\nDescription: A decorative frame made with colorful popsicle sticks arranged in layers and adorned with small flowers for an elegant touch.\r\nMaterials Used: Popsicle sticks, adhesive/glue, small artificial flowers, and paint for coloring.",
-      "media": "1732411482743.jpg",
+      "id": "d86bd837-1241-4df1-9970-162554e78126",
+      "username": "henry",
+      "profilePic": "1732531691387.jpg",
+      "description": "Two handmade bookmarks painted in watercolor. One features a message-in-a-bottle design with blue ocean hues, while the other shows an elegant fish swimming against a watery background. Both have an artistic, hand-painted feel.\r\n\r\nMaterials Used:\r\n\r\nBase: Recycled thick paper or cardstock (such as from old packaging).\r\nPaints: Watercolors for artistic effects.\r\nFinishing: Pen or marker outlines for detailing and splatter effects with leftover paint.",
+      "media": "1732532343066.jpg",
       "mediaType": "image",
       "forSale": true,
-      "price": 200,
-      "likes": 1,
-      "likedBy": [
-        "james"
-      ],
-      "comments": []
-    },
-    {
-      "id": "6a48938d-09ec-4abd-a8b6-01044a15b71f",
-      "username": "james",
-      "profilePic": "1732401078456.png",
-      "description": "Ice Cream Stick Wall Shelf\r\nDescription:\r\nA stylish wall-mounted shelf made with an interlocking square frame design. It features three central compartments displaying decorative items like a Rubik's cube and a potted plant. The golden-black finish adds a rustic charm.\r\n\r\nMaterials Used:\r\n\r\nIce cream sticks or wooden craft sticks\r\nPaint (golden and black tones)\r\nAdhesive or glue for assembling\r\nSmall potted plant and decor items for display",
-      "media": "1732412435690.mp4",
-      "mediaType": "video",
-      "forSale": true,
-      "price": 123,
-      "likes": 1,
-      "likedBy": [
-        "james"
-      ],
-      "comments": []
-    },
-    {
-      "id": "efd4148e-a4ed-4073-a19b-6cdaa6f7ff06",
-      "username": "james",
-      "profilePic": "1732401078456.png",
-      "description": "Mesh Rose Flower Vase\r\nDescription:\r\nA delicate artificial flower arrangement featuring pink roses made of layered mesh fabric, placed in a white vase. The roses mimic real petals and serve as an elegant decor item.\r\n\r\nMaterials Used:\r\n\r\nMesh fabric or organza for the petals\r\nFloral wires and green tape for stems\r\nArtificial leaves\r\nA plain white vase",
-      "media": "1732412694574.mp4",
-      "mediaType": "video",
-      "forSale": true,
-      "price": 199,
+      "price": 9,
       "likes": 0,
       "likedBy": [],
       "comments": []
     },
     {
-      "id": "238d12c1-fb33-48e4-84b4-6a0460688077",
-      "username": "james",
-      "profilePic": "1732401078456.png",
-      "description": "rfre3wf3",
-      "media": "1732448449581.jpg",
+      "id": "4dbb62e2-45ad-4be1-9ebf-0b10e5f2f0f7",
+      "username": "jhon",
+      "profilePic": "1732531637421.jpg",
+      "description": "Colorful Fish Wind Chime\r\nImage Description:\r\nThis is a vibrant and colorful wind chime featuring three stylized fish hanging vertically. Each fish has a distinct pattern painted in bright colors, and beneath them are small hoops with tassels hanging down. Beads are used along the string for added decoration. The structure is supported by a wooden or bamboo base with decorative designs.\r\nMaterials Used:\r\n\r\nBase: Bamboo or wooden stick.\r\nFish: Likely made of cardboard, thermocol, or light plastic.\r\nPaints: Acrylic or poster colors for vibrant patterns.\r\nBeads: Recycled plastic or wooden beads.\r\nHoops and Tassels: Waste thread or jute string for hoops and tassels",
+      "media": "1732532468096.jpg",
       "mediaType": "image",
       "forSale": true,
-      "price": 123,
+      "price": 19,
       "likes": 0,
       "likedBy": [],
       "comments": []
     },
     {
-      "id": "a678cecf-3776-4853-a1cd-41dbbe255932",
+      "id": "f3764854-7625-43ec-8f52-7d9732c0a7dc",
       "username": "thomas",
-      "profilePic": "1732401385208.jpeg",
-      "description": "(Dinosaur-Themed Pencil Holder)\r\nDescription: A fun and creative pencil holder designed as a dinosaur, using cardboard tubes and hand-drawn dinosaur features like wings, tail, and spikes.\r\nMaterials Used: Cardboard tubes, cardboard for details, markers or crayons, adhesive/glue, and a base for stability.",
-      "media": "1732471700949.png",
+      "profilePic": "1732531724814.jpg",
+      "description": "Decorative Wooden Biplane\r\nDescription: A colorful model of a biplane crafted with vibrant colors like blue, orange, red, and yellow, resting on a flat surface.\r\nMaterials Used: Made using wooden sticks, cardboard, and paint",
+      "media": "1732532561156.jpg",
       "mediaType": "image",
       "forSale": true,
-      "price": 200,
+      "price": 18,
       "likes": 0,
       "likedBy": [],
       "comments": []

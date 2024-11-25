@@ -1,45 +1,4 @@
-/* General Body Styling */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f4f4f4;
-}
 
-/* Navbar */
-nav {
-  background-color: #588456; /* Green background */
-  color: white;
-  display: flex;
-  justify-content: space-between; /* Space out the elements */
-  align-items: center;
-  padding: 15px 30px; /* Padding around navbar */
-  position: sticky;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-}
-
-nav h1 {
-  font-size: 1.8rem;
-  margin: 0;
-  font-weight: bold;
-}
-
-nav button {
-  background-color: #425e41;
-  color: white;
-  border: 1px solid white;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
-}
-
-nav button:hover {
-  background-color: #45a049; /* Darker green on hover */
-}
 
 /* Profile Section */
 #profile-section {
@@ -108,6 +67,10 @@ nav button:hover {
 
 /* Posts Section */
 .main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 2rem;
   background-color: white;
   border-radius: 8px;
@@ -203,11 +166,6 @@ nav button:hover {
 
 .close-btn:hover {
   color: #333;
-}
-
-button.liked {
-  color: red;
-  font-weight: bold;
 }
 
 button.unliked {

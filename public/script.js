@@ -7,6 +7,7 @@ const feedSection = document.getElementById("feed");
 const logoutButton = document.getElementById("logout-btn");
 const goToProfileBtn = document.getElementById("go-to-profile");
 const search = document.getElementById("se");
+const se = document.getElementById("search-btn");
 document.getElementById("search-btn").addEventListener("click", handleSearch);
 
 // Check login status on page load
@@ -19,7 +20,8 @@ window.onload = () => {
     console.log("Following array:", user1.following); // Check the following array
     loginSection.style.display = "none";
     signupSection.style.display = "none";
-    postSection.style.display = "block";
+    postSection.style.display = "flex";
+    postSection.style.justifyContent = "center";
     feedSection.style.display = "block";
     search.style.display = "block";
     // goToProfileBtn.style.display = "block";
@@ -99,7 +101,8 @@ document
       // localStorage.setItem("user", JSON.stringify({ username }));
       loginSection.style.display = "none";
       signupSection.style.display = "none";
-      postSection.style.display = "block";
+      postSection.style.display = "flex";
+      postSection.style.justifyContent = "center";
       feedSection.style.display = "block";
       logoutButton.style.display = "block";
       search.style.display = "block";
@@ -205,6 +208,7 @@ document.getElementById("post-btn").addEventListener("click", async () => {
     if (data.success) {
       alert(data.message);
       loadFeed(); // Reload feed after successful post
+      closePopup();
     } else {
       alert(data.message || "Failed to create post.");
     }
@@ -223,6 +227,7 @@ logoutButton.addEventListener("click", () => {
   postSection.style.display = "none";
   feedSection.style.display = "none";
   logoutButton.style.display = "none";
+  search.style.display = "none";
 });
 
 // Load Feed
@@ -504,6 +509,7 @@ async function toggleFollow(currentUser, targetUser) {
         user.following = user.following.filter((u) => u !== targetUser);
       }
       localStorage.setItem("user", JSON.stringify(user));
+      loadFeed();
     } else {
       alert(result.message);
     }
@@ -644,7 +650,8 @@ async function renderPosts(postIndices = []) {
 // Example: Handle search and render specific posts
 async function handleSearch() {
   const searchQuery = document.getElementById("search-input").value;
-
+  se.disabled = true;
+  se.innerText = "Analyzing...";
   try {
     const response = await fetch("http://localhost:3000/api/search", {
       method: "POST",
@@ -658,6 +665,8 @@ async function handleSearch() {
     }
 
     const v = await response.json();
+    se.disabled = false;
+    se.innerText = "AI Search";
     renderPosts(v); // Render the filtered posts
   } catch (error) {
     console.error("Search error:", error.message);

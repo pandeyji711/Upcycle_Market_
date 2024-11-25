@@ -41,8 +41,8 @@
         <!-- <button id="logout-btn"  onclick="goBackToHome();" >feed</button>  -->
         <div class="main-menu" id="navigation">
           <ul class="menu-list navbar-nav">
-            <li class="menu-item"><a href="/Upcycle_Market/index.html" data-effect="Home" class="nav-link">Home</a></li>
-            <li class="menu-item"><a href="/Upcycle_Market/index.html" data-effect="about" class="nav-link">About</a></li>
+            <li class="menu-item"><a href="/home.html" data-effect="Home" class="nav-link">Home</a></li>
+            <li class="menu-item"><a href="/home.html" data-effect="about" class="nav-link">About</a></li>
             <!-- <li class="menu-item"><a href="posts.html" data-effect="about" class="nav-link"  onclick="goBackToHome();">Posts</a></li> -->
             <!-- <button id="go-to-profile"  onclick="redirectToProfile()">Profile</button> -->
             <!-- <li class="menu-item"><a href="videos.html" data-effect="about" class="nav-link">Videos</a></li>
@@ -103,8 +103,8 @@
   </section>
 
   <!-- Post Section -->
-  <section id="post-section" style="display: none;">
-    <button id="open-post-popup" onclick="openPostPopup()">Create Post</button>
+  <section id="post-section" style="display: none; ">
+    <button id="open-post-popup" onclick="openPostPopup()"  >Create Post</button>
     <div id="post-popup" class="popup" style="display: none;">
       <div class="popup-content">
         <span class="close-btn" onclick="closePopup()">&times;</span>
@@ -121,7 +121,7 @@
   
         <!-- Selling price input -->
         <div id="selling-price-container" style="display: none;">
-          <input type="number" id="selling-price" placeholder="Enter price in INR">
+          <input type="number" id="selling-price" placeholder="Enter price in USD">
         </div>
         
         <button id="post-btn">Post</button>
@@ -130,8 +130,8 @@
   </section>
   
   <div id="se" style="display: none;">
-  <input id="search-input" type="text" placeholder="Search posts..." />
-  <button id="search-btn">Search</button>
+  <input id="search-input" type="text" placeholder="Exprole AI Search.." />
+  <button id="search-btn">AI Search</button>
   </div>
   <!-- Feed Section -->
   <div class="main-container">
