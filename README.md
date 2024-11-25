@@ -41,13 +41,13 @@ Before running the project, make sure you have the following installed on your s
 1. **Clone the Repository-**
 First, clone the repository to your local machine by running:
    ```bash
-    git clone https://github.com/anshikatiwari20/Upcycle_Market.git
+    git clone https://github.com/anshikatiwari20/Upcycle_Market_.git
     ```
 
 2. **Navigate to the Project Folder-**
 After cloning the repository, navigate to the project directory by running:
     ```bash
-    cd Upcycle_Market
+    cd Upcycle_Market_
     ```
 
 3. **Install Dependencies-**
