@@ -34,6 +34,15 @@
       "profilePic": "1732427971857.jpeg",
       "followers": [],
       "following": []
+    },
+    {
+      "username": "riya",
+      "password": "$2a$10$pMTSpDJuiovTlsAnQtU2TeD.e11WbU8NZZAG22hqBKuIxoXKVZoqu",
+      "name": "Riya",
+      "email": "riya@gmail.com",
+      "profilePic": "1732471853646.png",
+      "followers": [],
+      "following": []
     }
   ],
   "posts": [
@@ -104,6 +113,19 @@
       "mediaType": "image",
       "forSale": true,
       "price": 123,
+      "likes": 0,
+      "likedBy": [],
+      "comments": []
+    },
+    {
+      "id": "a678cecf-3776-4853-a1cd-41dbbe255932",
+      "username": "thomas",
+      "profilePic": "1732401385208.jpeg",
+      "description": "(Dinosaur-Themed Pencil Holder)\r\nDescription: A fun and creative pencil holder designed as a dinosaur, using cardboard tubes and hand-drawn dinosaur features like wings, tail, and spikes.\r\nMaterials Used: Cardboard tubes, cardboard for details, markers or crayons, adhesive/glue, and a base for stability.",
+      "media": "1732471700949.png",
+      "mediaType": "image",
+      "forSale": true,
+      "price": 200,
       "likes": 0,
       "likedBy": [],
       "comments": []
