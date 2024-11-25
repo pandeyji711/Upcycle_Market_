@@ -1144,7 +1144,7 @@ nav#navbar ul.menu-list {
 /* Dropdown Menu */
 .user-account .dropdown-menu {
   position: absolute;
-  top: 110%; /* Slightly below the Account button */
+  top: 100%; /* Slightly below the Account button */
   right: 0;
   background-color: #fff;
   border: 1px solid #ccc;
