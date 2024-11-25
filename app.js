@@ -89,6 +89,7 @@ app.post("/login", async (req, res) => {
       success: true,
       username: user.username,
       following: user.following, // Send the following array
+      profilePic: user.profilePic,
     });
   } else {
     res.status(401).json({ success: false, message: "Invalid credentials!" });
