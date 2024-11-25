@@ -65,4 +65,4 @@ To start the server, run:
 The server will be running locally on http://localhost:3000.
 
 5. **Run the Project-**
-Once the server is running, open your browser and navigate to http://localhost:3000 to see the project in action. Alternatively, you can run the index.html file directly in your browser without using the server. However, for full functionality, it is recommended to run the server first.
+Once the server is running, open your browser and navigate to http://localhost:3000/home to see the project in action or you can navigate to http://localhost:3000/index for directly Login or SignUp. However, for full functionality, it is recommended to run the server first.
