@@ -380,7 +380,7 @@ Return a JSON array of relevance scores, one for each post in the dataset, e.g.,
     }
 
     let filteredPosts = filter(scores);
-    console.log(filteredPosts);
+    // console.log(filteredPosts);
     res.json(filteredPosts);
   } catch (error) {
     console.error("Error processing search:", error.message);
