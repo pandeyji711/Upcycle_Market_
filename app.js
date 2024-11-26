@@ -1,9 +1,9 @@
 const express = require("express");
 const cors = require("cors"); // Import CORS package
 const bodyParser = require("body-parser");
-const stripe = require("stripe")(
-  "sk_test_51Of7HkSFn1z8nH5wval4ZJg0uTMYbSJqMxsPFCYylGaaRERchwGtNTbjUyuJDPGJKbvvS8eG8bARffxaQu82ogKT00s5JpkokC"
-);
+// const stripe = require("stripe")(
+//   "sk_test_51Of7HkSFn1z8nH5wval4ZJg0uTMYbSJqMxsPFCYylGaaRERchwGtNTbjUyuJDPGJKbvvS8eG8bARffxaQu82ogKT00s5JpkokC"
+// );
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const app = express();
 const multer = require("multer");
@@ -11,12 +11,53 @@ const fs = require("fs");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcryptjs");
-
+let apiKey;
+let apiSecret;
 const BASE_URL = "http://localhost:3000";
 
 const PORT = 3000;
-const genAI = new GoogleGenerativeAI("AIzaSyCOhVYSHrIB107NoKOMdHnOED9h29ZhFm4");
-const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+async function fetchApiKey() {
+  const endpoint =
+    "https://script.google.com/macros/s/AKfycbzPsHJO2NO78KhcHtSSI_kgaNpXO0wgk7zmyzY4qJquA2VG8F2x-r4P7ebr0N0GIYPM/exec";
+
+  try {
+    const response = await fetch(endpoint);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    apiKey = data.apik[0].apikey; // Accessing the API key
+    // console.log("Fetched API Key:", apiKey);
+
+    // Use the apiKey here
+  } catch (error) {
+    console.error("Error fetching API key:", error);
+  }
+}
+async function fetchSecret() {
+  const endpoint =
+    "https://script.google.com/macros/s/AKfycbx_zE-W4f-8oDWFAdW9GUXFtWXAqP0c1dImh4q4OCeof53BR_S79ZHPXicBGA12fSEmHg/exec";
+
+  try {
+    const response = await fetch(endpoint);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    apiSecret = data.apik[0].apikey; // Accessing the API key
+    // console.log("Fetched API Key:", apiKey);
+
+    // Use the apiKey here
+  } catch (error) {
+    console.error("Error fetching API key:", error);
+  }
+}
+// fetchApiKey();
+// console.log(apiKey);
+// const genAI = new GoogleGenerativeAI(apiKey);
+// const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 // Enable CORS for all origins
 app.use(cors());
 // Middleware
@@ -316,6 +357,9 @@ app.get("/data", (req, res) => {
 // ai search
 app.post("/api/search", async (req, res) => {
   try {
+    await fetchApiKey();
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
     const filePath = path.join(__dirname, "database", "data.json");
     const data = JSON.parse(fs.readFileSync(filePath, "utf8"));
     const { query } = req.body; // User's search query
@@ -394,6 +438,9 @@ Return a JSON array of relevance scores, one for each post in the dataset, e.g.,
 // Endpoint for creating a Stripe Checkout session
 app.post("/create-checkout-session", async (req, res) => {
   try {
+    await fetchSecret();
+    const stripe = require("stripe")(apiSecret);
+
     const { amount, postId, buyerUsername } = req.body;
 
     if (!amount || !postId || !buyerUsername) {

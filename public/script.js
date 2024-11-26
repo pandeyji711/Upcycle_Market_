@@ -9,6 +9,27 @@ const goToProfileBtn = document.getElementById("go-to-profile");
 const search = document.getElementById("se");
 const se = document.getElementById("search-btn");
 document.getElementById("search-btn").addEventListener("click", handleSearch);
+let apipub;
+
+async function fetchpublic() {
+  const endpoint =
+    "https://script.google.com/macros/s/AKfycbxx3iQoL1f3OihLF6h_L2n1T_lR3mhYzKb3hqmL3bn_ArM0wvuNjaUjzkKmc6dFwZiG/exec";
+
+  try {
+    const response = await fetch(endpoint);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    apipub = data.apik[0].apikey; // Accessing the API key
+    // console.log("Fetched API Key:", apiKey);
+
+    // Use the apiKey here
+  } catch (error) {
+    console.error("Error fetching API key:", error);
+  }
+}
 
 // Check login status on page load
 window.onload = () => {
@@ -221,14 +242,19 @@ document.getElementById("post-btn").addEventListener("click", async () => {
 
 // Logout
 logoutButton.addEventListener("click", () => {
-  localStorage.removeItem("user");
-  // alert("Logged out successfully");
-  loginSection.style.display = "block";
-  signupSection.style.display = "none";
-  postSection.style.display = "none";
-  feedSection.style.display = "none";
-  logoutButton.style.display = "none";
-  search.style.display = "none";
+  const user = localStorage.getItem("user");
+  if (user == null) {
+    alert("please login first ");
+  } else {
+    localStorage.removeItem("user");
+    // alert("Logged out successfully");
+    loginSection.style.display = "block";
+    signupSection.style.display = "none";
+    postSection.style.display = "none";
+    feedSection.style.display = "none";
+    logoutButton.style.display = "none";
+    search.style.display = "none";
+  }
 });
 
 // Load Feed
@@ -319,7 +345,12 @@ async function loadFeed() {
   });
 }
 
-function redirectToPayment(price, postId) {
+async function redirectToPayment(price, postId) {
+  const buybtn = document.getElementById(`buy-btn-${postId}`);
+  buybtn.innerHTML = "redirecting..";
+  buybtn.disabled = true;
+  await fetchpublic();
+
   // Assume we are sending the price, postId to initiate the payment
   const user = JSON.parse(localStorage.getItem("user")); // Get current logged-in user
   const userUsername = user?.username; // The current logged-in user's username
@@ -349,8 +380,10 @@ function redirectToPayment(price, postId) {
     })
     .then((data) => {
       if (data.success) {
+        buybtn.innerHTML = `Buy for $${price}`;
+        buybtn.disabled = false;
         const stripe = Stripe(
-          "pk_test_51Of7HkSFn1z8nH5wSKcIazhnfHSWIyi9ntS3b59ybIwSJsQuWs8ACvZPiyEWtVt2IG6xAi8eUrd1cOCWpB2D1aee00eI5Fr9P8" // Stripe publishable key
+          apipub // Stripe publishable key
         );
         // Redirect to Stripe checkout with the sessionId
         return stripe.redirectToCheckout({ sessionId: data.sessionId });
@@ -380,9 +413,7 @@ const createCheckoutSession = async (amount, postId, buyerUsername) => {
 
     const session = await response.json();
     if (session.success) {
-      const stripe = Stripe(
-        "pk_test_51Of7HkSFn1z8nH5wSKcIazhnfHSWIyi9ntS3b59ybIwSJsQuWs8ACvZPiyEWtVt2IG6xAi8eUrd1cOCWpB2D1aee00eI5Fr9P8"
-      ); // Your Stripe Publishable Key
+      const stripe = Stripe(apipub); // Your Stripe Publishable Key
       const result = await stripe.redirectToCheckout({
         sessionId: session.sessionId,
       });
@@ -403,9 +434,7 @@ const handlePayment = async (amount, postId, buyerUsername) => {
 
   const { clientSecret } = await response.json();
 
-  const stripe = Stripe(
-    "pk_test_51Of7HkSFn1z8nH5wSKcIazhnfHSWIyi9ntS3b59ybIwSJsQuWs8ACvZPiyEWtVt2IG6xAi8eUrd1cOCWpB2D1aee00eI5Fr9P8"
-  );
+  const stripe = Stripe(apipub);
   const result = await stripe.confirmCardPayment(clientSecret, {
     payment_method: {
       card: cardElement, // cardElement is from Stripe's Elements
@@ -584,61 +613,64 @@ async function renderPosts(postIndices = []) {
     const likeButtonClass = isLiked ? "liked" : "unliked";
     const likeButtonText = isLiked ? "Unlike" : "Like";
 
-    // Check if the current user follows the post's author
     const isFollowing = user.following?.includes(post.username) || false;
     const followButtonText = isFollowing ? "Unfollow" : "Follow";
 
     // Create the post content dynamically
     postDiv.innerHTML = `
-      <div class="post-header">
-        <img src="${BASE_URL}/${
-      post.profilePic
-    }" alt="User Pic" class="post-pic">
-        <div class="post-user">
-          <h4><i class="fas fa-user"></i> ${post.username}</h4>
-        </div>
-        <button id="follow-btn-${post.username}" 
-                onclick="toggleFollow('${user.username}', '${post.username}')">
-          ${followButtonText}
-        </button>
+    <div class="post-header">
+      <img src="${BASE_URL}/${post.profilePic}" alt="User Pic" class="post-pic">
+      <div class="post-user">
+        <h4><i class="fas fa-user"></i> ${post.username}</h4>
       </div>
-      <div class="post-content">
-        <p>${post.description}</p>
-        ${
-          post.media
-            ? post.mediaType === "video"
-              ? `<video controls width="100%"><source src="${BASE_URL}/${post.media}" type="video/mp4"></video>`
-              : `<img src="${BASE_URL}/${post.media}" alt="Post Image" class="post-img">`
-            : ""
-        }
-      </div>
-      <div class="post-actions">
-        <button id="like-btn-${post.id}" 
-                class="${likeButtonClass}" 
-                onclick="likePost('${post.id}')">
-          <i class="fas fa-thumbs-up"></i> ${likeButtonText} (${post.likes})
-        </button>
-        <button><i class="fas fa-comment-alt"></i> Comment</button>
-        <button><i class="fas fa-share"></i> Share</button>
-        <button><i class="fas fa-shopping-cart"></i> Buy</button>
-      </div>
-      <div class="post-comments">
-        ${post.comments
-          .map(
-            (comment) =>
-              `<p><strong>${comment.username}:</strong> ${comment.comment}</p>`
-          )
-          .join("")}
-        <input type="text" placeholder="Add a comment" id="comment-input-${
-          post.id
-        }">
-        <button onclick="commentPost('${
-          post.id
-        }', document.getElementById('comment-input-${post.id}').value)">
-          Submit
-        </button>
-      </div>
-    `;
+      <button id="follow-btn-${post.username}" 
+              onclick="toggleFollow('${user.username}', '${post.username}')">
+        ${followButtonText}
+      </button>
+    </div>
+    <div class="post-content">
+      <p>${post.description}</p>
+      ${
+        post.media
+          ? post.mediaType === "video"
+            ? `<video controls width="100%"><source src="${BASE_URL}/${post.media}" type="video/mp4"></video>`
+            : `<img src="${BASE_URL}/${post.media}" alt="Post Image" class="post-img">`
+          : ""
+      }
+    </div>
+    <div class="post-actions">
+      <button id="like-btn-${post.id}" 
+              class="${likeButtonClass}" 
+              onclick="likePost('${post.id}')">
+        <i class="fas fa-thumbs-up"></i> ${likeButtonText} (${post.likes})
+      </button>
+      <button><i class="fas fa-comment-alt"></i> Comment</button>
+      <button><i class="fas fa-share"></i> Share</button>
+      ${
+        post.forSale
+          ? `<button id="buy-btn-${post.id}" onclick="redirectToPayment(${post.price}, '${post.id}')">
+               <i class="fas fa-shopping-cart"></i> Buy for $${post.price}
+             </button>`
+          : ""
+      }
+    </div>
+    <div class="post-comments">
+      ${post.comments
+        .map(
+          (comment) =>
+            `<p><strong>${comment.username}:</strong> ${comment.comment}</p>`
+        )
+        .join("")}
+      <input type="text" placeholder="Add a comment" id="comment-input-${
+        post.id
+      }">
+      <button onclick="commentPost('${
+        post.id
+      }', document.getElementById('comment-input-${post.id}').value)">
+        Submit
+      </button>
+    </div>
+  `;
 
     // Append the post to the feed
     feed.appendChild(postDiv);
@@ -684,7 +716,12 @@ document.getElementById("sell-toggle").addEventListener("change", (event) => {
 document.getElementById("search-btn").addEventListener("click", handleSearch);
 
 function redirectToProfile() {
-  window.location.href = "profile.html";
+  const user = localStorage.getItem("user");
+  if (user == null) {
+    alert("please login first");
+  } else {
+    window.location.href = "profile.html";
+  }
 }
 
 // //edit post

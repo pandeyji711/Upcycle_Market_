@@ -9,7 +9,10 @@
       "followers": [
         "thomas"
       ],
-      "following": []
+      "following": [
+        "james",
+        "riya"
+      ]
     },
     {
       "username": "henry",
@@ -43,7 +46,8 @@
       "email": "riya@gmail.com",
       "profilePic": "1732531765240.jpg",
       "followers": [
-        "thomas"
+        "thomas",
+        "jhon"
       ],
       "following": []
     },
@@ -54,9 +58,13 @@
       "email": "james@gmail.com",
       "profilePic": "1732531794376.jpeg",
       "followers": [
-        "thomas"
+        "thomas",
+        "james",
+        "jhon"
       ],
-      "following": []
+      "following": [
+        "james"
+      ]
     }
   ],
   "posts": [
