@@ -62,9 +62,74 @@
         "james",
         "jhon"
       ],
+      "following": []
+    },
+    {
+      "username": "kiara",
+      "password": "$2a$10$Dla/dbqfrexPjrOOhviSdeHxYEKKM9JqvwZ5fYighs.0Nw.BoiT8C",
+      "name": "Kiara",
+      "email": "kiara@gmail.com",
+      "profilePic": "1732541684746.png",
+      "followers": [],
       "following": [
-        "james"
+        "jiya"
       ]
+    },
+    {
+      "username": "miara",
+      "password": "$2a$10$V2yZKaxsI6e7rXDzk4b9xuZ6cIxUn0/AaulcHMb4tm5Z2bnZH/0.u",
+      "name": "Miara",
+      "email": "mia@gmail.com",
+      "profilePic": "1732546368072.png",
+      "followers": [],
+      "following": []
+    },
+    {
+      "username": "mary",
+      "password": "$2a$10$VN89ORhOSV.uIRtxhpNUNewNTm5b1WBJLVQP66S1CgtjcdEaveWa2",
+      "name": "mary",
+      "email": "mary123@gmail.com",
+      "profilePic": "1732547236098.png",
+      "followers": [],
+      "following": []
+    },
+    {
+      "username": "kritika",
+      "password": "$2a$10$J6XmHFa.9PtIXV257Xi6A.efGtx5kkdKqUR4eHeFDkRJIyBlFi9mq",
+      "name": "kritika",
+      "email": "kriti123@gmail.com",
+      "profilePic": "1732548000326.png",
+      "followers": [],
+      "following": []
+    },
+    {
+      "username": "jiya",
+      "password": "$2a$10$jmXyPiJZvVFudM0Ygk6Tpe/9TgbgBaDbzeA6Rv2R.BmeW5/FS255y",
+      "name": "jiya",
+      "email": "jiya123@gmail.com",
+      "profilePic": "1732553419712.png",
+      "followers": [
+        "kiara"
+      ],
+      "following": []
+    },
+    {
+      "username": "alice",
+      "password": "$2a$10$fqGgyE4jSd1daaAFtniHKeaz2JCZo3PE/k1X.1KLEg2dVPrL4glEW",
+      "name": "alice",
+      "email": "alice123@gmail.com",
+      "profilePic": "1732554971323.png",
+      "followers": [],
+      "following": []
+    },
+    {
+      "username": "jack",
+      "password": "$2a$10$RAe8OvV0/4RbOTNiXgrDSO0Fdrx3phaMEZvmhZpygpiI4OUSsaGLG",
+      "name": "jack",
+      "email": "jack@gmail.com",
+      "profilePic": "1732647516385.jpeg",
+      "followers": [],
+      "following": []
     }
   ],
   "posts": [
@@ -77,54 +142,17 @@
       "mediaType": "video",
       "forSale": true,
       "price": 12,
-      "likes": 1,
+      "likes": 2,
       "likedBy": [
-        "james"
-      ],
-      "comments": []
-    },
-    {
-      "id": "e82332b3-9c78-4e74-8fb0-1f2b544c2250",
-      "username": "riya",
-      "profilePic": "1732531765240.jpg",
-      "description": "(Dinosaur-Themed Pencil Holder)\r\nDescription: A fun and creative pencil holder designed as a dinosaur, using cardboard tubes and hand-drawn dinosaur features like wings, tail, and spikes.\r\nMaterials Used: Cardboard tubes, cardboard for details, markers or crayons, adhesive/glue, and a base for stability.",
-      "media": "1732531963627.jpg",
-      "mediaType": "image",
-      "forSale": true,
-      "price": 9,
-      "likes": 1,
-      "likedBy": [
+        "james",
         "riya"
       ],
-      "comments": []
-    },
-    {
-      "id": "41fc6740-eec3-401f-a547-424443df77ee",
-      "username": "riya",
-      "profilePic": "1732531765240.jpg",
-      "description": "Floral Lattice Wall Hanging\r\nDescription: This is a floral wall hanging featuring three large, hand-crafted flowers in red and yellow tones. The flowers are mounted on a lattice-like wooden framework that acts as the base.\r\nMaterials Used:\r\nCardboard (for the flowers)\r\nPaint (red, yellow, and black for detailing)\r\nWooden sticks or painted cardboard (for the lattice structure)\r\nBeads (for flower centers)",
-      "media": "1732532105113.mp4",
-      "mediaType": "video",
-      "forSale": true,
-      "price": 19,
-      "likes": 0,
-      "likedBy": [],
-      "comments": []
-    },
-    {
-      "id": "9746c6a9-b23e-416e-b3f5-ba3496dabda4",
-      "username": "riya",
-      "profilePic": "1732531765240.jpg",
-      "description": "A creative artwork showcasing a tree made by using various buttons. The trunk and branches are either painted or crafted using materials like twigs or thread, while the foliage is represented by colorful buttons of different sizes. The buttons are arranged in a clustered manner to mimic the shape of a tree’s canopy, creating a vibrant and textured look.\r\n\r\nMaterials Used:\r\nButtons: Various colors and sizes for the tree's leaves.\r\nCanvas or Paper: Base for the artwork.\r\nPaint or Twigs/Threads: To create the tree trunk and branches.\r\nGlue: To fix the buttons in place.",
-      "media": "1732532191003.jpg",
-      "mediaType": "image",
-      "forSale": false,
-      "price": null,
-      "likes": 1,
-      "likedBy": [
-        "riya"
-      ],
-      "comments": []
+      "comments": [
+        {
+          "username": "riya",
+          "comment": "nice"
+        }
+      ]
     },
     {
       "id": "d86bd837-1241-4df1-9970-162554e78126",
@@ -163,6 +191,140 @@
       "price": 18,
       "likes": 0,
       "likedBy": [],
+      "comments": []
+    },
+    {
+      "id": "42f055a9-7c92-4fd3-af23-8112f790d65c",
+      "username": "riya",
+      "profilePic": "1732531765240.jpg",
+      "description": "Hanging Bird Art from Lids                                                                                                                                                  Description: Wall hangings made from jar lids, featuring colorful bird images with tassels and beads for decoration.\r\nMaterials Used: Jar lids, bird cutouts or printed images, beads, threads, tassels, paint, and adhesive/glue.",
+      "media": "1732555065636.png",
+      "mediaType": "image",
+      "forSale": true,
+      "price": 200,
+      "likes": 0,
+      "likedBy": [],
+      "comments": []
+    },
+    {
+      "id": "8a262551-e0af-423b-a5f1-dd017fb46b81",
+      "username": "jiya",
+      "profilePic": "1732553419712.png",
+      "description": "Plastic Bottle Piggy Banks\r\nCute piggy banks made from recycled plastic bottles. These banks are designed in the shape of pigs with added features such as ears, eyes, and a slot for coins. The bright pink color enhances the playful and appealing look.\r\n\r\nMaterials Used:\r\nBase: Empty plastic bottles.\r\nPaint: Pink spray or acrylic paint for the body.\r\nDetails: Plastic bottle caps for snouts, googly eyes, and cut plastic or cardboard for ears.\r\nAdhesive: Glue to attach features.",
+      "media": "1732595995745.png",
+      "mediaType": "image",
+      "forSale": false,
+      "price": null,
+      "likes": 0,
+      "likedBy": [],
+      "comments": []
+    },
+    {
+      "id": "4be71264-bcf2-499a-8e3a-50505095fee4",
+      "username": "jiya",
+      "profilePic": "1732553419712.png",
+      "description": "Organizer Box\r\nA handmade storage box created from rolled newspaper tubes. The cylindrical box has a lid and is used for organizing items like spools of thread and small tools such as scissors. The intricate weaving of newspaper adds a creative and sustainable touch.\r\n\r\nMaterials Used:\r\nBase Material: Rolled newspaper tubes.\r\nAdhesive: Glue to hold the structure together.\r\nReinforcement: Cardboard for added sturdiness.\r\nFinish: Paint or varnish (optional for durability).",
+      "media": "1732596101170.png",
+      "mediaType": "image",
+      "forSale": true,
+      "price": 100,
+      "likes": 0,
+      "likedBy": [],
+      "comments": []
+    },
+    {
+      "id": "f984208c-be2c-4611-bcd3-52c12bf8013e",
+      "username": "riya",
+      "profilePic": "1732531765240.jpg",
+      "description": "The image features two plants grown in transparent plastic cups. Each cup is filled with small pebbles or granules, and the plants are thriving under small lids that act as mini-greenhouses.\r\n\r\nMaterials Used:\r\nDisposable plastic cups\r\nPebbles or granules (can be sand, clay balls, or fine stones)\r\nTransparent dome lids (likely repurposed from disposable drink cups)",
+      "media": "1732596239802.png",
+      "mediaType": "image",
+      "forSale": true,
+      "price": 100,
+      "likes": 0,
+      "likedBy": [],
+      "comments": []
+    },
+    {
+      "id": "0b967a88-4b0b-4623-82d6-f1d93cf21d4b",
+      "username": "alice",
+      "profilePic": "1732554971323.png",
+      "description": "Dinosaur-Themed Pencil Holder\r\nA fun and creative pencil holder designed as a dinosaur, using cardboard tubes and hand-drawn dinosaur features like wings, tail, and spikes.\r\n\r\nMaterials Used:\r\nCardboard tubes, cardboard for details, markers or crayons, adhesive/glue, and a base for stability.",
+      "media": "1732596436472.png",
+      "mediaType": "image",
+      "forSale": true,
+      "price": 120,
+      "likes": 0,
+      "likedBy": [],
+      "comments": []
+    },
+    {
+      "id": "4c435058-3bb0-4e6d-a685-f8f1419535bc",
+      "username": "james",
+      "profilePic": "1732531794376.jpeg",
+      "description": "A creative planter made from horizontally cut plastic bottles. Each bottle serves as a mini-garden for seedlings or small plants, arranged in rows.\r\n\r\nMaterials Used:\r\nEmpty plastic bottles (cut horizontally to create planters)\r\nSoil or compost\r\nSmall plants or seedlings",
+      "media": "1732596992943.png",
+      "mediaType": "image",
+      "forSale": true,
+      "price": 60,
+      "likes": 0,
+      "likedBy": [],
+      "comments": []
+    },
+    {
+      "id": "cd2e3d13-68b2-4b8e-9f29-2baab007ecb5",
+      "username": "james",
+      "profilePic": "1732531794376.jpeg",
+      "description": "Painted Bottle Planters:\r\nA collection of vibrant planters made from upcycled plastic bottles, painted with creative designs and patterns.\r\n\r\nMaterials Used: Plastic bottles, acrylic paints, brushes, and optional varnish for finishing.",
+      "media": "1732597073697.png",
+      "mediaType": "image",
+      "forSale": true,
+      "price": 50,
+      "likes": 0,
+      "likedBy": [],
+      "comments": []
+    },
+    {
+      "id": "80cd38e8-daae-4336-9e5b-c7dbc113141f",
+      "username": "kritika",
+      "profilePic": "1732548000326.png",
+      "description": "Colorful Frame with Popsicle Sticks:\r\nA decorative frame made with colorful popsicle sticks arranged in layers and adorned with small flowers for an elegant touch.\r\n\r\nMaterials Used: Popsicle sticks, adhesive/glue, small artificial flowers, and paint for coloring.",
+      "media": "1732597202052.png",
+      "mediaType": "image",
+      "forSale": true,
+      "price": 50,
+      "likes": 0,
+      "likedBy": [],
+      "comments": []
+    },
+    {
+      "id": "e09ffa4b-8c22-4e85-ba18-9373d473a4f9",
+      "username": "kiara",
+      "profilePic": "1732541684746.png",
+      "description": "Product Description:\r\nEco-friendly upcycled tin can organizers with vibrant decorative designs. Perfect for holding pens, pencils, and stationery, they add charm to any workspace.\r\n\r\nMaterials:\r\nUpcycled tin cans,\r\nDecorative paper,\r\nNon-toxic adhesive.",
+      "media": "1732597530303.png",
+      "mediaType": "image",
+      "forSale": true,
+      "price": 70,
+      "likes": 1,
+      "likedBy": [
+        "kiara"
+      ],
+      "comments": []
+    },
+    {
+      "id": "ab270ea8-e4a0-4b55-91ac-994a68991fc9",
+      "username": "kiara",
+      "profilePic": "1732541684746.png",
+      "description": "The image shows a rectangular frame made from colorful popsicle sticks arranged in layers, creating a vibrant border around a black center.\r\n\r\nMaterials Used:\r\nPopsicle sticks (various colors)\r\nAdhesive (e.g., glue) for sticking the sticks together",
+      "media": "1732598454344.png",
+      "mediaType": "image",
+      "forSale": true,
+      "price": 20,
+      "likes": 1,
+      "likedBy": [
+        "kiara"
+      ],
       "comments": []
     }
   ]
