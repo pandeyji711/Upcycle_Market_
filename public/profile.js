@@ -4,7 +4,9 @@ const pro = document.getElementById("profile-pic");
 // Load user profile details on page load
 const user = JSON.parse(localStorage.getItem("user"));
 pro.src = user.profilePic;
-// console.log(user);
+function redirectToProfile() {
+  window.location.href = "profile.html";
+}
 window.onload = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   loadFeed();

@@ -9,7 +9,10 @@
       "followers": [
         "thomas"
       ],
-      "following": []
+      "following": [
+        "james",
+        "riya"
+      ]
     },
     {
       "username": "henry",
@@ -43,7 +46,8 @@
       "email": "riya@gmail.com",
       "profilePic": "1732531765240.jpg",
       "followers": [
-        "thomas"
+        "thomas",
+        "jhon"
       ],
       "following": []
     },
@@ -54,7 +58,9 @@
       "email": "james@gmail.com",
       "profilePic": "1732531794376.jpeg",
       "followers": [
-        "thomas"
+        "thomas",
+        "james",
+        "jhon"
       ],
       "following": []
     },
@@ -65,7 +71,9 @@
       "email": "kiara@gmail.com",
       "profilePic": "1732541684746.png",
       "followers": [],
-      "following": []
+      "following": [
+        "jiya"
+      ]
     },
     {
       "username": "miara",
@@ -100,7 +108,9 @@
       "name": "jiya",
       "email": "jiya123@gmail.com",
       "profilePic": "1732553419712.png",
-      "followers": [],
+      "followers": [
+        "kiara"
+      ],
       "following": []
     },
     {
@@ -109,6 +119,15 @@
       "name": "alice",
       "email": "alice123@gmail.com",
       "profilePic": "1732554971323.png",
+      "followers": [],
+      "following": []
+    },
+    {
+      "username": "jack",
+      "password": "$2a$10$RAe8OvV0/4RbOTNiXgrDSO0Fdrx3phaMEZvmhZpygpiI4OUSsaGLG",
+      "name": "jack",
+      "email": "jack@gmail.com",
+      "profilePic": "1732647516385.jpeg",
       "followers": [],
       "following": []
     }
@@ -287,8 +306,10 @@
       "mediaType": "image",
       "forSale": true,
       "price": 70,
-      "likes": 0,
-      "likedBy": [],
+      "likes": 1,
+      "likedBy": [
+        "kiara"
+      ],
       "comments": []
     },
     {
@@ -300,8 +321,10 @@
       "mediaType": "image",
       "forSale": true,
       "price": 20,
-      "likes": 0,
-      "likedBy": [],
+      "likes": 1,
+      "likedBy": [
+        "kiara"
+      ],
       "comments": []
     }
   ]
