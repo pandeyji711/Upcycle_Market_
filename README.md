@@ -30,6 +30,30 @@ The **Upcycle Market** is an innovative web platform designed to promote sustain
 - **Node.js**: Backend functionality and server-side logic.
 - **Express.js**: Web framework for Node.js to handle routing and server management.
 
+## Screenshots
+
+### Homepage
+![homepage](https://github.com/user-attachments/assets/1e6607b4-b60d-4b8b-8e64-796c2d96e1b7)
+
+### Signup
+![signup](https://github.com/user-attachments/assets/77397b10-d272-492e-965e-22fed33ff31c)
+
+### Login
+![login](https://github.com/user-attachments/assets/83742b2d-80a5-4481-8f6d-70839cad85de)
+
+### User Feed
+![feed](https://github.com/user-attachments/assets/a3bfa4ac-c845-4407-9db0-4d77b7efacd2)
+
+### AI Search
+![aisearch](https://github.com/user-attachments/assets/1423e747-810e-4abd-841b-8205bbdfd4a6)
+
+### Create Post
+![createpost](https://github.com/user-attachments/assets/d8e0fa00-8ba3-40d1-a527-e940cbaf40aa)
+
+### Payment Integration
+![payment](https://github.com/user-attachments/assets/2665e895-9006-4a96-92fe-f9351c6fad73)
+
+
 ## Prerequisites
 Before running the project, make sure you have the following installed on your system:
 
