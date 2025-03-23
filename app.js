@@ -9,7 +9,6 @@ import multer from "multer";
 import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcryptjs";
 import Stripe from "stripe";
-import helmet from "helmet"; // Recommended for additional security
 import dotenv from "dotenv";
 
 // Load environment variables
@@ -28,9 +27,6 @@ let apiSecret; // For stripe, though we use STRIPE_SECRET directly
 const BASE_URL = "http://localhost:3000";
 const PORT = process.env.PORT || 3000;
 const app = express();
-
-// Use Helmet for security headers
-app.use(helmet());
 
 // Enable CORS for all origins
 app.use(cors());
