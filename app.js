@@ -1,78 +1,49 @@
-const express = require("express");
-const cors = require("cors"); // Import CORS package
-const bodyParser = require("body-parser");
-// const stripe = require("stripe")(
-//   "sk_test_51Of7HkSFn1z8nH5wval4ZJg0uTMYbSJqMxsPFCYylGaaRERchwGtNTbjUyuJDPGJKbvvS8eG8bARffxaQu82ogKT00s5JpkokC"
-// );
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-const app = express();
-const multer = require("multer");
-const fs = require("fs");
-const path = require("path");
-const { v4: uuidv4 } = require("uuid");
-const bcrypt = require("bcryptjs");
-let apiKey;
-let apiSecret;
+import express from "express";
+import OpenAI from "openai";
+import { fileURLToPath } from "url";
+import cors from "cors";
+import fs from "fs";
+import path from "path";
+import bodyParser from "body-parser";
+import multer from "multer";
+import { v4 as uuidv4 } from "uuid";
+import bcrypt from "bcryptjs";
+import Stripe from "stripe";
+import dotenv from "dotenv";
+
+// Load environment variables
+dotenv.config();
+
+// Define __dirname manually for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Use environment variables for sensitive data
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY; // e.g., set in .env file
+const STRIPE_SECRET = process.env.STRIPE_SECRET; // Secure Stripe key
+let apiKey; // If needed, fetched via function
+let apiSecret; // For stripe, though we use STRIPE_SECRET directly
+
 const BASE_URL = "http://localhost:3000";
+const PORT = process.env.PORT || 3000;
+const app = express();
 
-const PORT = 3000;
-async function fetchApiKey() {
-  const endpoint =
-    "https://script.google.com/macros/s/AKfycbzPsHJO2NO78KhcHtSSI_kgaNpXO0wgk7zmyzY4qJquA2VG8F2x-r4P7ebr0N0GIYPM/exec";
-
-  try {
-    const response = await fetch(endpoint);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    apiKey = data.apik[0].apikey; // Accessing the API key
-    // console.log("Fetched API Key:", apiKey);
-
-    // Use the apiKey here
-  } catch (error) {
-    console.error("Error fetching API key:", error);
-  }
-}
-async function fetchSecret() {
-  const endpoint =
-    "https://script.google.com/macros/s/AKfycbx_zE-W4f-8oDWFAdW9GUXFtWXAqP0c1dImh4q4OCeof53BR_S79ZHPXicBGA12fSEmHg/exec";
-
-  try {
-    const response = await fetch(endpoint);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    apiSecret = data.apik[0].apikey; // Accessing the API key
-    // console.log("Fetched API Key:", apiKey);
-
-    // Use the apiKey here
-  } catch (error) {
-    console.error("Error fetching API key:", error);
-  }
-}
-// fetchApiKey();
-// console.log(apiKey);
-// const genAI = new GoogleGenerativeAI(apiKey);
-// const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 // Enable CORS for all origins
 app.use(cors());
+
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Serve static files from uploads and public directories
+app.use(express.static("uploads"));
+app.use(express.static(path.join(__dirname, "public")));
+
+// Optional: Set CORS headers manually if needed (already enabled by cors middleware)
 app.use((req, res, next) => {
-  // Enable CORS for frontend
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   next();
 });
-// Middleware
-app.use(bodyParser.json());
-app.use(express.static("uploads"));
 
 // Multer setup for handling file uploads
 const storage = multer.diskStorage({
@@ -87,7 +58,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage,
-  limits: { fileSize: 500 * 1024 * 1024 }, // Limit to 200MB
+  limits: { fileSize: 500 * 1024 * 1024 }, // 500MB limit
   fileFilter: (req, file, cb) => {
     const filetypes = /jpeg|jpg|png|gif|mp4/;
     const mimetype = filetypes.test(file.mimetype);
@@ -98,94 +69,87 @@ const upload = multer({
       return cb(null, true);
     }
     cb(
-      "Error: File upload only supports the following filetypes - " + filetypes
+      new Error(
+        "Error: File upload only supports the following filetypes - " +
+          filetypes
+      )
     );
   },
 });
 
-// Read/write JSON database
-const getDB = () => JSON.parse(fs.readFileSync("./database/data.json", "utf8"));
+// Utility functions for reading and writing the JSON "database"
+const DB_PATH = path.join(__dirname, "database", "data.json");
+const getDB = () => JSON.parse(fs.readFileSync(DB_PATH, "utf8"));
 const saveDB = (data) =>
-  fs.writeFileSync("./database/data.json", JSON.stringify(data, null, 2));
-//home
+  fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
 
-app.use(express.static(path.join(__dirname, "public")));
+// --- Routes ---
 
-// Endpoint for home
+// Home endpoint
 app.get("/home", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "home.html"));
 });
+
 // Login API
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const db = getDB();
 
-  // Find the user by username
   const user = db.users.find((u) => u.username === username);
-
-  // Check if user exists and compare hashed passwords
-  console.log(user);
   if (user && (await bcrypt.compare(password, user.password))) {
+    // Remove sensitive fields before sending
+    const { password: pwd, ...safeUser } = user;
     res.json({
       success: true,
-      username: user.username,
-      following: user.following, // Send the following array
-      profilePic: user.profilePic,
+      ...safeUser,
     });
   } else {
     res.status(401).json({ success: false, message: "Invalid credentials!" });
   }
 });
+
+// Signup API
 app.post("/signup", upload.single("profilePic"), async (req, res) => {
   const { username, password, name, email } = req.body;
   const db = getDB();
 
-  // Check if the username already exists
   if (db.users.find((u) => u.username === username)) {
     return res
       .status(409)
       .json({ success: false, message: "Username already exists!" });
   }
-
-  // Check if a file was uploaded
   if (!req.file) {
     return res
       .status(400)
       .json({ success: false, message: "Profile picture is required!" });
   }
-
   try {
-    // Hash the password before saving it
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Save the user data along with the profile picture path
     db.users.push({
       username,
       password: hashedPassword,
       name,
       email,
-      profilePic: req.file.filename, // Save the path to the uploaded file
+      profilePic: req.file.filename,
       followers: [],
       following: [],
     });
-    saveDB(db); // Save the updated database
-
+    saveDB(db);
     res.status(200).json({ success: true, message: "Signup successful!" });
   } catch (error) {
     console.error("Error during signup:", error);
     res.status(500).json({ success: false, message: "Server error!" });
   }
 });
-// Post API
+
+// Create Post API
 app.post("/post", upload.single("media"), (req, res) => {
   const { description, username, forSale, price } = req.body;
   const db = getDB();
-  console.log(username);
   const user = db.users.find((u) => u.username === username);
   if (!user) {
     return res.status(401).json({ success: false, message: "User not found!" });
   }
-
   const newPost = {
     id: uuidv4(),
     username,
@@ -197,16 +161,14 @@ app.post("/post", upload.single("media"), (req, res) => {
         ? "video"
         : "image"
       : null,
-    forSale: forSale === "true", // Convert string to boolean
+    forSale: forSale === "true",
     price: forSale === "true" ? Number(price) : null,
     likes: 0,
     likedBy: [],
     comments: [],
   };
-
   db.posts.push(newPost);
   saveDB(db);
-
   res.json({ success: true, message: "Post created successfully!" });
 });
 
@@ -219,8 +181,8 @@ app.get("/feed", (req, res) => {
 // Like API
 app.post("/like/:id", (req, res) => {
   const postId = req.params.id;
-  const { username } = req.body; // Get username from request body
-  const db = getDB(); // Load the database here
+  const { username } = req.body;
+  const db = getDB();
 
   if (!username) {
     return res.status(400).json({
@@ -228,21 +190,17 @@ app.post("/like/:id", (req, res) => {
       message: "Username is required to like a post",
     });
   }
-
-  const post = db.posts.find((p) => p.id === postId); // Use db instead of data
-
+  const post = db.posts.find((p) => p.id === postId);
   if (post) {
     if (post.likedBy.includes(username)) {
-      // Unlike the post
       post.likes--;
-      post.likedBy = post.likedBy.filter((user) => user !== username); // Remove username
-      saveDB(db); // Save the updated database
+      post.likedBy = post.likedBy.filter((user) => user !== username);
+      saveDB(db);
       res.json({ success: true, message: "Post unliked successfully!" });
     } else {
-      // Like the post
       post.likes++;
-      post.likedBy.push(username); // Add username to likedBy array
-      saveDB(db); // Save the updated database
+      post.likedBy.push(username);
+      saveDB(db);
       res.json({ success: true, message: "Post liked successfully!" });
     }
   } else {
@@ -254,59 +212,57 @@ app.post("/like/:id", (req, res) => {
 app.post("/comment/:id", (req, res) => {
   const { comment, username } = req.body;
   const db = getDB();
-
-  // Use string matching for UUID
   const post = db.posts.find((p) => p.id === req.params.id);
-
   if (post) {
     post.comments.push({ username, comment });
-    saveDB(db); // Save updated data
+    saveDB(db);
     res.json({ success: true, message: "Comment added!" });
   } else {
     res.status(404).json({ success: false, message: "Post not found!" });
   }
 });
 
+// Update Post API (fixed bug: using db.posts instead of undefined 'posts')
 app.put("/api/posts/:id", (req, res) => {
-  console.log("hii");
   const postId = req.params.id;
-  const updatedPost = req.body; // Expected { description: 'new text', media: 'new media' }
-
-  const postIndex = posts.findIndex((post) => post.id === postId);
+  const updatedPost = req.body;
+  const db = getDB();
+  const postIndex = db.posts.findIndex((post) => post.id === postId);
   if (postIndex === -1) {
     return res.status(404).send("Post not found");
   }
-
-  posts[postIndex] = { ...posts[postIndex], ...updatedPost };
-  res.json(posts[postIndex]);
+  db.posts[postIndex] = { ...db.posts[postIndex], ...updatedPost };
+  saveDB(db);
+  res.json(db.posts[postIndex]);
 });
 
-// Delete a post
+// Delete Post API
 app.delete("/api/posts/:id", (req, res) => {
   const postId = req.params.id;
   const db = getDB();
   const postIndex = db.posts.findIndex((post) => post.id === postId);
-
   if (postIndex === -1) {
     return res.status(404).send("Post not found");
   }
-
-  db.posts.splice(postIndex, 1); // Remove the post
+  db.posts.splice(postIndex, 1);
   saveDB(db);
   res.send("Post deleted");
 });
 
-//profile page
+// User Profile API
 app.get("/user/:username", (req, res) => {
   const db = getDB();
   const user = db.users.find((u) => u.username === req.params.username);
   if (user) {
-    res.json(user);
+    // Exclude sensitive fields
+    const { password, ...safeUser } = user;
+    res.json(safeUser);
   } else {
     res.status(404).json({ success: false, message: "User not found!" });
   }
 });
 
+// User Posts API
 app.get("/posts", (req, res) => {
   const { username } = req.query;
   const db = getDB();
@@ -314,119 +270,150 @@ app.get("/posts", (req, res) => {
   res.json(userPosts);
 });
 
-//follow
+// Follow/Unfollow API
 app.post("/follow", (req, res) => {
   const { currentUser, targetUser } = req.body;
   const db = getDB();
-
   const follower = db.users.find((u) => u.username === currentUser);
   const followee = db.users.find((u) => u.username === targetUser);
-
   if (!follower || !followee) {
     return res.status(404).json({ success: false, message: "User not found" });
   }
-
   const isFollowing = followee.followers.includes(currentUser);
-
   if (isFollowing) {
-    // Unfollow
     followee.followers = followee.followers.filter((u) => u !== currentUser);
     follower.following = follower.following.filter((u) => u !== targetUser);
   } else {
-    // Follow
     followee.followers.push(currentUser);
     follower.following.push(targetUser);
   }
-
   saveDB(db);
   res.json({ success: true, isFollowing: !isFollowing });
 });
 
-//fetching data from database
+// Endpoint to fetch raw database data (for debugging)
 app.get("/data", (req, res) => {
-  const filePath = path.join(__dirname, "database", "data.json");
-
   try {
-    const data = JSON.parse(fs.readFileSync(filePath, "utf8")); // Dynamically read and parse JSON
+    const data = JSON.parse(fs.readFileSync(DB_PATH, "utf8"));
     res.json(data);
   } catch (error) {
-    console.error("Error reading or parsing the JSON file:", error);
+    console.error("Error reading/parsing JSON file:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-// ai search
+
+// AI Search API
+const openai = new OpenAI({
+  baseURL: "https://models.inference.ai.azure.com",
+  apiKey: OPENAI_API_KEY,
+});
+
+/**
+ * Calls the OpenAI API with the given prompt and retries until a valid JSON array is returned.
+ * @param {string} prompt - The prompt to send to the API.
+ * @param {number} maxRetries - Maximum number of retries.
+ * @returns {Promise<Array>} - The valid array of scores.
+ */
+async function fetchValidScores(prompt, maxRetries = 5) {
+  let attempts = 0;
+  while (attempts < maxRetries) {
+    try {
+      const response = await openai.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [{ role: "system", content: prompt }],
+        temperature: 1,
+        max_tokens: 4096,
+        top_p: 1,
+      });
+
+      const rawResponse = response.choices[0]?.message?.content?.trim();
+      const scores = JSON.parse(rawResponse);
+
+      if (Array.isArray(scores)) {
+        return scores;
+      } else {
+        console.warn(
+          `Attempt ${
+            attempts + 1
+          }: Received result is not an array. Retrying...`
+        );
+      }
+    } catch (error) {
+      console.warn(
+        `Attempt ${
+          attempts + 1
+        }: Error parsing response or calling API. Retrying...`
+      );
+    }
+    attempts++;
+  }
+  throw new Error("Failed to get valid scores after maximum retries.");
+}
+
 app.post("/api/search", async (req, res) => {
   try {
-    await fetchApiKey();
-    const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
     const filePath = path.join(__dirname, "database", "data.json");
+    if (!fs.existsSync(filePath)) {
+      return res.status(500).json({ error: "Database file not found." });
+    }
     const data = JSON.parse(fs.readFileSync(filePath, "utf8"));
+    // console.log(data.posts);
     const { query } = req.body; // User's search query
+
     if (!query) {
       return res.status(400).json({ error: "Search query is required" });
     }
 
     const prompt = `
-You are an advanced AI model trained for semantic matching. Your task is to analyze a user's search query and a dataset of posts to assign a relevance score to each post based on how well its description and media type align with the query.
-### Input:
-1. **Search Query**: "${query}"
-2. **Dataset**: ${JSON.stringify(data)}
+You are an AI model specialized in semantic matching and relevance scoring. Your goal is to evaluate how well posts in a dataset match a given search query.
+. You are given:
+- A search query: "${query}"
+- A dataset of posts: ${JSON.stringify(data.posts)}
 
-### Scoring Criteria:
-- Focus primarily on matching the post's **description** and **media type** with the search query.
-- Evaluate the semantic similarity between the query and the description.
-- Consider how well the media type corresponds to the query's intent.
+Each post in the dataset contains  fields Like :"username","forSale","likedBy:[]","comments:[]" "description" and "media type". Your task is to assign each post a relevance score between 1 and 100 based solely on the following factors:
+// example post:
+ {
+      "id": "ab270ea8-e4a0-4b55-91ac-994a68991fc9",
+      "username": "kiara",
+      "profilePic": "1732541684746.png",
+      "description": "The image shows a rectangular frame made from colorful popsicle sticks arranged in layers, creating a vibrant border around a black center.\r\n\r\nMaterials Used:\r\nPopsicle sticks (various colors)\r\nAdhesive (e.g., glue) for sticking the sticks together",
+      "media": "1732598454344.png",
+      "mediaType": "image",
+      "forSale": true,
+      "price": 20,
+      "likes": 1,
+      "likedBy": [
+        "kiara"
+      ],
+      "comments": []
+    }
+//
+1. **Semantic Similarity**: How closely does the post's description match the search query?
+2. **Media Type Alignment**: How well does the post's media type correspond to the intent and context of the search query?
+3. find posts size how may posts it have , and you have to give scores accordingly
+Use these scoring guidelines:
+- **90-100**: Perfect match – the description and media type directly address the search query.
+- **70-89**: Good match – one of the fields (description or media type) aligns very well with the query.
+- **50-69**: Partial match – there is some relevance in either field, but the overall match is not strong.
+- **1-49**: Poor match – minimal or no alignment with the search query.
 
-### Scoring Guidelines:
-- **90-100**: Perfect match - the description and media type directly address the query.
-- **70-89**: Good match - the description or media type aligns well, even if not perfectly.
-- **50-69**: Partial match - either the description or media type has some relevance.
-- **1-49**: Poor match - minimal or no alignment with the query.
+Task:
+For every post in the dataset, calculate a relevance score following the criteria above. Return a JSON array of these scores in the order corresponding to the posts in the dataset (e.g., [85, 72, 45, ...]). Do not include any commentary or explanation; output only the JSON array.
 
-### Task:
-1. Analyze each post in the dataset using the criteria above.
-2. Assign a relevance score (1-100) to every post, ensuring that every post gets a score.
-3. Focus only on the post's **description** and **media type** when determining relevance.
+Be precise, consistent, and ensure every post is assigned a score.
 
-### Output:
-Return a JSON array of relevance scores, one for each post in the dataset, e.g., [85, 72, 45, ...].
-- Do not include explanations or additional text, only the JSON array.
 `;
 
-    const result = await model.generateContent(prompt);
-    const rawResponse = result.response.text();
+    // Call the helper function to fetch valid scores
+    const scores1 = await fetchValidScores(prompt, 5);
+    console.log(scores1);
+    // Sorting function to rank posts based on scores
+    const rankedPosts = scores1
+      .map((score, index) => ({ score, index }))
+      .sort((a, b) => b.score - a.score)
+      .map((item) => item.index);
 
-    // Parse the scores
-    const scores = JSON.parse(rawResponse);
-
-    if (!Array.isArray(scores)) {
-      throw new Error("Invalid AI response format.");
-    }
-
-    // Pair scores with posts and filter/sort by relevance
-    function filter(v) {
-      // Create a vector of pairs {value, index}
-      let vp = [];
-      for (let i = 0; i < v.length; i++) {
-        vp.push({ value: v[i], index: i });
-      }
-
-      // Sort the pairs in descending order of values
-      vp.sort((a, b) => b.value - a.value);
-
-      // Extract indices from the sorted pairs
-      let res = [];
-      for (let i = 0; i < vp.length; i++) {
-        res.push(vp[i].index);
-      }
-
-      return res;
-    }
-
-    let filteredPosts = filter(scores);
-    // console.log(filteredPosts);
-    res.json(filteredPosts);
+    res.json(rankedPosts);
   } catch (error) {
     console.error("Error processing search:", error.message);
     res
@@ -434,41 +421,35 @@ Return a JSON array of relevance scores, one for each post in the dataset, e.g.,
       .json({ error: "Failed to process search. Please try again." });
   }
 });
-//payment server
-// Endpoint for creating a Stripe Checkout session
+
+// Payment Endpoint (Stripe Checkout)
 app.post("/create-checkout-session", async (req, res) => {
   try {
-    await fetchSecret();
-    const stripe = require("stripe")(apiSecret);
-
+    const stripe = new Stripe(STRIPE_SECRET);
     const { amount, postId, buyerUsername } = req.body;
-
     if (!amount || !postId || !buyerUsername) {
       return res
         .status(400)
         .json({ success: false, error: "Missing parameters" });
     }
-
-    // Create the Stripe Checkout session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [
         {
           price_data: {
-            currency: "usd", // Use appropriate currency code
+            currency: "usd",
             product_data: {
               name: `Post #${postId}`,
             },
-            unit_amount: amount * 100, // Stripe expects amount in cents (INR paisa)
+            unit_amount: amount * 100,
           },
           quantity: 1,
         },
       ],
       mode: "payment",
-      success_url: `${BASE_URL}/payment-success`, // Updated with your success URL
-      cancel_url: `${BASE_URL}/payment-fail`, // Updated with your cancel URL
+      success_url: `${BASE_URL}/payment-success`,
+      cancel_url: `${BASE_URL}/payment-fail`,
     });
-
     res.json({ success: true, sessionId: session.id });
   } catch (error) {
     console.error("Error creating checkout session:", error);
@@ -476,30 +457,13 @@ app.post("/create-checkout-session", async (req, res) => {
   }
 });
 
-// Success URL Page
-// app.get("/success", async (req, res) => {
-//   const { session_id } = req.query;
-
-//   const session = await stripe.checkout.sessions.retrieve(session_id);
-
-//   if (session.payment_status === "paid") {
-//     // Handle post-payment actions, e.g., mark post as sold
-//     res.send("Payment successful! Your order has been confirmed.");
-//   } else {
-//     res.send("Payment failed. Please try again.");
-//   }
-// });
+// Payment Success Page
 app.get("/payment-success", (req, res) => {
-  const sessionId = req.query.session_id; // Get session_id from query params
-  // Here you can fetch session details from Stripe (optional for dynamic content)
-
-  // Render the success page
   res.sendFile(path.join(__dirname, "payment-success.html"));
 });
 
-// Route for Failure Page
+// Payment Failure Page
 app.get("/payment-fail", (req, res) => {
-  // You can pass failure message dynamically here, if needed
   res.sendFile(path.join(__dirname, "payment-fail.html"));
 });
 
