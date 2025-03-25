@@ -31,7 +31,9 @@
       "name": "thomas",
       "email": "thomas@gmail.com",
       "profilePic": "1732531724814.jpg",
-      "followers": [],
+      "followers": [
+        "riya"
+      ],
       "following": [
         "riya",
         "henry",
@@ -49,7 +51,10 @@
         "thomas",
         "jhon"
       ],
-      "following": []
+      "following": [
+        "thomas",
+        "jiya"
+      ]
     },
     {
       "username": "james",
@@ -109,7 +114,8 @@
       "email": "jiya123@gmail.com",
       "profilePic": "1732553419712.png",
       "followers": [
-        "kiara"
+        "kiara",
+        "riya"
       ],
       "following": []
     },
@@ -142,10 +148,9 @@
       "mediaType": "video",
       "forSale": true,
       "price": 12,
-      "likes": 2,
+      "likes": 1,
       "likedBy": [
-        "james",
-        "riya"
+        "james"
       ],
       "comments": [
         {
@@ -163,9 +168,16 @@
       "mediaType": "image",
       "forSale": true,
       "price": 9,
-      "likes": 0,
-      "likedBy": [],
-      "comments": []
+      "likes": 1,
+      "likedBy": [
+        "kiara"
+      ],
+      "comments": [
+        {
+          "username": "riya",
+          "comment": "nice"
+        }
+      ]
     },
     {
       "id": "4dbb62e2-45ad-4be1-9ebf-0b10e5f2f0f7",
@@ -176,9 +188,16 @@
       "mediaType": "image",
       "forSale": true,
       "price": 19,
-      "likes": 0,
-      "likedBy": [],
-      "comments": []
+      "likes": 1,
+      "likedBy": [
+        "riya"
+      ],
+      "comments": [
+        {
+          "username": "riya",
+          "comment": ""
+        }
+      ]
     },
     {
       "id": "f3764854-7625-43ec-8f52-7d9732c0a7dc",
@@ -189,8 +208,10 @@
       "mediaType": "image",
       "forSale": true,
       "price": 18,
-      "likes": 0,
-      "likedBy": [],
+      "likes": 1,
+      "likedBy": [
+        "riya"
+      ],
       "comments": []
     },
     {
@@ -202,8 +223,10 @@
       "mediaType": "image",
       "forSale": true,
       "price": 200,
-      "likes": 0,
-      "likedBy": [],
+      "likes": 1,
+      "likedBy": [
+        "riya"
+      ],
       "comments": []
     },
     {
@@ -215,8 +238,10 @@
       "mediaType": "image",
       "forSale": false,
       "price": null,
-      "likes": 0,
-      "likedBy": [],
+      "likes": 1,
+      "likedBy": [
+        "kiara"
+      ],
       "comments": []
     },
     {
@@ -228,8 +253,10 @@
       "mediaType": "image",
       "forSale": true,
       "price": 100,
-      "likes": 0,
-      "likedBy": [],
+      "likes": 1,
+      "likedBy": [
+        "kiara"
+      ],
       "comments": []
     },
     {
@@ -306,10 +333,8 @@
       "mediaType": "image",
       "forSale": true,
       "price": 70,
-      "likes": 1,
-      "likedBy": [
-        "kiara"
-      ],
+      "likes": 0,
+      "likedBy": [],
       "comments": []
     },
     {

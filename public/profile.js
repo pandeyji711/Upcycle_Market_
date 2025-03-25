@@ -145,29 +145,66 @@ async function likePost(postId) {
     alert(data.message);
   }
 }
+// Function to toggle comment input visibility
+function toggleCommentInput(postId) {
+  const commentSection = document.getElementById(`comment-section-${postId}`);
+  if (commentSection) {
+    commentSection.style.display = 
+      commentSection.style.display === "none" ? "block" : "none";
+  }
+}
 
-// Comment
-async function commentPost(postId, comment) {
+// Function to add comment
+async function commentPost(postId) {
   const user = JSON.parse(localStorage.getItem("user"));
   if (!user) {
     alert("You need to log in to comment.");
     return;
   }
 
+  const commentInput = document.getElementById(`comment-input-${postId}`);
+  const comment = commentInput.value.trim();
+  if (!comment) {
+    alert("Comment cannot be empty!");
+    return;
+  }
+
   const response = await fetch(`${BASE_URL}/comment/${postId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username: user.username, comment }), // Include username
+    body: JSON.stringify({ username: user.username, comment }), 
   });
 
   const data = await response.json();
   if (data.success) {
-    // alert("Comment added!");
+    commentInput.value = ""; // Clear input after successful comment
     loadFeed(); // Reload feed to show new comments
   } else {
     alert(data.message);
   }
 }
+// // Comment
+// async function commentPost(postId, comment) {
+//   const user = JSON.parse(localStorage.getItem("user"));
+//   if (!user) {
+//     alert("You need to log in to comment.");
+//     return;
+//   }
+
+//   const response = await fetch(`${BASE_URL}/comment/${postId}`, {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify({ username: user.username, comment }), // Include username
+//   });
+
+//   const data = await response.json();
+//   if (data.success) {
+//     // alert("Comment added!");
+//     loadFeed(); // Reload feed to show new comments
+//   } else {
+//     alert(data.message);
+//   }
+// }
 
 //delete post
 function deletePost(event) {
