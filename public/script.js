@@ -103,7 +103,7 @@ document
     const username = document.getElementById("login-username").value.trim();
     const password = document.getElementById("login-password").value.trim();
 
-    const response = await fetch(`${BASE_URL}/login`, {
+    const response = await fetch(`/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
@@ -163,7 +163,7 @@ document
     formData.append("profilePic", profilePic);
 
     try {
-      const response = await fetch(`${BASE_URL}/signup`, {
+      const response = await fetch(`/signup`, {
         method: "POST",
         body: formData, // Send FormData to include the file
       });
@@ -221,7 +221,7 @@ document.getElementById("post-btn").addEventListener("click", async () => {
 
   // Send data to the server
   try {
-    const response = await fetch(`${BASE_URL}/post`, {
+    const response = await fetch(`/post`, {
       method: "POST",
       body: formData,
     });
@@ -362,7 +362,7 @@ async function redirectToPayment(price, postId) {
   }
 
   // Send the data to the backend to create a Stripe checkout session
-  fetch(`${BASE_URL}/create-checkout-session`, {
+  fetch(`/create-checkout-session`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -404,7 +404,7 @@ async function redirectToPayment(price, postId) {
 // Frontend function to create Checkout session and redirect
 const createCheckoutSession = async (amount, postId, buyerUsername) => {
   try {
-    const response = await fetch(`${BASE_URL}/create-checkout-session`, {
+    const response = await fetch(`/create-checkout-session`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -464,7 +464,7 @@ async function likePost(postId) {
   }
 
   try {
-    const response = await fetch(`${BASE_URL}/like/${postId}`, {
+    const response = await fetch(`/like/${postId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username: user.username }), // Include username
@@ -495,7 +495,7 @@ async function commentPost(postId, comment) {
   }
 
   try {
-    const response = await fetch(`${BASE_URL}/comment/${postId}`, {
+    const response = await fetch(`/comment/${postId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username: user.username, comment }), // Include username
@@ -517,7 +517,7 @@ async function commentPost(postId, comment) {
 //follow
 async function toggleFollow(currentUser, targetUser) {
   try {
-    const response = await fetch(`${BASE_URL}/follow`, {
+    const response = await fetch(`/follow`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ currentUser, targetUser }),
@@ -578,7 +578,7 @@ function closePopup() {
 
 //ai search
 async function renderPosts(postIndices = []) {
-  const response = await fetch(`${BASE_URL}/feed`);
+  const response = await fetch(`/feed`);
   const posts = await response.json();
   const feed = document.getElementById("feed"); // Ensure there's an element with id="feed" in the HTML
 
@@ -620,7 +620,7 @@ async function renderPosts(postIndices = []) {
     // Create the post content dynamically
     postDiv.innerHTML = `
     <div class="post-header">
-      <img src="${BASE_URL}/${post.profilePic}" alt="User Pic" class="post-pic">
+      <img src="$${post.profilePic}" alt="User Pic" class="post-pic">
       <div class="post-user">
         <h4><i class="fas fa-user"></i> ${post.username}</h4>
       </div>
@@ -634,8 +634,8 @@ async function renderPosts(postIndices = []) {
       ${
         post.media
           ? post.mediaType === "video"
-            ? `<video controls width="100%"><source src="${BASE_URL}/${post.media}" type="video/mp4"></video>`
-            : `<img src="${BASE_URL}/${post.media}" alt="Post Image" class="post-img">`
+            ? `<video controls width="100%"><source src="${post.media}" type="video/mp4"></video>`
+            : `<img src="${post.media}" alt="Post Image" class="post-img">`
           : ""
       }
     </div>
