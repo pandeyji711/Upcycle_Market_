@@ -11,7 +11,8 @@ import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcryptjs";
 import Stripe from "stripe";
 import dotenv from "dotenv";
-
+const baseURL = "http://localhost:3000";
+const BASE_URL = "http://localhost:3000";
 import { v2 as cloudinary } from "cloudinary";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 
@@ -40,7 +41,7 @@ app.use(bodyParser.json());
 
 const STRIPE_SECRET = process.env.STRIPE_SECRET;
 const PORT = process.env.PORT || 3000;
-
+const mongopass = process.env.mongo_password;
 // Enable CORS for all origins
 app.use(cors());
 app.use((req, res, next) => {
@@ -50,9 +51,11 @@ app.use((req, res, next) => {
 
 // Connect to MongoDB
 mongoose
-  .connect("mongodb://127.0.0.1:27017/upcycle")
-  .then(() => console.log("Connected to MongoDB!"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+  .connect(
+    `mongodb+srv://anurag_:${mongopass}cluster0.0gmv1vr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+  )
+  .then(() => console.log("✅ Connected to MongoDB!"))
+  .catch((err) => console.error("❌ MongoDB connection error:", err));
 
 // Schemas
 const userSchema = new mongoose.Schema({
@@ -288,23 +291,40 @@ app.get("/posts", async (req, res) => {
 // Follow/unfollow
 app.post("/follow", async (req, res) => {
   const { currentUser, targetUser } = req.body;
+
   const follower = await User.findOne({ username: currentUser });
   const followee = await User.findOne({ username: targetUser });
 
-  if (!follower || !followee)
+  if (!follower || !followee) {
     return res.status(404).json({ success: false, message: "User not found" });
-
-  const isFollowing = followee.followers.includes(currentUser);
-  if (isFollowing) {
-    followee.followers = followee.followers.filter((u) => u !== currentUser);
-    follower.following = follower.following.filter((u) => u !== targetUser);
-  } else {
-    followee.followers.push(currentUser);
-    follower.following.push(targetUser);
   }
 
-  await follower.save();
-  await followee.save();
+  const isFollowing = followee.followers.includes(currentUser);
+
+  if (isFollowing) {
+    // Unfollow
+    await User.findOneAndUpdate(
+      { username: targetUser },
+      { $pull: { followers: currentUser } }
+    );
+
+    await User.findOneAndUpdate(
+      { username: currentUser },
+      { $pull: { following: targetUser } }
+    );
+  } else {
+    // Follow
+    await User.findOneAndUpdate(
+      { username: targetUser },
+      { $addToSet: { followers: currentUser } }
+    );
+
+    await User.findOneAndUpdate(
+      { username: currentUser },
+      { $addToSet: { following: targetUser } }
+    );
+  }
+
   res.json({ success: true, isFollowing: !isFollowing });
 });
 
