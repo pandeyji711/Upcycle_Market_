@@ -1,8 +1,9 @@
 import express from "express";
 import OpenAI from "openai";
+import mongoose from "mongoose";
+import fs from "fs";
 import { fileURLToPath } from "url";
 import cors from "cors";
-import fs from "fs";
 import path from "path";
 import bodyParser from "body-parser";
 import multer from "multer";
@@ -11,274 +12,288 @@ import bcrypt from "bcryptjs";
 import Stripe from "stripe";
 import dotenv from "dotenv";
 
+import { v2 as cloudinary } from "cloudinary";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+
+const app = express();
+
 // Load environment variables
 dotenv.config();
 
-// Define __dirname manually for ES modules
+// Cloudinary config
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// Get __dirname with ES module syntax
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Use environment variables for sensitive data
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY; // e.g., set in .env file
-const STRIPE_SECRET = process.env.STRIPE_SECRET; // Secure Stripe key
-let apiKey; // If needed, fetched via function
-let apiSecret; // For stripe, though we use STRIPE_SECRET directly
+// Middleware
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+app.use(bodyParser.json());
 
-const BASE_URL = "http://localhost:3000";
+const STRIPE_SECRET = process.env.STRIPE_SECRET;
 const PORT = process.env.PORT || 3000;
-const app = express();
 
 // Enable CORS for all origins
 app.use(cors());
-
-// Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// Serve static files from uploads and public directories
-app.use(express.static("uploads"));
-app.use(express.static(path.join(__dirname, "public")));
-
-// Optional: Set CORS headers manually if needed (already enabled by cors middleware)
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   next();
 });
 
-// Multer setup for handling file uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads");
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    cb(null, `${Date.now()}${ext}`);
+// Connect to MongoDB
+mongoose
+  .connect("mongodb://127.0.0.1:27017/upcycle")
+  .then(() => console.log("Connected to MongoDB!"))
+  .catch((err) => console.error("MongoDB connection error:", err));
+
+// Schemas
+const userSchema = new mongoose.Schema({
+  username: String,
+  password: String,
+  name: String,
+  email: String,
+  profilePic: String,
+  followers: [String],
+  following: [String],
+});
+
+const postSchema = new mongoose.Schema({
+  id: String,
+  username: String,
+  profilePic: String,
+  description: String,
+  media: String,
+  mediaType: String,
+  forSale: Boolean,
+  price: Number,
+  likes: Number,
+  likedBy: [String],
+  comments: [
+    {
+      username: String,
+      comment: String,
+    },
+  ],
+});
+
+const User = mongoose.model("User", userSchema);
+const Post = mongoose.model("Post", postSchema);
+
+// Multer Cloudinary storage setup
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "upcycle_media", // folder in Cloudinary
+    allowed_formats: ["jpg", "jpeg", "png", "gif", "mp4"],
   },
 });
 
 const upload = multer({
   storage,
-  limits: { fileSize: 500 * 1024 * 1024 }, // 500MB limit
-  fileFilter: (req, file, cb) => {
-    const filetypes = /jpeg|jpg|png|gif|mp4/;
-    const mimetype = filetypes.test(file.mimetype);
-    const extname = filetypes.test(
-      path.extname(file.originalname).toLowerCase()
-    );
-    if (mimetype && extname) {
-      return cb(null, true);
-    }
-    cb(
-      new Error(
-        "Error: File upload only supports the following filetypes - " +
-          filetypes
-      )
-    );
-  },
+  limits: { fileSize: 500 * 1024 * 1024 }, // 500MB max
 });
 
-// Utility functions for reading and writing the JSON "database"
-const DB_PATH = path.join(__dirname, "database", "data.json");
-const getDB = () => JSON.parse(fs.readFileSync(DB_PATH, "utf8"));
-const saveDB = (data) =>
-  fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
+// Routes
 
-// --- Routes ---
+app.get("/home", (req, res) => res.render("home"));
+app.get("/", (req, res) => res.render("index"));
 
-// Home endpoint
-app.get("/home", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "home.html"));
-});
-
-// Login API
+// Login
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
-  const db = getDB();
-
-  const user = db.users.find((u) => u.username === username);
+  const user = await User.findOne({ username });
   if (user && (await bcrypt.compare(password, user.password))) {
-    // Remove sensitive fields before sending
-    const { password: pwd, ...safeUser } = user;
-    res.json({
-      success: true,
-      ...safeUser,
-    });
+    const { password, ...safeUser } = user.toObject();
+    res.json({ success: true, ...safeUser });
   } else {
     res.status(401).json({ success: false, message: "Invalid credentials!" });
   }
 });
 
-// Signup API
+// Signup with Cloudinary upload for profilePic
 app.post("/signup", upload.single("profilePic"), async (req, res) => {
   const { username, password, name, email } = req.body;
-  const db = getDB();
 
-  if (db.users.find((u) => u.username === username)) {
+  if (await User.findOne({ username })) {
     return res
       .status(409)
       .json({ success: false, message: "Username already exists!" });
   }
-  if (!req.file) {
+
+  if (!req.file || !req.file.path) {
     return res
       .status(400)
       .json({ success: false, message: "Profile picture is required!" });
   }
+
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    db.users.push({
+    const newUser = new User({
       username,
       password: hashedPassword,
       name,
       email,
-      profilePic: req.file.filename,
+      profilePic: req.file.path, // Cloudinary URL
       followers: [],
       following: [],
     });
-    saveDB(db);
-    res.status(200).json({ success: true, message: "Signup successful!" });
-  } catch (error) {
-    console.error("Error during signup:", error);
+    await newUser.save();
+    res.json({ success: true, message: "Signup successful!" });
+  } catch (err) {
+    console.error("Signup error:", err);
     res.status(500).json({ success: false, message: "Server error!" });
   }
 });
-
-// Create Post API
-app.post("/post", upload.single("media"), (req, res) => {
+//feed
+app.get("/feed", async (req, res) => {
+  try {
+    const posts = await Post.find().sort({ createdAt: -1 });
+    res.json(posts);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch posts" });
+  }
+});
+// Create Post with Cloudinary upload for media
+app.post("/post", upload.single("media"), async (req, res) => {
   const { description, username, forSale, price } = req.body;
-  const db = getDB();
-  const user = db.users.find((u) => u.username === username);
-  if (!user) {
+  const user = await User.findOne({ username });
+  if (!user)
     return res.status(401).json({ success: false, message: "User not found!" });
-  }
-  const newPost = {
-    id: uuidv4(),
-    username,
-    profilePic: user.profilePic,
-    description,
-    media: req.file ? req.file.filename : null,
-    mediaType: req.file
-      ? req.file.mimetype.startsWith("video/")
-        ? "video"
-        : "image"
-      : null,
-    forSale: forSale === "true",
-    price: forSale === "true" ? Number(price) : null,
-    likes: 0,
-    likedBy: [],
-    comments: [],
-  };
-  db.posts.push(newPost);
-  saveDB(db);
-  res.json({ success: true, message: "Post created successfully!" });
-});
 
-// Feed API
-app.get("/feed", (req, res) => {
-  const db = getDB();
-  res.json(db.posts);
-});
+  try {
+    let mediaUrl = null;
+    let mediaType = null;
 
-// Like API
-app.post("/like/:id", (req, res) => {
-  const postId = req.params.id;
-  const { username } = req.body;
-  const db = getDB();
+    if (req.file) {
+      // Upload file to Cloudinary
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        resource_type: req.file.mimetype.startsWith("video/")
+          ? "video"
+          : "image",
+        folder: "upcycle_media", // optional: put it into a folder
+      });
 
-  if (!username) {
-    return res.status(400).json({
-      success: false,
-      message: "Username is required to like a post",
-    });
-  }
-  const post = db.posts.find((p) => p.id === postId);
-  if (post) {
-    if (post.likedBy.includes(username)) {
-      post.likes--;
-      post.likedBy = post.likedBy.filter((user) => user !== username);
-      saveDB(db);
-      res.json({ success: true, message: "Post unliked successfully!" });
-    } else {
-      post.likes++;
-      post.likedBy.push(username);
-      saveDB(db);
-      res.json({ success: true, message: "Post liked successfully!" });
+      mediaUrl = result.secure_url;
+      mediaType = req.file.mimetype.startsWith("video/") ? "video" : "image";
+
+      // ✅ Correct local file deletion
+      if (fs.existsSync(req.file.path)) {
+        fs.unlinkSync(req.file.path);
+      }
     }
-  } else {
-    res.status(404).json({ success: false, message: "Post not found" });
+
+    const newPost = new Post({
+      id: uuidv4(),
+      username,
+      profilePic: user.profilePic,
+      description,
+      media: mediaUrl,
+      mediaType,
+      forSale: forSale === "true",
+      price: forSale === "true" ? Number(price) : null,
+      likes: 0,
+      likedBy: [],
+      comments: [],
+    });
+
+    await newPost.save();
+    res.json({
+      success: true,
+      message: "Post created successfully!",
+      post: newPost,
+    });
+  } catch (error) {
+    console.error("Error uploading to Cloudinary:", error);
+    res.status(500).json({ success: false, message: "Upload failed" });
   }
 });
 
-// Comment API
-app.post("/comment/:id", (req, res) => {
+// Like/unlike
+app.post("/like/:id", async (req, res) => {
+  const { username } = req.body;
+  const post = await Post.findOne({ id: req.params.id });
+  if (!post)
+    return res.status(404).json({ success: false, message: "Post not found" });
+
+  if (post.likedBy.includes(username)) {
+    post.likes--;
+    post.likedBy = post.likedBy.filter((u) => u !== username);
+  } else {
+    post.likes++;
+    post.likedBy.push(username);
+  }
+  await post.save();
+  res.json({
+    success: true,
+    message: post.likedBy.includes(username)
+      ? "Post liked successfully!"
+      : "Post unliked successfully!",
+  });
+});
+
+// Comment on post
+app.post("/comment/:id", async (req, res) => {
   const { comment, username } = req.body;
-  const db = getDB();
-  const post = db.posts.find((p) => p.id === req.params.id);
-  if (post) {
-    post.comments.push({ username, comment });
-    saveDB(db);
-    res.json({ success: true, message: "Comment added!" });
-  } else {
-    res.status(404).json({ success: false, message: "Post not found!" });
-  }
+  const post = await Post.findOne({ id: req.params.id });
+  if (!post)
+    return res.status(404).json({ success: false, message: "Post not found!" });
+
+  post.comments.push({ username, comment });
+  await post.save();
+  res.json({ success: true, message: "Comment added!" });
 });
 
-// Update Post API (fixed bug: using db.posts instead of undefined 'posts')
-app.put("/api/posts/:id", (req, res) => {
-  const postId = req.params.id;
-  const updatedPost = req.body;
-  const db = getDB();
-  const postIndex = db.posts.findIndex((post) => post.id === postId);
-  if (postIndex === -1) {
-    return res.status(404).send("Post not found");
-  }
-  db.posts[postIndex] = { ...db.posts[postIndex], ...updatedPost };
-  saveDB(db);
-  res.json(db.posts[postIndex]);
+// Update post
+app.put("/api/posts/:id", async (req, res) => {
+  const updatedPost = await Post.findOneAndUpdate(
+    { id: req.params.id },
+    req.body,
+    { new: true }
+  );
+  if (!updatedPost) return res.status(404).send("Post not found");
+  res.json(updatedPost);
 });
 
-// Delete Post API
-app.delete("/api/posts/:id", (req, res) => {
-  const postId = req.params.id;
-  const db = getDB();
-  const postIndex = db.posts.findIndex((post) => post.id === postId);
-  if (postIndex === -1) {
-    return res.status(404).send("Post not found");
-  }
-  db.posts.splice(postIndex, 1);
-  saveDB(db);
+// Delete post
+app.delete("/api/posts/:id", async (req, res) => {
+  const deleted = await Post.findOneAndDelete({ id: req.params.id });
+  if (!deleted) return res.status(404).send("Post not found");
   res.send("Post deleted");
 });
 
-// User Profile API
-app.get("/user/:username", (req, res) => {
-  const db = getDB();
-  const user = db.users.find((u) => u.username === req.params.username);
-  if (user) {
-    // Exclude sensitive fields
-    const { password, ...safeUser } = user;
-    res.json(safeUser);
-  } else {
-    res.status(404).json({ success: false, message: "User not found!" });
-  }
+// Get user profile
+app.get("/user/:username", async (req, res) => {
+  const user = await User.findOne({ username: req.params.username }).lean();
+  if (!user)
+    return res.status(404).json({ success: false, message: "User not found!" });
+
+  const { password, ...safeUser } = user;
+  res.json(safeUser);
 });
 
-// User Posts API
-app.get("/posts", (req, res) => {
-  const { username } = req.query;
-  const db = getDB();
-  const userPosts = db.posts.filter((post) => post.username === username);
-  res.json(userPosts);
+// Get user posts
+app.get("/posts", async (req, res) => {
+  const posts = await Post.find({ username: req.query.username });
+  res.json(posts);
 });
 
-// Follow/Unfollow API
-app.post("/follow", (req, res) => {
+// Follow/unfollow
+app.post("/follow", async (req, res) => {
   const { currentUser, targetUser } = req.body;
-  const db = getDB();
-  const follower = db.users.find((u) => u.username === currentUser);
-  const followee = db.users.find((u) => u.username === targetUser);
-  if (!follower || !followee) {
+  const follower = await User.findOne({ username: currentUser });
+  const followee = await User.findOne({ username: targetUser });
+
+  if (!follower || !followee)
     return res.status(404).json({ success: false, message: "User not found" });
-  }
+
   const isFollowing = followee.followers.includes(currentUser);
   if (isFollowing) {
     followee.followers = followee.followers.filter((u) => u !== currentUser);
@@ -287,71 +302,72 @@ app.post("/follow", (req, res) => {
     followee.followers.push(currentUser);
     follower.following.push(targetUser);
   }
-  saveDB(db);
+
+  await follower.save();
+  await followee.save();
   res.json({ success: true, isFollowing: !isFollowing });
 });
 
-// Endpoint to fetch raw database data (for debugging)
-app.get("/data", (req, res) => {
-  try {
-    const data = JSON.parse(fs.readFileSync(DB_PATH, "utf8"));
-    res.json(data);
-  } catch (error) {
-    console.error("Error reading/parsing JSON file:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
+// Debug route for all data
+app.get("/data", async (req, res) => {
+  const users = await User.find();
+  const posts = await Post.find();
+  res.json({ users, posts });
 });
+//fetch post data for ai
+let PostData;
+async function fetchData() {
+  const PostData = await Post.find();
+  // console.log(d);
+}
 
 // AI Search API
-const openai = new OpenAI({
-  baseURL: "https://models.inference.ai.azure.com",
-  apiKey: OPENAI_API_KEY,
-});
 
+const endpoint = "https://models.github.ai/inference";
+const token = process.env.OPENAI_API_KEY;
+const model = "openai/gpt-4.1";
 /**
  * Calls the OpenAI API with the given prompt and retries until a valid JSON array is returned.
  * @param {string} prompt - The prompt to send to the API.
  * @param {number} maxRetries - Maximum number of retries.
  * @returns {Promise<Array>} - The valid array of scores.
  */
+const openai = new OpenAI({ baseURL: endpoint, apiKey: token });
+
 async function fetchValidScores(prompt, maxRetries = 5) {
-  let attempts = 0;
-  while (attempts < maxRetries) {
+  for (let attempts = 0; attempts < maxRetries; attempts++) {
     try {
       const response = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
-        messages: [{ role: "system", content: prompt }],
+        model,
+        messages: [
+          {
+            role: "system",
+            content: "You are a helpful assistant scoring posts.",
+          },
+          { role: "user", content: prompt },
+        ],
         temperature: 1,
-        max_tokens: 4096,
         top_p: 1,
       });
 
-      const rawResponse = response.choices[0]?.message?.content?.trim();
-      const scores = JSON.parse(rawResponse);
+      const content = response.choices[0].message.content?.trim();
+      const match = content.match(/\[.*\]/s);
+      if (!match) throw new Error("No valid JSON array found.");
+      const scores = JSON.parse(match[0]);
 
-      if (Array.isArray(scores)) {
-        return scores;
-      } else {
-        console.warn(
-          `Attempt ${
-            attempts + 1
-          }: Received result is not an array. Retrying...`
-        );
-      }
-    } catch (error) {
-      console.warn(
-        `Attempt ${
-          attempts + 1
-        }: Error parsing response or calling API. Retrying...`
-      );
+      if (Array.isArray(scores)) return scores;
+    } catch (err) {
+      console.warn(`Attempt ${attempts + 1} failed:`, err.message);
+      await new Promise((res) => setTimeout(res, 1000 * (attempts + 1)));
     }
-    attempts++;
   }
-  throw new Error("Failed to get valid scores after maximum retries.");
+
+  throw new Error("Failed to get valid scores after retries.");
 }
 
 app.post("/api/search", async (req, res) => {
   try {
+    fetchData();
     const filePath = path.join(__dirname, "database", "data.json");
     if (!fs.existsSync(filePath)) {
       return res.status(500).json({ error: "Database file not found." });
@@ -368,7 +384,7 @@ app.post("/api/search", async (req, res) => {
 You are an AI model specialized in semantic matching and relevance scoring. Your goal is to evaluate how well posts in a dataset match a given search query.
 . You are given:
 - A search query: "${query}"
-- A dataset of posts: ${JSON.stringify(data.posts)}
+- A dataset of posts: ${JSON.stringify(PostData)}
 
 Each post in the dataset contains  fields Like :"username","forSale","likedBy:[]","comments:[]" "description" and "media type". Your task is to assign each post a relevance score between 1 and 100 based solely on the following factors:
 // example post:
@@ -406,7 +422,7 @@ Be precise, consistent, and ensure every post is assigned a score.
 
     // Call the helper function to fetch valid scores
     const scores1 = await fetchValidScores(prompt, 5);
-    console.log(scores1);
+    // console.log(scores1);
     // Sorting function to rank posts based on scores
     const rankedPosts = scores1
       .map((score, index) => ({ score, index }))
@@ -459,14 +475,18 @@ app.post("/create-checkout-session", async (req, res) => {
 
 // Payment Success Page
 app.get("/payment-success", (req, res) => {
-  res.sendFile(path.join(__dirname, "payment-success.html"));
+  res.render("payment-success");
 });
-
+app.get("/index", (req, res) => {
+  res.render("index");
+});
 // Payment Failure Page
 app.get("/payment-fail", (req, res) => {
-  res.sendFile(path.join(__dirname, "payment-fail.html"));
+  res.render("payment-fail");
 });
-
+app.get("/profile", (req, res) => {
+  res.render("profile");
+});
 // Start server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

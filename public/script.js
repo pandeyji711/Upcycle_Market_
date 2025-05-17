@@ -68,6 +68,7 @@ function loadUserPosts() {
       profilePostsContainer.innerHTML = ""; // Clear previous posts
 
       posts.forEach((post) => {
+        console.log(posts.media);
         const postDiv = document.createElement("div");
         postDiv.classList.add("post");
         postDiv.innerHTML = `
@@ -259,7 +260,7 @@ logoutButton.addEventListener("click", () => {
 
 // Load Feed
 async function loadFeed() {
-  const response = await fetch(`${BASE_URL}/feed`);
+  const response = await fetch("/feed");
   const posts = await response.json();
 
   const feed = document.getElementById("feed");
@@ -287,7 +288,7 @@ async function loadFeed() {
     // Create the post content dynamically
     postDiv.innerHTML = `
     <div class="post-header">
-      <img src="${BASE_URL}/${post.profilePic}" alt="User Pic" class="post-pic">
+      <img src="${post.profilePic}" alt="User Pic" class="post-pic">
       <div class="post-user">
         <h4><i class="fas fa-user"></i> ${post.username}</h4>
       </div>
@@ -301,8 +302,8 @@ async function loadFeed() {
       ${
         post.media
           ? post.mediaType === "video"
-            ? `<video controls width="100%"><source src="${BASE_URL}/${post.media}" type="video/mp4"></video>`
-            : `<img src="${BASE_URL}/${post.media}" alt="Post Image" class="post-img">`
+            ? `<video controls width="100%"><source src="${post.media}" type="video/mp4"></video>`
+            : `<img src="${post.media}" alt="Post Image" class="post-img">`
           : ""
       }
     </div>
@@ -426,7 +427,7 @@ const createCheckoutSession = async (amount, postId, buyerUsername) => {
   }
 };
 const handlePayment = async (amount, postId, buyerUsername) => {
-  const response = await fetch(`${BASE_URL}/create-payment-intent`, {
+  const response = await fetch(`/create-payment-intent`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ amount, postId, buyerUsername }),
@@ -702,6 +703,8 @@ async function handleSearch() {
     se.innerText = "AI Search";
     renderPosts(v); // Render the filtered posts
   } catch (error) {
+    se.disabled = false;
+    se.innerText = "AI Search";
     console.error("Search error:", error.message);
     alert("Failed to fetch search results. Please try again.");
   }
@@ -720,7 +723,7 @@ function redirectToProfile() {
   if (user == null) {
     alert("please login first");
   } else {
-    window.location.href = "profile.html";
+    window.location.href = "/profile";
   }
 }
 

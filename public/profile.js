@@ -5,14 +5,14 @@ const pro = document.getElementById("profile-pic");
 const user = JSON.parse(localStorage.getItem("user"));
 pro.src = user.profilePic;
 function redirectToProfile() {
-  window.location.href = "profile.html";
+  window.location.href = "/profile";
 }
 window.onload = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   loadFeed();
   if (!user) {
     alert("Please log in first.");
-    window.location.href = "index.html";
+    window.location.href = "/index";
     return;
   }
   logoutButton.addEventListener("click", () => {
@@ -37,7 +37,7 @@ fetch(`${BASE_URL}/user/${user.username}`)
 
 // Fetch and display user posts
 async function loadFeed() {
-  fetch(`${BASE_URL}/posts?username=${user.username}`)
+  fetch(`/posts?username=${user.username}`)
     .then((response) => response.json())
     .then((posts) => {
       const postsContainer = document.getElementById("profile-posts");
@@ -57,7 +57,7 @@ async function loadFeed() {
         // Create the post content dynamically
         postDiv.innerHTML = `
     <div class="post-header">
-      <img src="${BASE_URL}/${post.profilePic}" alt="User Pic" class="post-pic">
+      <img src="${post.profilePic}" alt="User Pic" class="post-pic">
       <div class="post-user">
         <h4><i class="fas fa-user"></i> ${post.username}</h4>
       </div>
@@ -71,8 +71,8 @@ async function loadFeed() {
       ${
         post.media
           ? post.mediaType === "video"
-            ? `<video controls width="100%"><source src="${BASE_URL}/${post.media}" type="video/mp4"></video>`
-            : `<img src="${BASE_URL}/${post.media}" alt="Post Image" class="post-img">`
+            ? `<video controls width="100%"><source src="${post.media}" type="video/mp4"></video>`
+            : `<img src="${post.media}" alt="Post Image" class="post-img">`
           : ""
       }
     </div>
@@ -129,7 +129,7 @@ async function likePost(postId) {
     return;
   }
 
-  const response = await fetch(`${BASE_URL}/like/${postId}`, {
+  const response = await fetch(`/like/${postId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username: user.username }), // Include username
@@ -149,7 +149,7 @@ async function likePost(postId) {
 function toggleCommentInput(postId) {
   const commentSection = document.getElementById(`comment-section-${postId}`);
   if (commentSection) {
-    commentSection.style.display = 
+    commentSection.style.display =
       commentSection.style.display === "none" ? "block" : "none";
   }
 }
@@ -172,7 +172,7 @@ async function commentPost(postId) {
   const response = await fetch(`${BASE_URL}/comment/${postId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username: user.username, comment }), 
+    body: JSON.stringify({ username: user.username, comment }),
   });
 
   const data = await response.json();
@@ -212,7 +212,7 @@ function deletePost(event) {
   const user = JSON.parse(localStorage.getItem("user"));
 
   // Send request to delete the post
-  fetch(`${BASE_URL}/api/posts/${postId}`, {
+  fetch(`/api/posts/${postId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -255,5 +255,5 @@ function updatePostStats() {
 }
 // Navigate back to home
 function goBackToHome() {
-  window.location.href = "index.html";
+  window.location.href = "/index";
 }
