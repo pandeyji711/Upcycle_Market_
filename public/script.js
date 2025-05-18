@@ -633,7 +633,7 @@ async function renderPosts(postIndices = []) {
     // Create the post content dynamically
     postDiv.innerHTML = `
     <div class="post-header">
-      <img src="$${post.profilePic}" alt="User Pic" class="post-pic">
+      <img src="${post.profilePic}" alt="User Pic" class="post-pic">
       <div class="post-user">
         <h4><i class="fas fa-user"></i> ${post.username}</h4>
       </div>

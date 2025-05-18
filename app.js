@@ -336,9 +336,9 @@ app.get("/data", async (req, res) => {
   res.json({ users, posts });
 });
 //fetch post data for ai
-let PostData;
+var PostData;
 async function fetchData() {
-  const PostData = await Post.find();
+  PostData = await Post.find();
   // console.log(d);
 }
 
@@ -388,7 +388,7 @@ async function fetchValidScores(prompt, maxRetries = 5) {
 
 app.post("/api/search", async (req, res) => {
   try {
-    fetchData();
+    await fetchData();
     const filePath = path.join(__dirname, "database", "data.json");
     if (!fs.existsSync(filePath)) {
       return res.status(500).json({ error: "Database file not found." });
