@@ -102,7 +102,8 @@ document
     event.preventDefault();
     const username = document.getElementById("login-username").value.trim();
     const password = document.getElementById("login-password").value.trim();
-
+    const login = document.getElementById("login");
+    login.innerHTML = "Please Wait..";
     const response = await fetch(`/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -121,6 +122,7 @@ document
           profilePic: data.profilePic,
         })
       );
+      login.innerHTML = "LOGIN";
       // localStorage.setItem("user", JSON.stringify({ username }));
       loginSection.style.display = "none";
       signupSection.style.display = "none";
@@ -129,8 +131,10 @@ document
       feedSection.style.display = "block";
       logoutButton.style.display = "block";
       search.style.display = "block";
+
       loadFeed();
     } else {
+      login.innerHTML = "LOGIN";
       alert(data.message);
     }
   });
@@ -257,7 +261,16 @@ logoutButton.addEventListener("click", () => {
     search.style.display = "none";
   }
 });
-
+//check login
+const profile = document.getElementById("go-to-profile");
+profile.addEventListener("click", () => {
+  const user = localStorage.getItem("user");
+  if (user == null) {
+    alert("please login first ");
+  } else {
+    window.location.href = "/profile";
+  }
+});
 // Load Feed
 async function loadFeed() {
   const response = await fetch("/feed");

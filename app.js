@@ -115,6 +115,7 @@ app.post("/login", async (req, res) => {
   const user = await User.findOne({ username });
   if (user && (await bcrypt.compare(password, user.password))) {
     const { password, ...safeUser } = user.toObject();
+
     res.json({ success: true, ...safeUser });
   } else {
     res.status(401).json({ success: false, message: "Invalid credentials!" });
