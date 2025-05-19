@@ -23,7 +23,7 @@ window.onload = () => {
   });
 };
 // Fetch and display user details
-fetch(`${BASE_URL}/user/${user.username}`)
+fetch(`/user/${user.username}`)
   .then((response) => response.json())
   .then((data) => {
     // Update profile info
@@ -169,7 +169,7 @@ async function commentPost(postId) {
     return;
   }
 
-  const response = await fetch(`${BASE_URL}/comment/${postId}`, {
+  const response = await fetch(`/comment/${postId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username: user.username, comment }),

@@ -37,8 +37,8 @@ window.onload = () => {
   if (user) {
     const user1 = JSON.parse(user); // Parse the JSON string
     following = user1.following || [];
-    console.log("Logged-in user:", user);
-    console.log("Following array:", user1.following); // Check the following array
+    // console.log("Logged-in user:", user);
+    // console.log("Following array:", user1.following); // Check the following array
     loginSection.style.display = "none";
     signupSection.style.display = "none";
     postSection.style.display = "flex";
@@ -68,7 +68,7 @@ function loadUserPosts() {
       profilePostsContainer.innerHTML = ""; // Clear previous posts
 
       posts.forEach((post) => {
-        console.log(posts.media);
+        // console.log(posts.media);
         const postDiv = document.createElement("div");
         postDiv.classList.add("post");
         postDiv.innerHTML = `
@@ -145,7 +145,10 @@ document
   .getElementById("signup-form")
   .addEventListener("submit", async (event) => {
     event.preventDefault();
-
+    const signupbtn = document.getElementById("s");
+    signupbtn.innerHTML = "Please Wait";
+    // console.log(signupbtn);
+    signupbtn.disabled = true;
     // Get form inputs
     const username = document.getElementById("signup-username").value.trim();
     const password = document.getElementById("signup-password").value.trim();
@@ -174,18 +177,24 @@ document
 
       // Check if response is valid JSON
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
 
       if (response.ok && data.success) {
+        signupbtn.innerHTML = "Sign Up";
+        signupbtn.disabled = false;
         alert(data.message);
         signupSection.style.display = "none";
         loginSection.style.display = "block";
       } else {
+        signupbtn.innerHTML = "Sign Up";
+        signupbtn.disabled = false;
         alert(data.message || "Sign-up failed.");
       }
     } catch (error) {
+      signupbtn.innerHTML = "Sign Up";
+      signupbtn.disabled = false;
       console.error("Error during signup:", error);
-      console.log(data);
+      // console.log(data);
       alert("An error occurred during sign-up. Please try again.");
     }
   });
@@ -196,17 +205,23 @@ document.getElementById("post-btn").addEventListener("click", async () => {
   const fileInput = document.getElementById("media-upload");
   const sellToggle = document.getElementById("sell-toggle").checked;
   const sellingPrice = document.getElementById("selling-price").value.trim();
-
+  const postbtn = document.getElementById("post-btn");
+  postbtn.innerHTML = "Please Wait..";
+  postbtn.disabled = true;
   // Retrieve user object
   const user = JSON.parse(localStorage.getItem("user"));
 
   if (!user) {
+    postbtn.innerHTML = "post";
+    postbtn.disabled = false;
     alert("You need to log in to post.");
     return;
   }
 
   // Validate input
   if (sellToggle && !sellingPrice) {
+    postbtn.innerHTML = "post";
+    postbtn.disabled = false;
     alert("Please provide a selling price if you want to sell this item.");
     return;
   }
@@ -233,13 +248,19 @@ document.getElementById("post-btn").addEventListener("click", async () => {
     const data = await response.json();
 
     if (data.success) {
+      postbtn.innerHTML = "post";
+      postbtn.disabled = false;
       alert(data.message);
       loadFeed(); // Reload feed after successful post
       closePopup();
     } else {
+      postbtn.innerHTML = "post";
+      postbtn.disabled = false;
       alert(data.message || "Failed to create post.");
     }
   } catch (error) {
+    postbtn.innerHTML = "post";
+    postbtn.disabled = false;
     console.error("Error creating post:", error);
     alert("An error occurred. Please try again.");
   }
