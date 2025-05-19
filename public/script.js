@@ -219,6 +219,12 @@ document.getElementById("post-btn").addEventListener("click", async () => {
   }
 
   // Validate input
+  if (description.length <= 0) {
+    postbtn.innerHTML = "post";
+    postbtn.disabled = false;
+    alert("description cannot be empty... ");
+    return;
+  }
   if (sellToggle && !sellingPrice) {
     postbtn.innerHTML = "post";
     postbtn.disabled = false;
